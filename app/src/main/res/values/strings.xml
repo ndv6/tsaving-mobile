@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">TSaving</string>
+    <string-array name="color_va">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+    </string-array>
 </resources>
