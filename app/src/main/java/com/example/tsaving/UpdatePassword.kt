@@ -16,10 +16,10 @@ class UpdatePassword : Activity() {
             finish()
         }
 
-        btn_updatepass.setOnClickListener {
-            val oldPassword = editOldPass.text.toString()
-            val newPassword = editNewPass.text.toString()
-            val confirmPassword = editConfirmPass.text.toString()
+        btn_updatepassword.setOnClickListener {
+            val oldPassword = edit_oldpassword.text.toString()
+            val newPassword = edit_newpassword.text.toString()
+            val confirmPassword = edit_confirmpassword.text.toString()
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(applicationContext,"please fill your password", Toast.LENGTH_SHORT).show()
