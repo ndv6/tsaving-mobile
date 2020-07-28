@@ -99,7 +99,7 @@
         android:background="@drawable/button_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_register_password" />
+        app:layout_constraintTop_toBottomOf="@+id/et_register_password" />
 
     <TextView
         android:id="@+id/tv_register_question"
