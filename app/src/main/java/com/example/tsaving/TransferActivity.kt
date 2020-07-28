@@ -25,7 +25,7 @@ class TransferActivity: Activity() {
         }
 
         back_button_tf.setOnClickListener {
-            this.finish()
+            finish()
         }
     }
 
