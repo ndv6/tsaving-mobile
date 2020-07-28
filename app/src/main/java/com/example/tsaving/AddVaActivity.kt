@@ -10,12 +10,12 @@ class AddVaActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_va)
 
-        button_addva_back.setOnClickListener{
+        btn_addva_back.setOnClickListener{
             finish()
         }
 
-        button_addva_submit.setOnClickListener{
-            val label = label_addva_label.text.toString()
+        btn_addva_submit.setOnClickListener{
+            val label = et_addva_label.text.toString()
 //            val color = spinner_color.
 
             if (label.isEmpty()){
