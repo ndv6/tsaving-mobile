@@ -20,5 +20,12 @@ class LoginActivity : Activity() {
             startActivity(intent)
             finish()
         }
+        //custom login david direct to transfer
+        btn_login.setOnClickListener {
+            val intent = Intent(this, TransferActivity::class.java)
+            startActivity(intent)
+        }
+
+
     }
 }
