@@ -10,7 +10,7 @@ class ProfileActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_profile)
 
-        editProfileBtn.setOnClickListener {
+        btn_profile_edit.setOnClickListener {
             val intent = Intent(this@ProfileActivity, EditProfileActivity::class.java)
             startActivity(intent)
         }

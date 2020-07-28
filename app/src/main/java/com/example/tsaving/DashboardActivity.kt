@@ -9,11 +9,11 @@ class DashboardActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_dashboard)
 
-        profileImage.setOnClickListener{
+        civ_dashboard.setOnClickListener{
 //            startActivity(Intent(this@DashboardActivity, ProfileActivity::class.java))
         }
 
-        btnSideDrawer.setOnClickListener {
+        btn_dashboard_drawer.setOnClickListener {
 //            startActivity(Intent(this@DashboardActivity, SideDrawer::class.java))
         }
     }

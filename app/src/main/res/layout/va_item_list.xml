@@ -7,6 +7,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <TextView
+        android:id="@+id/tv_item_list_va_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="VA label"
@@ -17,18 +18,19 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
+        android:id="@+id/tv_item_list_va_balance"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="50000"
         android:layout_marginRight="10dp"
-        app:layout_constraintRight_toLeftOf="@id/btnVaDetail"
+        app:layout_constraintRight_toLeftOf="@id/btn_item_list_va_detail"
         app:layout_constraintTop_toTopOf="parent"/>
 
 
     <Button
         style="?android:attr/borderlessButtonStyle"
-        android:id="@+id/btnVaDetail"
+        android:id="@+id/btn_item_list_va_detail"
         android:layout_width="25dp"
         android:layout_height="25dp"
         android:layout_marginRight="5dp"

@@ -20,5 +20,9 @@ class RegisterActivity: Activity() {
             startActivity(intent)
             finish()
         }
+
+        btn_register.setOnClickListener {
+            startActivity(Intent(this@RegisterActivity, OTPActivity::class.java))
+        }
     }
 }
