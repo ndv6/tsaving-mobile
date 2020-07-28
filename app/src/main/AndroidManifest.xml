@@ -23,6 +23,7 @@
         <activity android:name=".AddVaActivity"/>
         <activity android:name=".OTPActivity"/>
         <activity android:name=".VADetailsActivity"/>
+        <activity android:name=".UpdatePassword" />
         <activity android:name=".TransactionHistoryActivity" />
     </application>
 
