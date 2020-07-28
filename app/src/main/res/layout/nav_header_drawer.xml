@@ -27,7 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="8dp"
-        android:text="@string/nav_header_cust_name"
+        android:text="Customer Name"
         android:textColor="@color/colorLight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/iv_drawer_photo"/>
@@ -36,7 +36,7 @@
         android:id="@+id/tv_drawer_email"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/nav_header_cust_email"
+        android:text="customer@mail.com"
         android:textColor="@color/colorLight"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_drawer_name"/>

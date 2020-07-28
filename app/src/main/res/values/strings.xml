@@ -1,10 +1,6 @@
 <resources>
     <string name="app_name">TSaving</string>
 
-<!--    customer identity-->
-    <string name="nav_header_cust_name">Customer Name</string>
-    <string name="nav_header_cust_email">customer@gmail.com</string>
-
 <!--    drawer menu-->
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
