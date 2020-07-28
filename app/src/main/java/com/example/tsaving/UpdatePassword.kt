@@ -23,13 +23,32 @@ class UpdatePassword : Activity() {
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(applicationContext,"please fill your password", Toast.LENGTH_SHORT).show()
-            }
-            if (newPassword != confirmPassword) {
-                Toast.makeText(applicationContext,"password doesn't match", Toast.LENGTH_SHORT).show()
+            }else{
+                if (et_up_newpassword.text.toString().length < 6) {
+                    et_up_newpassword.setError("password minimum contain 6 character")
+                    et_up_newpassword.requestFocus()
+                    et_up_newpassword.isEnabled = true
 
+                }
+                if (et_up_confirmpassword.text.toString().length < 6) {
+                    et_up_confirmpassword.setError("password minimum contain 6 character")
+                    et_up_confirmpassword.requestFocus()
+                    et_up_confirmpassword.isEnabled = true
+
+                }
+                if (newPassword != confirmPassword) {
+                    Toast.makeText(applicationContext,"password doesn't match", Toast.LENGTH_SHORT).show()
+
+                }
             }
+
+
+
+
+
 
         }
+
     }
 
 
