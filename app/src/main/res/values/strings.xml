@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">TSaving</string>
+
+<!--    customer identity-->
+    <string name="nav_header_cust_name">Customer Name</string>
+    <string name="nav_header_cust_email">customer@gmail.com</string>
+
+<!--    sidebar menu-->
+    <string name="menu_home">Home</string>
+    <string name="menu_profile">Profile</string>
+    <string name="menu_edit_profile">Edit Profile</string>
+    <string name="menu_edit_password">Edit Password</string>
+    <string name="menu_create_va">Create Virtual Account</string>
+    <string name="menu_history">Transaction History</string>
+    <string name="menu_logout">Log Out</string>
 </resources>
