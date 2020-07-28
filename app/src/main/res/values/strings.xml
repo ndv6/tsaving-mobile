@@ -13,4 +13,14 @@
     <string name="menu_create_va">Create Virtual Account</string>
     <string name="menu_history">Transaction History</string>
     <string name="menu_logout">Log Out</string>
+
+    <string-array name="color_va">
+        <item>Red</item>
+        <item>Blue</item>
+        <item>Green</item>
+        <item>Yellow</item>
+        <item>Orange</item>
+        <item>Purple</item>
+    </string-array>
+
 </resources>
