@@ -14,9 +14,6 @@
             android:id="@+id/nav_drawer_edit_profile"
             android:title="@string/menu_edit_profile" />
         <item
-            android:id="@+id/nav_drawer_update_password"
-            android:title="@string/menu_update_password" />
-        <item
             android:id="@+id/nav_drawer_create_va"
             android:title="@string/menu_create_va" />
         <item
