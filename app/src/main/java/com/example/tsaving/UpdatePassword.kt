@@ -23,7 +23,7 @@ class UpdatePassword : Activity() {
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(applicationContext,"please fill your password", Toast.LENGTH_SHORT).show()
-            }else{
+            }else if (!newPassword.isEmpty() || !confirmPassword.isEmpty()) {
                 if (et_up_newpassword.text.toString().length < 6) {
                     et_up_newpassword.setError("password minimum contain 6 character")
                     et_up_newpassword.requestFocus()
