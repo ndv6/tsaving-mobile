@@ -8,7 +8,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar_transfer"
+        android:id="@+id/toolbar_tf"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
@@ -21,7 +21,7 @@
         />
 
     <ImageButton
-        android:id="@+id/back_button_tf"
+        android:id="@+id/btn_tf_back"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@drawable/ic_baseline_arrow_back_ios_24"
@@ -32,7 +32,7 @@
         />
 
     <TextView
-        android:id="@+id/txt_toolbar_tf"
+        android:id="@+id/txt_tf_toolbar"
         android:textAllCaps="true"
         android:text="TRANSFER"
         android:textSize="24sp"
@@ -41,9 +41,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="@id/toolbar_transfer"
-        app:layout_constraintEnd_toEndOf="@id/toolbar_transfer"
-        app:layout_constraintBottom_toBottomOf="@id/toolbar_transfer" />
+        app:layout_constraintStart_toStartOf="@id/toolbar_tf"
+        app:layout_constraintEnd_toEndOf="@id/toolbar_tf"
+        app:layout_constraintBottom_toBottomOf="@id/toolbar_tf" />
     <TextView
         android:id="@+id/txt_tf_from"
         android:text="Transfer From"
@@ -55,7 +55,7 @@
         android:layout_marginTop="24dp"
         android:paddingVertical="8dp"
         android:background="@drawable/border_bottom"
-        app:layout_constraintTop_toBottomOf="@id/toolbar_transfer"
+        app:layout_constraintTop_toBottomOf="@id/toolbar_tf"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -75,7 +75,7 @@
         />
 
     <TextView
-        android:id="@+id/txt_from_num"
+        android:id="@+id/tx_tf_from_num"
         android:text="2007268321001"
         android:textSize="16sp"
         android:textColor="@color/colorGrey"
@@ -100,7 +100,7 @@
         android:layout_marginTop="24dp"
         android:paddingVertical="8dp"
         android:background="@drawable/border_bottom"
-        app:layout_constraintTop_toBottomOf="@id/txt_from_num"
+        app:layout_constraintTop_toBottomOf="@id/tx_tf_from_num"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
@@ -185,7 +185,7 @@
         />
 
     <Button
-        android:id="@+id/btn_transfer"
+        android:id="@+id/btn_tf_transfer"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:text="TRANSFER"

@@ -15,16 +15,16 @@ class TransferActivity: Activity() {
 
 
         //logic for submit transfer
-        btn_transfer.setOnClickListener {
-            val txtNumber = txt_tf_amount_input.text.toString()
-            if(txtNumber.isBlank()){
+        btn_tf_transfer.setOnClickListener {
+            val txtAmount = txt_tf_amount_input.text.toString()
+            if(txtAmount.isBlank()){
                 Toast.makeText(applicationContext,"Please Input The Amount", Toast.LENGTH_SHORT).show()
             } else{
                 Toast.makeText(applicationContext,"Good To Go", Toast.LENGTH_SHORT).show()
             }
         }
 
-        back_button_tf.setOnClickListener {
+        btn_tf_back.setOnClickListener {
             finish()
         }
     }
