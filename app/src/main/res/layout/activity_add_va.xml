@@ -8,7 +8,7 @@
     android:background="@color/colorWhite">
 
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/tb_addva"
+        android:id="@+id/tb_vad"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -28,9 +28,9 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_margin="15dp"
             android:layout_marginLeft="50dp"
-            app:layout_constraintTop_toTopOf="@+id/tb_addva"
-            app:layout_constraintStart_toStartOf="@+id/tb_addva"
-            app:layout_constraintBottom_toBottomOf="@+id/tb_addva"
+            app:layout_constraintTop_toTopOf="@+id/tb_vad"
+            app:layout_constraintStart_toStartOf="@+id/tb_vad"
+            app:layout_constraintBottom_toBottomOf="@+id/tb_vad"
             />
         <TextView
             android:textAllCaps="true"
@@ -42,9 +42,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_daily"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/tb_addva"
-            app:layout_constraintEnd_toEndOf="@+id/tb_addva"
-            app:layout_constraintBottom_toBottomOf="@+id/tb_addva" />
+            app:layout_constraintStart_toStartOf="@+id/tb_vad"
+            app:layout_constraintEnd_toEndOf="@+id/tb_vad"
+            app:layout_constraintBottom_toBottomOf="@+id/tb_vad" />
         />
     </androidx.appcompat.widget.Toolbar>
 
@@ -62,7 +62,7 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tb_addva" />
+        app:layout_constraintTop_toBottomOf="@+id/tb_vad" />
 
     <TextView
         android:id = "@+id/tv_addva_label"

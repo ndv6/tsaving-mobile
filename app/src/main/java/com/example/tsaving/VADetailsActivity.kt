@@ -6,6 +6,6 @@ import android.os.Bundle
 class VADetailsActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.va_details)
+        setContentView(R.layout.activity_va_details)
     }
 }
