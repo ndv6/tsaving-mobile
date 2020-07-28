@@ -11,16 +11,13 @@ class LoginActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         tv_login_signup.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
+            startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
 
-        btn_login.setOnClickListener {
-            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
+        btn_login_signin.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             finish()
         }
     }

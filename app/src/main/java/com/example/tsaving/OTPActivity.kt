@@ -11,7 +11,7 @@ class OTPActivity : Activity() {
         setContentView(R.layout.verify_email)
 
         btn_otp_send.setOnClickListener {
-            startActivity(Intent(this@OTPActivity, DashboardActivity::class.java))
+            startActivity(Intent(this@OTPActivity, MainActivity::class.java))
             finish()
         }
     }
