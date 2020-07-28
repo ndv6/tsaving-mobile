@@ -12,14 +12,14 @@ class UpdatePassword : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_password)
 
-        back_button.setOnClickListener{
+        btn_up_back.setOnClickListener{
             finish()
         }
 
-        btn_updatepassword.setOnClickListener {
-            val oldPassword = edit_oldpassword.text.toString()
-            val newPassword = edit_newpassword.text.toString()
-            val confirmPassword = edit_confirmpassword.text.toString()
+        btn_up_updatepassword.setOnClickListener {
+            val oldPassword = et_up_oldpassword.text.toString()
+            val newPassword = et_up_newpassword.text.toString()
+            val confirmPassword = et_up_confirmpassword.text.toString()
 
             if (oldPassword.isEmpty() || newPassword.isEmpty() || confirmPassword.isEmpty()) {
                 Toast.makeText(applicationContext,"please fill your password", Toast.LENGTH_SHORT).show()
