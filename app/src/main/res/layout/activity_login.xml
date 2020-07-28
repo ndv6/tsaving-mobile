@@ -19,7 +19,7 @@
         app:layout_constraintVertical_bias="0.286" />
 
     <TextView
-        android:id="@+id/txt_login_title"
+        android:id="@+id/tv_login_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="sans-serif-black"
@@ -31,7 +31,7 @@
         app:layout_constraintTop_toBottomOf="@+id/img_login_view"/>
 
     <EditText
-        android:id="@+id/txt_login_email"
+        android:id="@+id/et_login_email"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Email"
@@ -39,11 +39,11 @@
         android:layout_margin="15dp"
         android:background="@drawable/edittext_rounded"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_login_title"
+        app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <EditText
-        android:id="@+id/txt_login_password"
+        android:id="@+id/et_login_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Password"
@@ -51,7 +51,7 @@
         android:layout_margin="15dp"
         android:background="@drawable/edittext_rounded"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_login_email"
+        app:layout_constraintTop_toBottomOf="@+id/et_login_email"
         app:layout_constraintEnd_toEndOf="parent"/>
 
     <Button
@@ -65,10 +65,10 @@
         android:background="@drawable/button_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_login_password" />
+        app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
 
     <TextView
-        android:id="@+id/txt_login_question"
+        android:id="@+id/tv_login_question"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Belum Punya Akun ? "
@@ -78,12 +78,12 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_login_signin" />
 
     <TextView
-        android:id="@+id/txt_login_signup"
+        android:id="@+id/tv_login_signup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Register"
         android:textColor="#0000ff"
-        app:layout_constraintStart_toEndOf="@+id/txt_login_question"
+        app:layout_constraintStart_toEndOf="@+id/tv_login_question"
         app:layout_constraintTop_toBottomOf="@+id/btn_login_signin"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
