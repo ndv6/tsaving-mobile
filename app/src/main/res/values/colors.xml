@@ -11,7 +11,7 @@
     <color name="colorGreyLight">#cccccc</color>
     <color name="colorGold">#fbbc1c</color>
     <color name="colorPink">#e6a5b0</color>
-    <color name="colorPinkLight">##eec3ca</color>
+    <color name="colorPinkLight">#eec3ca</color>
     <color name="colorBlush">#ea7484</color>
     <color name="colorChampagne">#fbde93</color>
 </resources>
