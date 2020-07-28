@@ -11,7 +11,7 @@ class TransactionHistoryActivity : Activity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.transaction_history)
-        recycler_view_transaction_history.adapter = transactionHistoryAdapter
-        recycler_view_transaction_history.layoutManager = LinearLayoutManager(this)
+        rv_transaction_history.adapter = transactionHistoryAdapter
+        rv_transaction_history.layoutManager = LinearLayoutManager(this)
     }
 }

@@ -3,10 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    >
 
     <TextView
-        android:id="@+id/text_transaction_history_title"
+        android:id="@+id/tv_transaction_history_title"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:gravity="center_horizontal"
@@ -17,25 +18,25 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/text_transaction_history_account_num"
+        android:id="@+id/tv_transaction_history_account_num"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_transaction_history_title" />
+        app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_title" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/swipe_refresh_layout_transaction_history"
+        android:id="@+id/srl_transaction_history"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/text_transaction_history_account_num">
+        app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_account_num">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_transaction_history"
+            android:id="@+id/rv_transaction_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 

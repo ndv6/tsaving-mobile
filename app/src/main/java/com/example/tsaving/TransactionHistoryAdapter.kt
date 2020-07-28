@@ -23,16 +23,16 @@ class TransactionHistoryAdapter :
 
     class TransactionHistoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindData(position: TransactionHistory) {
-            val accountNum = view.findViewById<TextView>(R.id.text_transaction_history_account_num)
+            val accountNum = view.findViewById<TextView>(R.id.tv_transaction_history_account_num)
             val tranAmt =
-                view.findViewById<TextView>(R.id.text_transaction_history_item_tran_amount)
+                view.findViewById<TextView>(R.id.tv_transaction_history_item_tran_amount)
             val destAccount =
-                view.findViewById<TextView>(R.id.text_transaction_history_item_dest_account)
+                view.findViewById<TextView>(R.id.tv_transaction_history_item_dest_account)
             val fromAccount =
-                view.findViewById<TextView>(R.id.text_transaction_history_item_from_account)
-            val desc = view.findViewById<TextView>(R.id.text_transaction_history_item_title)
+                view.findViewById<TextView>(R.id.tv_transaction_history_item_from_account)
+            val desc = view.findViewById<TextView>(R.id.tv_transaction_history_item_title)
             val createdAt =
-                view.findViewById<TextView>(R.id.text_transaction_history_item_created_at)
+                view.findViewById<TextView>(R.id.tv_transaction_history_item_created_at)
 
             accountNum.text = position.accountNum
             tranAmt.text = position.tranAmount.toString()
