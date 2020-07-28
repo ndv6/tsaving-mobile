@@ -17,7 +17,10 @@ class LoginActivity : Activity() {
 
         tv_login_signup.setOnClickListener {
             val intent = Intent(this, RegisterActivity::class.java)
-            startActivity(intent)
+        }
+
+        btn_login.setOnClickListener {
+            startActivity(Intent(this@LoginActivity, DashboardActivity::class.java))
             finish()
         }
     }
