@@ -26,6 +26,10 @@ class MainActivity: AppCompatActivity() {
 
         mDrawer = drawer_layout
         setupDrawerContent(nav_drawer_view)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction().replace(R.id.flContent, DashboardFragment()).commit()
+        }
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -48,7 +52,7 @@ class MainActivity: AppCompatActivity() {
                 fragment = (ProfileFragment::class.java).newInstance()
             }
             R.id.nav_drawer_edit_profile -> {
-                fragment = (EditProfileActivity::class.java).newInstance()
+                fragment = (EditProfileFragment::class.java).newInstance()
             }
             R.id.nav_drawer_create_va -> {
                 fragment = (AddVaFragment::class.java).newInstance()
@@ -57,7 +61,8 @@ class MainActivity: AppCompatActivity() {
                 fragment = (TransactionHistoryFragment::class.java).newInstance()
             }
             R.id.nav_drawer_logout -> {
-                // modify shared pref token
+                startActivity(Intent(this@MainActivity, LoginActivity::class.java))
+                finish()
             }
         }
 

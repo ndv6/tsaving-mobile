@@ -21,7 +21,7 @@
         <activity android:name=".TransferActivity" />
         <activity android:name=".OTPActivity"/>
         <activity android:name=".VADetailsActivity"/>
-        <activity android:name=".UpdatePassword" />
+        <activity android:name=".UpdatePasswordActivity" />
     </application>
 
 </manifest>

@@ -10,18 +10,6 @@ import androidx.fragment.app.Fragment
 import kotlinx.android.synthetic.main.activity_profile.*
 import java.util.zip.Inflater
 
-//class ProfileActivity : Activity() {
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setContentView(R.layout.activity_profile)
-//
-//        btn_profile_edit.setOnClickListener {
-//            val intent = Intent(this@ProfileActivity, EditProfileActivity::class.java)
-//            startActivity(intent)
-//        }
-//    }
-//}
-
 class ProfileFragment: androidx.fragment.app.Fragment () {
 
     override fun onCreateView(
@@ -30,5 +18,17 @@ class ProfileFragment: androidx.fragment.app.Fragment () {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.activity_profile, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        btn_profile_edit.setOnClickListener {
+            fragmentManager?.beginTransaction()?.replace(R.id.flContent, EditProfileFragment())?.commit()
+        }
+
+        btn_profile_change_password.setOnClickListener {
+            startActivity(Intent(activity, UpdatePasswordActivity::class.java))
+        }
+
+        super.onViewCreated(view, savedInstanceState)
     }
 }
