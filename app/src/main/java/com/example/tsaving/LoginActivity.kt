@@ -16,7 +16,7 @@ class LoginActivity : Activity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         txt_register.setOnClickListener {
-            val intent = Intent(this, RegisterActivity::class.java)
+            val intent = Intent(this, AddVaActivity::class.java)
             startActivity(intent)
             finish()
         }

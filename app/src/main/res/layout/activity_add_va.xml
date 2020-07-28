@@ -7,10 +7,8 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite">
 
-
-
     <androidx.appcompat.widget.Toolbar
-        android:id="@+id/toolbar"
+        android:id="@+id/toolbar_va"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:background="?attr/colorPrimary"
@@ -22,7 +20,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
         <ImageButton
-            android:id="@+id/back_button"
+            android:id="@+id/button_addva_back"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
@@ -30,9 +28,9 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:layout_margin="15dp"
             android:layout_marginLeft="50dp"
-            app:layout_constraintTop_toTopOf="@+id/toolbar"
-            app:layout_constraintStart_toStartOf="@+id/toolbar"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar"
+            app:layout_constraintTop_toTopOf="@+id/toolbar_va"
+            app:layout_constraintStart_toStartOf="@+id/toolbar_va"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_va"
             />
         <TextView
             android:textAllCaps="true"
@@ -44,16 +42,16 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_daily"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/toolbar"
-            app:layout_constraintEnd_toEndOf="@+id/toolbar"
-            app:layout_constraintBottom_toBottomOf="@+id/toolbar" />
+            app:layout_constraintStart_toStartOf="@+id/toolbar_va"
+            app:layout_constraintEnd_toEndOf="@+id/toolbar_va"
+            app:layout_constraintBottom_toBottomOf="@+id/toolbar_va" />
         />
     </androidx.appcompat.widget.Toolbar>
 
 
 
     <TextView
-        android:id="@+id/label_add_va"
+        android:id="@+id/label_addva_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="50dp"
@@ -64,10 +62,10 @@
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar" />
+        app:layout_constraintTop_toBottomOf="@+id/toolbar_va" />
 
     <TextView
-        android:id = "@+id/lbl_label"
+        android:id = "@+id/label_addva_label"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Label"
@@ -79,11 +77,11 @@
         android:elegantTextHeight="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/label_add_va"
+        app:layout_constraintTop_toBottomOf="@+id/label_addva_title"
         />
 
     <EditText
-        android:id = "@+id/txt_label"
+        android:id = "@+id/edittext_addva_label"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="50dp"
@@ -93,10 +91,10 @@
         android:padding = "15dp"
         android:hint = "Input label"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_label" />
+        app:layout_constraintTop_toBottomOf="@+id/label_addva_label" />
 
     <TextView
-        android:id = "@+id/lbl_warna"
+        android:id = "@+id/label_addva_warna"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:text="Color"
@@ -108,7 +106,7 @@
         android:elegantTextHeight="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_label"
+        app:layout_constraintTop_toBottomOf="@+id/edittext_addva_label"
         />
 
     <!--    <EditText-->
@@ -123,11 +121,11 @@
     <!--        app:layout_constraintTop_toBottomOf="@+id/lbl_warna" />-->
 
     <Spinner
-        android:id="@+id/planets_spinner"
+        android:id="@+id/spinner_addva_color"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
-        app:layout_constraintTop_toBottomOf="@+id/lbl_warna"
+        app:layout_constraintTop_toBottomOf="@+id/label_addva_warna"
         app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft = "50dp"
         android:layout_marginRight="50dp"
@@ -136,6 +134,7 @@
         />
 
     <Button
+        android:id="@+id/button_addva_submit"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text = "SUBMIT"
