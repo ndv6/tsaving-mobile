@@ -16,7 +16,7 @@ import java.util.*
 class TransferActivity: AppCompatActivity(), LifecycleOwner {
     lateinit var et_amount: EditText
 
-    private val transferViewModel : TransferViewModel = TransferViewModel()
+    private val transferViewModel = TransferViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
