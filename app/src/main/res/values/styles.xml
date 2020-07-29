@@ -7,4 +7,18 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name = "ButtonPrimary" parent = "@style/Widget.AppCompat.Button">
+        <item name = "android:background">@drawable/button_oval</item>
+        <item name = "android:textSize">@dimen/text_medium</item>
+        <item name = "android:textColor">@color/colorWhite</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
+    <style name ="EditTextPrimary">
+        <item name = "android:background">@drawable/edittext_rounded</item>
+        <item name = "android:textSize">@dimen/text_medium</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
+
 </resources>
