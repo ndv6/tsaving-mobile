@@ -7,11 +7,15 @@ import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_transfer.*
-import java.lang.StringBuilder
+import java.text.DecimalFormat
 import java.text.NumberFormat
+import java.util.*
 
 class TransferActivity: Activity() {
     lateinit var et_amount: EditText
+
+    var formatter: DecimalFormat = DecimalFormat("#,###,###")
+    var yourFormattedString: String = formatter.format(100000)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transfer)
@@ -37,8 +41,20 @@ class TransferActivity: Activity() {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            //will implemented soon
+            et_amount.removeTextChangedListener(this);
+            val stringAmount = s.toString()
+            et_amount.setText(stringAmount.formatDecimal())
+            et_amount.addTextChangedListener(this)
+            et_amount.setSelection(et_amount.getText().toString().length);
         }
+
     }
 
+}
+fun String.formatDecimal() : String{
+    var stringAmount = this.replace(",", "")
+    if(stringAmount.length > 3){
+        stringAmount = NumberFormat.getNumberInstance(Locale.getDefault()).format(stringAmount.toDouble())
+    }
+    return stringAmount
 }
