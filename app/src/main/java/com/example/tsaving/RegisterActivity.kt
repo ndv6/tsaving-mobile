@@ -11,14 +11,14 @@ class RegisterActivity: Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register)
 
-        getWindow().setFlags(
-            WindowManager.LayoutParams.FLAG_FULLSCREEN,
-            WindowManager.LayoutParams.FLAG_FULLSCREEN);
-
         tv_register_signin.setOnClickListener {
             val intent = Intent(this, LoginActivity::class.java)
             startActivity(intent)
             finish()
+        }
+
+        btn_register_signup.setOnClickListener {
+            startActivity(Intent(this@RegisterActivity, OTPActivity::class.java))
         }
     }
 }
