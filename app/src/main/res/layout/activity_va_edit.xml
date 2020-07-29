@@ -152,7 +152,7 @@
         />
 
     <Button
-        android:id="@+id/btn_vae_submit"
+        android:id="@+id/btn_vae_save"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text = "SAVE"
