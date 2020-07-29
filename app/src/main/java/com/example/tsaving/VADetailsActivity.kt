@@ -10,6 +10,10 @@ class VADetailsActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_details)
 
+        btn_vad_edit.setOnClickListener {
+            val intent = Intent(this, EditVaActivity::class.java)
+            startActivity(intent)
+        }
         btn_vad_addbalance.setOnClickListener {
             val intent = Intent(this, TransferActivity::class.java)
             startActivity(intent)
