@@ -1,31 +1,44 @@
 package com.example.tsaving
 
-import android.app.Activity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.widget.EditText
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
+import com.example.tsaving.vm.TransferViewModel
 import kotlinx.android.synthetic.main.activity_transfer.*
-import java.text.DecimalFormat
 import java.text.NumberFormat
 import java.util.*
 
-class TransferActivity: Activity() {
+class TransferActivity: AppCompatActivity(), LifecycleOwner {
     lateinit var et_amount: EditText
 
-    var formatter: DecimalFormat = DecimalFormat("#,###,###")
-    var yourFormattedString: String = formatter.format(100000)
+    private val transferViewModel : TransferViewModel = TransferViewModel()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_transfer)
         et_amount = findViewById(R.id.et_tf_amount_input)
         et_amount.addTextChangedListener(textWatcher)
+        lifecycle.addObserver(transferViewModel)
+
+        //adding oncreate event from model
+        transferViewModel.apply {
+            labelFrom.observe(this@TransferActivity, Observer { tv_tf_from_name.text = it })
+            numFrom.observe(this@TransferActivity, Observer { tv_tf_from_num.text = it })
+            labelTo.observe(this@TransferActivity, Observer { tv_tf_to_name.text = it })
+            numTo.observe(this@TransferActivity, Observer { tv_to_tf_num.text = it })
+        }
+
         //logic for submit transfer
         btn_tf_transfer.setOnClickListener {
             val amount = et_tf_amount_input.text.toString()
-            if(amount.isBlank()){
-                Toast.makeText(applicationContext,"Please Input The Amount", Toast.LENGTH_SHORT).show()
+            val checkAmount = transferViewModel.validateTransfer(amount)
+            if(!checkAmount){
+                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
             } else{
                 Toast.makeText(applicationContext,"Good To Go", Toast.LENGTH_SHORT).show()
             }
@@ -35,6 +48,7 @@ class TransferActivity: Activity() {
         }
     } //end override
 
+    //add event when typing money give auto thousand separator
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }
