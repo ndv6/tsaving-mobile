@@ -60,7 +60,7 @@ interface WebServices {
     suspend fun updateVa(@Path("va_num") vaNum: String)
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
-    suspend fun transferVaToMainAccount()
+    suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
 
     @POST(DELETE_VA)
     suspend fun deleteVa(@Path("va_num") vaNum: String)
