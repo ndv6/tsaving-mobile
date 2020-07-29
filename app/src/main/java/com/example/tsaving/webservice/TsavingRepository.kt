@@ -20,5 +20,4 @@ class TsavingRepository {
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
     suspend fun listTransactionHistory(page: Int) = webService.listTransactionHistory(page)
     suspend fun sendEmail() = webService.sendEmail()
-
 }

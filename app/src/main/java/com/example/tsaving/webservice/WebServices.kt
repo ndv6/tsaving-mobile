@@ -7,6 +7,10 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 
+const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMDE6MTY6NDQuMDU3MjI5KzA3OjAwIn0.YtcQp_0IxXNR4wseH90hZqBtC33ro8YRB66koK2Le-k"
+const val contentType = "Content-Type: application/json"
+const val accept = "Accept: application/json"
+
 interface WebServices {
     companion object {
         const val LOGIN = "login"
@@ -41,6 +45,7 @@ interface WebServices {
     @PUT(UPDATE_PROFILE)
     suspend fun updateProfile()
 
+    @Headers(jwtAuth, contentType, accept)
     @GET(DASHBOARD)
     suspend fun dashboard() : ResponseModel
 

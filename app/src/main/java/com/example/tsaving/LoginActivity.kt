@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -31,11 +32,12 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             var repo: TsavingRepository = TsavingRepository()
 
             //please change email & passwordnya from edit text then delete this comment
-            var request: LoginRequestModel = LoginRequestModel("asdf@gmail.com", "testing")
+            var request: LoginRequestModel = LoginRequestModel("vcvcvc@gmail.com", "vcvcvc")
 
             lifecycleScope.launch {
                 try {
                     val result = withContext(Dispatchers.IO) { repo.login(request) }
+                    Log.i("result", result.toString())
                 } catch (t: Throwable) {
                     when (t) {
                         is IOException -> {
@@ -49,7 +51,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
                             val errMsg = t.response().toString()
                             Toast.makeText(
                                 this@LoginActivity,
-                                "httpError" + code + errMsg,
+                                "httpError $code $errMsg",
                                 Toast.LENGTH_SHORT
                             )
                                 .show()
