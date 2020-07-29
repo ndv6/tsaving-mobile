@@ -42,7 +42,7 @@ interface WebServices {
     suspend fun updateProfile()
 
     @GET(DASHBOARD)
-    suspend fun dashboard()
+    suspend fun dashboard() : ResponseModel
 
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()
@@ -72,11 +72,11 @@ interface WebServices {
     suspend fun sendEmail()
 }
 
+//singleton
 val webServices: WebServices by lazy {
     Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8000/")
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(WebServices::class.java)
-
 }
