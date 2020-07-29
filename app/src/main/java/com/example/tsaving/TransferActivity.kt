@@ -57,18 +57,11 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             et_amount.removeTextChangedListener(this);
             val stringAmount = s.toString()
-            et_amount.setText(stringAmount.formatDecimal())
+            et_amount.setText(stringAmount.FormatDecimal())
             et_amount.addTextChangedListener(this)
             et_amount.setSelection(et_amount.getText().toString().length);
         }
 
     }
 
-}
-fun String.formatDecimal() : String{
-    var stringAmount = this.replace(",", "")
-    if(stringAmount.length > 3){
-        stringAmount = NumberFormat.getNumberInstance(Locale.getDefault()).format(stringAmount.toDouble())
-    }
-    return stringAmount
 }

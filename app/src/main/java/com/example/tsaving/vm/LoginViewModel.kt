@@ -2,7 +2,7 @@ package com.example.tsaving.vm
 
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.ViewModel
-import com.example.tsaving.isEmailValid
+import com.example.tsaving.IsEmailValid
 import java.util.regex.Pattern.compile
 
 class LoginViewModel : ViewModel(), LifecycleObserver {
@@ -11,7 +11,7 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
         var res = 0
         if(email.isBlank() || password.isBlank()){
             res = 1
-        }else if(!email.isEmailValid()){
+        }else if(!email.IsEmailValid()){
             res = 2
         }
         return res
