@@ -5,24 +5,25 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
-class DialogHandling : Activity() {
+class ErrorDialogHandling(ctx: Context, title: String, message: String) {
 
-//    DialogHandling().basicAlert(this@TransferActivity, "title", "message", "btn_txt")
-
+    val ctx = ctx
+    val title = title
+    val message = message
 
     val positiveButtonClick = { dialog: DialogInterface, which: Int ->
-
+        //aksi yg mau dilakukan setelah button di klik
+        //refetch api
     }
 
-    fun basicAlert(ctx: Context, title: String, message: String, button: String){
+    fun errorResponseDialog(){
         val builder = AlertDialog.Builder(ctx)
         with(builder)
         {
             setTitle(title)
             setMessage(message)
-            setPositiveButton(button, DialogInterface.OnClickListener(function = positiveButtonClick))
+            setPositiveButton("REFRESH", DialogInterface.OnClickListener(function = positiveButtonClick))
             show()
         }
     }
-
 }
