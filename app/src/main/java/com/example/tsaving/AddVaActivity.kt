@@ -16,7 +16,6 @@ class AddVaActivity: Activity() {
 
         btn_addva_submit.setOnClickListener{
             val label = et_addva_label.text.toString()
-//            val color = spinner_color.
 
             if (label.isEmpty()){
                 Toast.makeText(applicationContext,"Please input data", Toast.LENGTH_SHORT).show()
