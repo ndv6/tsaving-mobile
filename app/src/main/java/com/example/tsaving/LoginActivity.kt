@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -21,7 +22,6 @@ class LoginActivity: AppCompatActivity(), LifecycleOwner {
 
         btn_login_signin.setOnClickListener {
             val statusLogin = loginViewModel.validateLogin(et_login_email.text.toString(), et_login_password.text.toString())
-//            println(status)
             if(statusLogin == 1){
                 DialogHandling().basicAlert(this@LoginActivity, "Notification", "Please Input Email & Password", "Close")
             }
@@ -34,5 +34,9 @@ class LoginActivity: AppCompatActivity(), LifecycleOwner {
             }
         }
     }
+}
+
+fun String.isEmailValid(): Boolean {
+    return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
 
