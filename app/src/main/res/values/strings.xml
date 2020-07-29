@@ -4,7 +4,6 @@
 <!--    drawer menu-->
     <string name="menu_home">Home</string>
     <string name="menu_profile">Profile</string>
-    <string name="menu_edit_profile">Edit Profile</string>
     <string name="menu_create_va">Create Virtual Account</string>
     <string name="menu_history">Transaction History</string>
     <string name="menu_logout">Log Out</string>
