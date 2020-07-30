@@ -5,25 +5,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.sql.Time
+import com.example.tsaving.model.TransactionHistoryResponseBody
 
 class TransactionHistoryAdapter :
     RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
 
-    data class TransactionHistory(
-        var accountNum: String,
-        var tranAmount: Int,
-        var destAccount: String,
-        var fromAccount: String,
-        var description: String,
-        var createdAt: Time
-    )
-
-    var transactionHistoryList: MutableList<TransactionHistory> = mutableListOf()
+    var transactionHistoryList: List<TransactionHistoryResponseBody> = listOf()
 
     class TransactionHistoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindData(position: TransactionHistory) {
-            val accountNum = view.findViewById<TextView>(R.id.tv_transaction_history_account_num)
+        fun bindData(position: TransactionHistoryResponseBody) {
             val tranAmt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_tran_amount)
             val destAccount =
@@ -34,9 +24,8 @@ class TransactionHistoryAdapter :
             val createdAt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_created_at)
 
-            accountNum.text = position.accountNum
-            tranAmt.text = position.tranAmount.toString()
-            destAccount.text = position.destAccount
+            tranAmt.text = position.transferAmount.toString()
+            destAccount.text = position.destinationAccount
             fromAccount.text = position.fromAccount
             desc.text = position.description
             createdAt.text = position.createdAt.toString()
@@ -48,7 +37,7 @@ class TransactionHistoryAdapter :
         viewType: Int
     ): TransactionHistoryViewHolder {
         val viewItem =
-            LayoutInflater.from(parent.context).inflate(R.layout.transaction_history, null)
+            LayoutInflater.from(parent.context).inflate(R.layout.transaction_history_item, null)
         return TransactionHistoryViewHolder(viewItem)
     }
 

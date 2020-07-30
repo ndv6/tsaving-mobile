@@ -90,8 +90,8 @@ interface WebServices {
     @POST(DELETE_VA)
     suspend fun deleteVa(@Path("va_num") vaNum: String)
 
-    @DELETE(LIST_TRANSACTION_HISTORY)
-    suspend fun listTransactionHistory(@Path("page") page: Int)
+    @GET(LIST_TRANSACTION_HISTORY)
+    suspend fun listTransactionHistory(@Path("page") page: Int): ResponseModelList
 
     @POST(SEND_EMAIL)
     suspend fun sendEmail(@Body body: SendMailRequest) : GenericResponseModel<Any>

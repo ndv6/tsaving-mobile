@@ -7,24 +7,14 @@
     >
 
     <TextView
-        android:id="@+id/tv_transaction_history_title"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:gravity="center_horizontal"
-        android:text="Transaction History"
-        android:textSize="30sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
         android:id="@+id/tv_transaction_history_account_num"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_title" />
+        app:layout_constraintTop_toTopOf="parent
+" />
 
     <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
         android:id="@+id/srl_transaction_history"
