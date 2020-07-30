@@ -7,6 +7,9 @@ import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.UpdatePasswordRequestModel
+import com.example.tsaving.model.response.UpdatePasswordResponseModel
+import com.example.tsaving.vm.UpdatePasswordViewModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
@@ -29,6 +32,7 @@ interface WebServices {
         const val VIEW_PROFILE = "me/profile"
         const val UPDATE_PHOTO = "me/update-photo"
         const val UPDATE_PROFILE = "me/update"
+        const val UPDATE_PASSWORD = "me/update-password"
         const val TRANSFER_VA = "me/transfer-va"
         const val LIST_VA = "me/va"
         const val CREATE_VA = "me/va/create"
@@ -37,6 +41,7 @@ interface WebServices {
         const val DELETE_VA = "me/va/{va_num}"
         const val LIST_TRANSACTION_HISTORY = "me/transaction/{page}"
         const val SEND_EMAIL = "sendMail"
+
     }
 
     @POST(REGISTER)
@@ -53,6 +58,9 @@ interface WebServices {
 
     @PUT(UPDATE_PROFILE)
     suspend fun updateProfile()
+
+    @PATCH(UPDATE_PASSWORD)
+    suspend fun  updatePassword(@Body body: UpdatePasswordRequestModel): UpdatePasswordResponseModel
 
 //    @Headers(jwtAuth, contentType, accept)
     @GET(DASHBOARD)
