@@ -25,7 +25,8 @@ class LoginActivity: AppCompatActivity(), LifecycleOwner {
                     errorName: ErrorName ->
                     when (errorName){
                         ErrorName.NullEmail ->{
-                            DialogHandling().basicAlert(this@LoginActivity, "Notification", "Please Input Email", "Close")
+                            layout_login_email.setError("Please Input Email")
+//                            DialogHandling().basicAlert(this@LoginActivity, "Notification", "Please Input Email", "Close")
                         }
                         ErrorName.NullPassword ->{
                             DialogHandling().basicAlert(this@LoginActivity, "Notification", "Please Input Password", "Close")
@@ -42,16 +43,6 @@ class LoginActivity: AppCompatActivity(), LifecycleOwner {
                 Toast.makeText(applicationContext, "Login Success", Toast.LENGTH_SHORT).show()
                 startActivity(Intent(this@LoginActivity, MainActivity::class.java))
             }
-
-//            if(statusLogin == 1){
-//                DialogHandling().basicAlert(this@LoginActivity, "Notification", "Please Input Email & Password", "Close")
-//            }
-//            else if(statusLogin == 2){
-//                DialogHandling().basicAlert(this@LoginActivity, "Notification", "Invalid Email Format", "Close")
-//            }
-//            else{
-//
-//            }
         }
     }
 }
