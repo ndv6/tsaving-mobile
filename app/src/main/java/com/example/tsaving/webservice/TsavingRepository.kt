@@ -1,13 +1,14 @@
 package com.example.tsaving.webservice
 
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.VerifyRequestModel
 
 class TsavingRepository {
     private var webService: WebServices = webServices
 
     suspend fun register() = webService.register()
     suspend fun login(body: LoginRequestModel) = webService.login(body)
-    suspend fun verifyAccount() = webService.verifyAccount()
+    suspend fun verifyAccount(body: VerifyRequestModel) = webService.verifyAccount(body)
     suspend fun viewProfile() = webService.viewProfile()
     suspend fun updateProfile() = webService.updateProfile()
     suspend fun dashboard() = webService.dashboard()
