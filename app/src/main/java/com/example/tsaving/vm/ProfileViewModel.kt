@@ -3,35 +3,35 @@ package com.example.tsaving.vm
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import com.example.tsaving.model.response.ProfileResponseModel
+import com.example.tsaving.webservice.TsavingRepository
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
+import kotlin.coroutines.CoroutineContext
 
-class ProfileViewModel : ViewModel(), LifecycleObserver {
-    var accNum: String = "2007160004"
+class ProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), CoroutineScope, LifecycleObserver {
+    private var job: Job = Job()
+    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
-    private val _name = MutableLiveData<String>()
-    val name: LiveData<String> = _name
+    private val _data = MutableLiveData<ProfileResponseModel>()
+    val data: LiveData<ProfileResponseModel> = _data
 
-    private val _email = MutableLiveData<String>()
-    val email: LiveData<String> = _email
-
-    private val _isVerified = MutableLiveData<Boolean>()
-    val isVerified: LiveData<Boolean> = _isVerified
-
-    private val _phone = MutableLiveData<String>()
-    val phone: LiveData<String> = _phone
-
-    private val _address = MutableLiveData<String>()
-    val address: LiveData<String> = _address
-
-    init {
-        _name.value = "Init Sukirman"
-        _email.value = "initsukirman@sukijan.com"
-        _isVerified.value = false
-        _phone.value = "085252525252"
-        _address.value = "Init Jalan Mega Kuningan"
+    @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
+    private fun fetchDashboardData() {
+        viewModelScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {tsRepo.viewProfile()}
+                Log.i("ProfileViewModel", result.toString())
+                if (result.status == "SUCCESS") {
+                    _data.value = result
+                }
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> println(t.message)
+                    is HttpException -> println(t.message)
+                }
+            }
+        }
     }
 }
