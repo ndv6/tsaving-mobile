@@ -115,7 +115,6 @@ class UnauthInterceptor (val ctx: Context) : Interceptor {
 
 val ohc = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build()
 
-
 //singleton
 val webServices: WebServices by lazy {
     Retrofit.Builder()
