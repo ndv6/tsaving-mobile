@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.webservice.TsavingRepository
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
@@ -28,8 +27,10 @@ class OTPViewModel : ViewModel(),
                 try {
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
                     if (result.status == "SUCCESS") {
+                        _error.setValue(null)
                         isValid.setValue(true)
                     }
+                    return@launch
                 } catch (t: Throwable) {
                     when (t) {
                         is IOException -> {
