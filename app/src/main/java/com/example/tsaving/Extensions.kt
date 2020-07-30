@@ -33,6 +33,8 @@ sealed class ErrorName{
     object NullEmail : ErrorName()
     object NullPassword : ErrorName()
     object InvalidEmail : ErrorName()
+    object ErrorNetwork : ErrorName()
+    object ErrorBadRequest : ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{
