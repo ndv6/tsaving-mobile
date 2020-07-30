@@ -9,11 +9,21 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.TransferViewModel
+import androidx.lifecycle.lifecycleScope
+import com.example.tsaving.vm.OTPViewModel
+import kotlinx.android.synthetic.main.verify_email.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 import kotlinx.android.synthetic.main.activity_transfer.*
-import java.text.NumberFormat
-import java.util.*
 
-class TransferActivity: AppCompatActivity(), LifecycleOwner {
+
+class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
+
+    lateinit var job : Job
+    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
+
     lateinit var et_amount: EditText
 
     private val transferViewModel = TransferViewModel()
@@ -25,8 +35,10 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         et_amount.addTextChangedListener(textWatcher)
         lifecycle.addObserver(transferViewModel)
 
+        job = Job()
         //adding oncreate event from model
         transferViewModel.apply {
+            _statusTransfer.observe(this@TransferActivity, Observer { statusTransfer })
             labelFrom.observe(this@TransferActivity, Observer { tv_tf_from_name.text = it })
             numFrom.observe(this@TransferActivity, Observer { tv_tf_from_num.text = it })
             labelTo.observe(this@TransferActivity, Observer { tv_tf_to_name.text = it })
@@ -37,10 +49,25 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         btn_tf_transfer.setOnClickListener {
             val checkAmount = transferViewModel.validateTransfer(et_tf_amount_input.text.toString())
             if(!checkAmount){
-                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
+                layout_tf_amout.setError("Please Input Amount")
+//                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
             } else{
-                Toast.makeText(applicationContext,"Good To Go", Toast.LENGTH_SHORT).show()
+                layout_tf_amout.setError(null)
+                transferViewModel.apiTransferToVa("2007307563001", 5000)
+                val statusTf = transferViewModel.statusTransfer
+                if(statusTf.value == true){
+//                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Success", "Close")
+                    finish()
+                    startActivity(getIntent())
+                    Toast.makeText(this,"Transfer Success", Toast.LENGTH_SHORT).show()
+                }else{
+                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
+                }
             }
+
+
+
+
         }
         btn_tf_back.setOnClickListener {
             finish()
@@ -54,6 +81,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
         }
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            layout_tf_amout.setError(null)
             et_amount.removeTextChangedListener(this);
             val stringAmount = s.toString()
             et_amount.setText(stringAmount.FormatDecimal())

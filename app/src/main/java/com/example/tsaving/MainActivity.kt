@@ -51,9 +51,6 @@ class MainActivity: AppCompatActivity() {
             R.id.nav_drawer_profile -> {
                 fragment = (ProfileFragment::class.java).newInstance()
             }
-            R.id.nav_drawer_edit_profile -> {
-                fragment = (EditProfileFragment::class.java).newInstance()
-            }
             R.id.nav_drawer_create_va -> {
                 fragment = (AddVaFragment::class.java).newInstance()
             }

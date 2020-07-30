@@ -3,9 +3,7 @@ package com.example.tsaving
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
-import android.view.View
 import android.widget.EditText
-import android.widget.TextView
 import java.text.NumberFormat
 import java.util.*
 
@@ -13,7 +11,6 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
     addTextChangedListener(object : TextWatcher{
         override fun afterTextChanged(editable: Editable?) {
             afterText(editable?.toString() ?: "")
-
         }
         override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
             //Not yet implemented
@@ -49,3 +46,4 @@ fun String.FormatDecimal() : String{
 fun String.IsEmailValid(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
+
