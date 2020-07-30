@@ -20,7 +20,12 @@ class DashboardRecyclerViewAdapter: RecyclerView.Adapter<DashboardRecyclerViewAd
             tvLabel.text = va.vaLabel
             tvBalance.text = va.vaBalance.toString()
             btnVaDetail.setOnClickListener {
-                view.context.startActivity(Intent(view.context, VADetailsActivity::class.java))
+                val intent = Intent(view.context, VADetailsActivity::class.java)
+                intent.putExtra("va_label", va.vaLabel)
+                intent.putExtra("va_accnum", va.accountNum)
+                intent.putExtra("va_balance", va.vaBalance)
+                intent.putExtra("va_color", va.vaColor)
+                view.context.startActivity(intent)
             }
         }
     }

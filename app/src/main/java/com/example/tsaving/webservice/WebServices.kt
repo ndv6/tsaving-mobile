@@ -93,7 +93,7 @@ class HeaderInterceptor: Interceptor {
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
-            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTI6NTc6MzguOTkyOTA5KzA3OjAwIn0.gqGeZmIniWQ1ser3u8JEAAsyFs1u4MUmPeDSMZlKTCQ")
+            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxLCJhY2NvdW50X251bSI6IjIwMDcyMzM0MjAiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQxODowNjowOS42NTExMjQrMDc6MDAifQ.imke3EHLU4YZFNqmLmWcu1-TN2Gm_xl4wB4g0pWJ7J0")
             .build()
         return chain.proceed(req)
     }
