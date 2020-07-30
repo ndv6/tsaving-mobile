@@ -7,15 +7,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.LifecycleOwner
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.VirtualAccount
+import com.example.tsaving.vm.DashboardViewModel
+import com.example.tsaving.webservice.TsavingRepository
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_dashboard.*
 import java.util.*
 
-class DashboardFragment : androidx.fragment.app.Fragment() {
+
+
+class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
+    private var dashboardViewModel: DashboardViewModel = DashboardViewModel(TsavingRepository())
     val dashboardAdapter = DashboardRecyclerViewAdapter()
-    val dummyVa = VirtualAccount(1, "23412343", "32472984729", 50000, "Blue", "House", Calendar.getInstance().time, Calendar.getInstance().time)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,14 +32,23 @@ class DashboardFragment : androidx.fragment.app.Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycle.addObserver(dashboardViewModel)
+
+        dashboardViewModel.apply {
+            data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
+                tv_dashboard_name.text = it.data.cust_name
+                tv_dashboard_email.text = it.data.cust_email
+                tv_dashboard_acc_num.text = it.data.account_num
+                tv_dashboard_acc_balance.text = it.data.account_balance.toString()
+                dashboardAdapter.vaList = it.data.virtual_accounts
+            })
+        }
+
         civ_dashboard.setOnClickListener{
             fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
         }
-
         rv_dashboard_va_list.adapter = dashboardAdapter
         rv_dashboard_va_list.layoutManager = LinearLayoutManager(context)
-
-        dashboardAdapter.vaList.add(dummyVa)
 
         super.onViewCreated(view, savedInstanceState)
     }
