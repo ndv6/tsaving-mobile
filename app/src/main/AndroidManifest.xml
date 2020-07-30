@@ -13,7 +13,7 @@
         android:supportsRtl="true"
         android:name=".BaseApplication"
         android:theme="@style/AppTheme">
-        <activity android:name=".LoginActivity">
+        <activity android:name=".EditVaActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,7 +26,7 @@
         <activity android:name=".OTPActivity"/>
         <activity android:name=".VADetailsActivity"/>
         <activity android:name=".UpdatePasswordActivity" />
-        <activity android:name=".EditVaActivity"/>
+        <activity android:name=".LoginActivity"/>
     </application>
 
 </manifest>

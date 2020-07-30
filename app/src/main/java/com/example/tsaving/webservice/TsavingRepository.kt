@@ -1,5 +1,6 @@
 package com.example.tsaving.webservice
 
+import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
 
@@ -16,7 +17,7 @@ class TsavingRepository {
     suspend fun transferVa() = webService.transferToVa()
     suspend fun listVa() = webService.listVa()
     suspend fun createVa() = webService.createVa()
-    suspend fun updateVa(vaNum: String) = webService.updateVa(vaNum)
+    suspend fun updateVa(vaNum: String, body: EditVaRequestModel) = webService.updateVa(vaNum, body)
     suspend fun transferVaToMainAccount(vaNum: String) = webService.transferVaToMainAccount(vaNum)
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
     suspend fun listTransactionHistory(page: Int) = webService.listTransactionHistory(page)

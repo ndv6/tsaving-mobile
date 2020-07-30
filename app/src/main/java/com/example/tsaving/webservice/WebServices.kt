@@ -5,12 +5,14 @@ import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.ResponseModel
+import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -71,7 +73,7 @@ interface WebServices {
     suspend fun createVa()
 
     @PUT(UPDATE_VA)
-    suspend fun updateVa(@Path("va_num") vaNum: String)
+    suspend fun updateVa(@Path("va_num") vaNum: String, @Body body:EditVaRequestModel) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
@@ -93,7 +95,7 @@ class HeaderInterceptor: Interceptor {
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
-            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTI6NTc6MzguOTkyOTA5KzA3OjAwIn0.gqGeZmIniWQ1ser3u8JEAAsyFs1u4MUmPeDSMZlKTCQ")
+            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxLCJhY2NvdW50X251bSI6IjIwMDczMDE4NzYiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMDo0NDoxNy45NjA3NjMrMDc6MDAifQ.sTkk_OA2hf_olFaxlX6wtrSerCNO___5IREWV3L13_Q")
             .build()
         return chain.proceed(req)
     }
