@@ -1,6 +1,7 @@
 package com.example.tsaving.webservice
 
 import com.example.tsaving.model.ResponseModel
+import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -54,7 +55,7 @@ interface WebServices {
     suspend fun listVa()
 
     @POST(CREATE_VA)
-    suspend fun createVa()
+    suspend fun createVa(@Body body:AddVaRequestModel): AddVaResponseModel
 
     @PUT(UPDATE_VA)
     suspend fun updateVa(@Path("va_num") vaNum: String)
@@ -78,5 +79,4 @@ val webServices: WebServices by lazy {
         .addConverterFactory(GsonConverterFactory.create())
         .build()
         .create(WebServices::class.java)
-
 }

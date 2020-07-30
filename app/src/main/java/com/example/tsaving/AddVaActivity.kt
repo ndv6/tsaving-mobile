@@ -1,15 +1,14 @@
 package com.example.tsaving
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
-import androidx.fragment.app.Fragment
 import com.example.tsaving.vm.AddVaViewModel
 import kotlinx.android.synthetic.main.activity_add_va.*
+
 
 class AddVaFragment: androidx.fragment.app.Fragment() {
     private val addVaViewModel : AddVaViewModel = AddVaViewModel()
@@ -24,17 +23,21 @@ class AddVaFragment: androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        btn_addva_back.setOnClickListener{
-////            fragmentManager?.beginTransaction()?.replace(R.id.flContent, DashboardFragment())?.commit()
-////        }
+//            fragmentManager?.beginTransaction()?.replace(R.id.flContent, DashboardFragment())?.commit()
+//        }
+        val label = et_addva_label.text.toString()
+
 
         btn_addva_submit.setOnClickListener{
-            val label = et_addva_label.text.toString()
+
+
             val status = addVaViewModel.validateAddVa(label)
             if(!status){
-                Toast.makeText(context,"Please input data", Toast.LENGTH_SHORT).show()
+                layout_addva_label.setError("Please fill this field")
             }
             else{
                 fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
+
             }
         }
 
