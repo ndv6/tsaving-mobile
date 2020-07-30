@@ -1,6 +1,5 @@
 package com.example.tsaving.vm
 
-import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.webservice.TsavingRepository
@@ -16,13 +15,12 @@ class OTPViewModel : ViewModel(),
     var _error  = MutableLiveData<String>()
     var isValid = MutableLiveData<Boolean>()
 
-    fun onValidate(otp: String) {
+    fun onValidate(otp: String, email: String) {
         if (otp.isBlank()) {
-            _error.value = "OTP can not be empty"
+            _error.value = "OTP can not be blank"
             isValid.value = false
         } else {
-//            TODO : get token and email from view
-            var request = VerifyRequestModel("testing", "testing@apa.com")
+            var request = VerifyRequestModel(otp, email)
             viewModelScope.launch{
                 try {
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
@@ -40,7 +38,7 @@ class OTPViewModel : ViewModel(),
                         is HttpException -> {
                             val code = t.code()
                             val errMsg = t.response().toString()
-                            _error.setValue("HTTP Error $code $errMsg")
+                            _error.setValue("HTTP Error: $errMsg")
                             isValid.setValue(false)
                         }
                     }

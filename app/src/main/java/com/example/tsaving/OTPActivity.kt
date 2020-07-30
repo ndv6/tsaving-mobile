@@ -50,9 +50,11 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         })
 
         btn_otp_send.setOnClickListener {
-            otpViewModel.onValidate(et_otp_token.text.toString())
+            val cust_email = intent.getStringExtra("cust_email").toString()
+            otpViewModel.onValidate(et_otp_token.text.toString(), cust_email)
             val valid = otpViewModel.isValid
             val errorMsg = otpViewModel._error.value
+
             if (valid.value == false) {
                 layout_otp_token.setError(errorMsg)
             } else {
