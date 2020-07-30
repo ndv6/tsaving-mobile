@@ -9,15 +9,26 @@ import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.vm.EditVaViewModel
 import kotlinx.android.synthetic.main.activity_va_edit.*
+import kotlinx.coroutines.CoroutineScope
 
-class EditVaActivity: AppCompatActivity(), LifecycleOwner {
+class EditVaActivity: AppCompatActivity(), CoroutineScope {
 
     private val editVaViewModel : EditVaViewModel = EditVaViewModel()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_edit)
         lifecycle.addObserver(editVaViewModel)
+
+        var vaNum = intent.getStringExtra("va_num")
+        tv_vae_num.text = vaNum
+
+//        editVaViewModel.apply {
+//            data.observe(this@EditVaActivity, androidx.lifecycle.Observer {
+//            }
+//        }
+
 
         btn_vae_save.setOnClickListener {
             val label = et_vae_label.text.toString()
