@@ -11,5 +11,6 @@ data class DashboardResponse (
     val cust_email: String,
     val account_num: String,
     val account_balance: Int,
-    val virtual_accounts: List<VirtualAccount>
+    val virtual_accounts: List<VirtualAccount>,
+    val message: String
 )

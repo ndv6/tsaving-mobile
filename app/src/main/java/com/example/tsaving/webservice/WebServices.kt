@@ -2,7 +2,6 @@ package com.example.tsaving.webservice
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.ResponseModel
@@ -10,7 +9,8 @@ import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import okhttp3.internal.connection.ConnectInterceptor
+import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -46,7 +46,7 @@ interface WebServices {
     suspend fun login(@Body body: LoginRequestModel): ResponseModel
 
     @POST(VERIFY_ACCOUNT)
-    suspend fun verifyAccount()
+    suspend fun verifyAccount(@Body body: VerifyRequestModel): VerifyAccountResponseModel
 
     @GET(VIEW_PROFILE)
     suspend fun viewProfile()
