@@ -15,15 +15,11 @@ import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.webservice.TsavingRepository
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
 import java.util.*
-import kotlin.coroutines.CoroutineContext
 
-class DashboardFragment() : androidx.fragment.app.Fragment(), CoroutineScope, LifecycleOwner {
-    var job: Job = Job()
-    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
+
+
+class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
     private var dashboardViewModel: DashboardViewModel = DashboardViewModel(TsavingRepository())
     val dashboardAdapter = DashboardRecyclerViewAdapter()
 
@@ -32,11 +28,12 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), CoroutineScope, Li
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        lifecycle.addObserver(dashboardViewModel)
         return inflater.inflate(R.layout.activity_dashboard, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        lifecycle.addObserver(dashboardViewModel)
+
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
                 tv_dashboard_name.text = it.data.cust_name

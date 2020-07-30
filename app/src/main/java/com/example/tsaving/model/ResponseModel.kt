@@ -6,7 +6,7 @@ data class ResponseModel(
     val data: DashboardResponse
 )
 
-data class DashboardResponse(
+data class DashboardResponse (
     val cust_name: String,
     val cust_email: String,
     val account_num: String,

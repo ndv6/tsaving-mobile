@@ -32,7 +32,8 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             var repo: TsavingRepository = TsavingRepository()
 
             //please change email & passwordnya from edit text then delete this comment
-            var request: LoginRequestModel = LoginRequestModel("vcvcvc@gmail.com", "vcvcvc")
+            var request: LoginRequestModel = LoginRequestModel("vc@gmail.com", "vcvcvc")
+            Log.i("login req :", request.toString())
 
             lifecycleScope.launch {
                 try {
@@ -49,6 +50,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
                             //Please change this to handle error with Sekar's dialog box then delete this comment
                             val code = t.code()
                             val errMsg = t.response().toString()
+                            Log.i("login error message", t.response().toString())
                             Toast.makeText(
                                 this@LoginActivity,
                                 "httpError $code $errMsg",

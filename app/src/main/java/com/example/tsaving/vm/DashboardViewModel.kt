@@ -5,19 +5,24 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.webservice.TsavingRepository
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.coroutines.*
 import retrofit2.HttpException
 import retrofit2.Response
 import java.io.IOException
+import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 
-class DashboardViewModel (private val tsRepo: TsavingRepository): ViewModel(), LifecycleObserver {
-    var _data = MutableLiveData<ResponseModel>()
+class DashboardViewModel (private val tsRepo: TsavingRepository): ViewModel(),
+    CoroutineScope, LifecycleObserver {
+    private var job: Job = Job()
+    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
+    private var _data = MutableLiveData<ResponseModel>()
     var data : LiveData<ResponseModel> = _data
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    fun fetchDashboardData() {
+    private fun fetchDashboardData() {
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {tsRepo.dashboard()}
@@ -31,4 +36,4 @@ class DashboardViewModel (private val tsRepo: TsavingRepository): ViewModel(), L
             }
         }
     }
-}
+    }
