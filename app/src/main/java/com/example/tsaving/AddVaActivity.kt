@@ -3,14 +3,17 @@ package com.example.tsaving
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.vm.AddVaViewModel
 import kotlinx.android.synthetic.main.activity_add_va.*
 
 
-class AddVaFragment: androidx.fragment.app.Fragment() {
+class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
     private val addVaViewModel: AddVaViewModel = AddVaViewModel()
 
     override fun onCreateView(
@@ -25,19 +28,26 @@ class AddVaFragment: androidx.fragment.app.Fragment() {
 //        btn_addva_back.setOnClickListener{
 //            fragmentManager?.beginTransaction()?.replace(R.id.flContent, DashboardFragment())?.commit()
 //        }
-        val label = et_addva_label.text.toString()
+//        lifecycle.addObserver(addVaViewModel)
 
+        addVaViewModel.errorLabel.observe(this, Observer{
+                newErrorName -> layout_addva_label.setError(newErrorName)
+        })
 
+        addVaViewModel._data.observe(this, Observer{
+            Log.i("_data observe", it.toString())
+        })
+
+        et_addva_label?.afterTextChanged {
+            layout_addva_label.setError(null)
+        }
         btn_addva_submit.setOnClickListener {
-
-
-            val status = addVaViewModel.validateAddVa(label)
-            if (!status) {
-                layout_addva_label.setError("Please fill this field")
-            } else {
-                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
-                    ?.commit()
-
+            val label = et_addva_label.text.toString()
+            addVaViewModel.validateAddVa(label)
+            if(layout_addva_label.error == null) {
+//                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
+//                    ?.commit()
+                addVaViewModel.addVaRequest()
             }
         }
 

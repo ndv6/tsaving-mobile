@@ -4,8 +4,8 @@ import com.google.gson.annotations.SerializedName
 
 data class AddVaRequestModel(
     @SerializedName("va_color")
-    val VaColor: String,
+    val va_color: String,
 
     @SerializedName("va_label")
-    val VaLabel: String
+    val va_label: String
 )

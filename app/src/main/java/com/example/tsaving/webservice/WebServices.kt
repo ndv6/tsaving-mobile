@@ -11,6 +11,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -69,7 +70,7 @@ interface WebServices {
     suspend fun listVa()
 
     @POST(CREATE_VA)
-    suspend fun createVa(@Body body:AddVaRequestModel): AddVaResponseModel
+    suspend fun createVa(@Body body:AddVaRequestModel) : AddVaResponseModel
 
     @PUT(UPDATE_VA)
     suspend fun updateVa(@Path("va_num") vaNum: String)
@@ -92,7 +93,7 @@ class HeaderInterceptor: Interceptor {
         var req = chain.request()
         req = req.newBuilder().addHeader("Content-Type", "application/json")
             .addHeader("Accept", "application/json")
-            .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTA6NTQ6NTcuMTg1MzUyKzA3OjAwIn0.TzZi9MLnlhI4DTG3CDX2gQ257KRx6DHtORasdfjdofA")
+            .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMDozNzoxOS4yODI3MTMrMDc6MDAifQ.JFZ9RaPi9tN75AWrSRcaZkZna81ClUnQgk2JilhTtec")
             .build()
         return chain.proceed(req)
     }
@@ -122,3 +123,4 @@ val webServices: WebServices by lazy {
         .build()
         .create(WebServices::class.java)
 }
+
