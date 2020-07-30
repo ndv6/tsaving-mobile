@@ -8,6 +8,7 @@ import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
@@ -19,7 +20,7 @@ import retrofit2.http.*
 
 
 const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTA6NTQ6NTcuMTg1MzUyKzA3OjAwIn0.TzZi9MLnlhI4DTG3CDX2gQ257KRx6DHtOR1026zkYuA"
+const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTM6MDg6MDkuNTQ1NzgrMDc6MDAifQ.YtDrManolqO4-VH6hf-3bzIC1qEw52uaKvq3JQF6qgU"
 const val accept = "Accept: application/json"
 
 interface WebServices {
@@ -56,7 +57,6 @@ interface WebServices {
     @PUT(UPDATE_PROFILE)
     suspend fun updateProfile()
 
-//    @Headers(jwtAuth, contentType, accept)
     @GET(DASHBOARD)
     suspend fun dashboard() : ResponseModel
 
@@ -90,10 +90,12 @@ interface WebServices {
 
 class HeaderInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
+//        set your login token
         var req = chain.request()
-        req = req.newBuilder().addHeader("Content-Type", "application/json")
-            .addHeader("Accept", "application/json")
-            .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMDozNzoxOS4yODI3MTMrMDc6MDAifQ.JFZ9RaPi9tN75AWrSRcaZkZna81ClUnQgk2JilhTtec")
+        req = req.newBuilder().header("Content-Type", "application/json")
+            .header("User-Agent", "tsaving-mobile")
+            .header("Accept", "application/json")
+            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTI6NTc6MzguOTkyOTA5KzA3OjAwIn0.gqGeZmIniWQ1ser3u8JEAAsyFs1u4MUmPeDSMZlKTCQ")
             .build()
         return chain.proceed(req)
     }
@@ -113,13 +115,14 @@ class UnauthInterceptor (val ctx: Context) : Interceptor {
     }
 }
 
+val ohc = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build()
+
 //singleton
 val webServices: WebServices by lazy {
     Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8000/")
         .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build())
-        .client(OkHttpClient.Builder().addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build())
+        .client(ohc)
         .build()
         .create(WebServices::class.java)
 }
