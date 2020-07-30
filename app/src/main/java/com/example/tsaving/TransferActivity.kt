@@ -37,8 +37,19 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
 
         job = Job()
         //adding oncreate event from model
+        //live data harus dihandle disini
+
         transferViewModel.apply {
-            _statusTransfer.observe(this@TransferActivity, Observer { statusTransfer })
+            _statusTransfer.observe(this@TransferActivity, Observer {
+                if(_statusTransfer.value == true){
+//                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Success", "Close")
+                    finish()
+                    startActivity(getIntent())
+                    Toast.makeText(this@TransferActivity,"Transfer Success", Toast.LENGTH_SHORT).show()
+                }else{
+                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
+                }
+            })
             labelFrom.observe(this@TransferActivity, Observer { tv_tf_from_name.text = it })
             numFrom.observe(this@TransferActivity, Observer { tv_tf_from_num.text = it })
             labelTo.observe(this@TransferActivity, Observer { tv_tf_to_name.text = it })
@@ -54,15 +65,8 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
             } else{
                 layout_tf_amout.setError(null)
                 transferViewModel.apiTransferToVa("2007307563001", 5000)
-                val statusTf = transferViewModel.statusTransfer
-                if(statusTf.value == true){
-//                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Success", "Close")
-                    finish()
-                    startActivity(getIntent())
-                    Toast.makeText(this,"Transfer Success", Toast.LENGTH_SHORT).show()
-                }else{
-                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
-                }
+                val statusTf = transferViewModel.statusTransfer // this is wrong bro
+
             }
 
 

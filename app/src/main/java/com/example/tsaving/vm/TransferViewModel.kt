@@ -68,6 +68,7 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
                         val errMsg = t.response().toString()
                         Log.i("login error message", t.response().toString())
                         _statusTransfer.setValue(false)
+
 //                        _flagStatus.value = ErrorName.InvalidLogin
                     }
                 }
