@@ -35,8 +35,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
 
         //logic for submit transfer
         btn_tf_transfer.setOnClickListener {
-            val amount = et_tf_amount_input.text.toString()
-            val checkAmount = transferViewModel.validateTransfer(amount)
+            val checkAmount = transferViewModel.validateTransfer(et_tf_amount_input.text.toString())
             if(!checkAmount){
                 DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
             } else{
