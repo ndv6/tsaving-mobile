@@ -11,7 +11,7 @@ import kotlinx.android.synthetic.main.activity_add_va.*
 
 
 class AddVaFragment: androidx.fragment.app.Fragment() {
-    private val addVaViewModel : AddVaViewModel = AddVaViewModel()
+    private val addVaViewModel: AddVaViewModel = AddVaViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,21 +28,19 @@ class AddVaFragment: androidx.fragment.app.Fragment() {
         val label = et_addva_label.text.toString()
 
 
-        btn_addva_submit.setOnClickListener{
+        btn_addva_submit.setOnClickListener {
 
 
             val status = addVaViewModel.validateAddVa(label)
-            if(!status){
+            if (!status) {
                 layout_addva_label.setError("Please fill this field")
-            }
-            else{
-                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
+            } else {
+                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
+                    ?.commit()
 
             }
         }
 
         super.onViewCreated(view, savedInstanceState)
     }
-
 }
-

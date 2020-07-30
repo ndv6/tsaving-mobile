@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.tsaving.model.VirtualAccount
 
 class DashboardRecyclerViewAdapter: RecyclerView.Adapter<DashboardRecyclerViewAdapter.DashboardItemHolder>() {
-    val vaList = mutableListOf<VirtualAccount>()
+    var vaList: List<VirtualAccount> = listOf<VirtualAccount>()
 
     data class DashboardItemHolder (val view: View) :RecyclerView.ViewHolder(view) {
         fun bindData(va: VirtualAccount) {
@@ -19,7 +19,6 @@ class DashboardRecyclerViewAdapter: RecyclerView.Adapter<DashboardRecyclerViewAd
             val btnVaDetail = view.findViewById<Button>(R.id.btn_item_list_va_detail)
             tvLabel.text = va.vaLabel
             tvBalance.text = va.vaBalance.toString()
-
             btnVaDetail.setOnClickListener {
                 view.context.startActivity(Intent(view.context, VADetailsActivity::class.java))
             }
