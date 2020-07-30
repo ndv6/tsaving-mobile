@@ -3,7 +3,7 @@ package com.example.tsaving.model.response
 data class VerifyAccountResponseModel(
     val status: String,
     val message: String,
-    val data: TokenResponse
+    val data: DataResponse<TokenResponse>
 )
 
 data class TokenResponse (

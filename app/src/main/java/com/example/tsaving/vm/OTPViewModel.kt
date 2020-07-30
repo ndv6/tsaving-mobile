@@ -1,5 +1,6 @@
 package com.example.tsaving.vm
 
+import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.webservice.TsavingRepository
@@ -24,8 +25,10 @@ class OTPViewModel : ViewModel(),
             viewModelScope.launch{
                 try {
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
+                    Log.i("response", result.data.toString())
                     if (result.status == "SUCCESS") {
                         _error.setValue(null)
+                        Log.i("response", result.data.dataResponse.token)
                         isValid.setValue(true)
                     }
                     return@launch
