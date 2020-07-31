@@ -20,5 +20,12 @@
         <item name = "android:height">@dimen/height</item>
     </style>
 
+    <style name = "ButtonCancel">
+        <item name = "android:background">@drawable/button_oval_cancel</item>
+        <item name = "android:textSize">@dimen/text_medium</item>
+        <item name = "android:textColor">@color/colorPrimary</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
 
 </resources>

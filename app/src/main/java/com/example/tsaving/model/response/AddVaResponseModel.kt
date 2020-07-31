@@ -6,6 +6,5 @@ import com.google.gson.annotations.SerializedName
 data class AddVaResponseModel (
     val status: String,
     val message: String,
-    val data: VirtualAccount
-
+    val data: String
 )

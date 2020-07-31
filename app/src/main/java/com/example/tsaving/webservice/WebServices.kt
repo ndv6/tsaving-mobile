@@ -20,7 +20,7 @@ import retrofit2.http.*
 
 
 const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTM6MDg6MDkuNTQ1NzgrMDc6MDAifQ.YtDrManolqO4-VH6hf-3bzIC1qEw52uaKvq3JQF6qgU"
+const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMTowMDoyNy4xMzExNzkrMDc6MDAifQ.jrRQ4wpR1cbinDSmi9KrGhstVuB58vK6Ef8t1VbHZw0"
 const val accept = "Accept: application/json"
 
 interface WebServices {
@@ -95,7 +95,7 @@ class HeaderInterceptor: Interceptor {
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
-            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTI6NTc6MzguOTkyOTA5KzA3OjAwIn0.gqGeZmIniWQ1ser3u8JEAAsyFs1u4MUmPeDSMZlKTCQ")
+            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMToxODozNi4zNTg5MjIrMDc6MDAifQ.1ueD9iqUhjOBsc_rI6D_LTzFkUJyCCLCpItNs6pZyOQ")
             .build()
         return chain.proceed(req)
     }

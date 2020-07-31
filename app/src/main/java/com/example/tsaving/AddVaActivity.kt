@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_add_va.*
 
 
 class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
+
     private val addVaViewModel: AddVaViewModel = AddVaViewModel()
 
     override fun onCreateView(
@@ -25,30 +26,25 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        btn_addva_back.setOnClickListener{
-//            fragmentManager?.beginTransaction()?.replace(R.id.flContent, DashboardFragment())?.commit()
-//        }
-//        lifecycle.addObserver(addVaViewModel)
 
         addVaViewModel.errorLabel.observe(this, Observer{
                 newErrorName -> layout_addva_label.setError(newErrorName)
         })
-
-        addVaViewModel._data.observe(this, Observer{
-            Log.i("_data observe", it.toString())
+        addVaViewModel.status.observe(this, Observer { it ->
+            if(it == true){
+                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
+            }else{
+                ErrorDialogHandling(requireContext(), "Ga bisa", "No").errorResponseDialog()
+            }
         })
 
         et_addva_label?.afterTextChanged {
             layout_addva_label.setError(null)
         }
         btn_addva_submit.setOnClickListener {
+            val color = sp_addva_color.selectedItem.toString()
             val label = et_addva_label.text.toString()
-            addVaViewModel.validateAddVa(label)
-            if(layout_addva_label.error == null) {
-//                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
-//                    ?.commit()
-                addVaViewModel.addVaRequest()
-            }
+            addVaViewModel.validateAddVa(label,color)
         }
 
         super.onViewCreated(view, savedInstanceState)
