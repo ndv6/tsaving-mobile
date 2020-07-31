@@ -3,6 +3,7 @@ package com.example.tsaving
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import com.example.tsaving.model.VirtualAccount
 import kotlinx.android.synthetic.main.activity_va_details.*
 
 class VADetailsActivity : Activity() {
@@ -10,6 +11,8 @@ class VADetailsActivity : Activity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_details)
 
+//        TODO : Change get string extra to get parcelable
+//        val va = intent.getParcelableExtra("va_detail") as? VirtualAccount
         val va_label = intent.getStringExtra("va_label")
         val va_accnum = intent.getStringExtra("va_accnum")
         val va_balance = intent.getStringExtra("va_balance")
@@ -18,7 +21,7 @@ class VADetailsActivity : Activity() {
 
         when (va_color) {
             "Red" -> {
-                color = R.color.colorPrimary
+                color = R.color.colorRed
             }
             "Blue" -> {
                 color = R.color.colorBlue
