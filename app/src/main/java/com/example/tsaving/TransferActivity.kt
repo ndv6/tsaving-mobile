@@ -9,9 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.TransferViewModel
-import androidx.lifecycle.lifecycleScope
-import com.example.tsaving.vm.OTPViewModel
-import kotlinx.android.synthetic.main.verify_email.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -65,8 +62,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
             } else{
                 layout_tf_amout.setError(null)
                 transferViewModel.apiTransferToVa("2007307563001", 5000)
-                val statusTf = transferViewModel.statusTransfer // this is wrong bro
-
+//                val statusTf = transferViewModel.statusTransfer // this is wrong bro
             }
 
 
