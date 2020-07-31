@@ -35,6 +35,7 @@ sealed class ErrorName{
     object InvalidEmail : ErrorName()
     object ErrorNetwork : ErrorName()
     object ErrorBadRequest : ErrorName()
+    object NullEmailAndPass : ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

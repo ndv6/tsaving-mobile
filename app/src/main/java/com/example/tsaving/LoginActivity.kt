@@ -1,5 +1,6 @@
 package com.example.tsaving
 
+import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
@@ -31,38 +32,43 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
         }
 
         loginViewModel.apply {
-            _statusLogin.observe(this@LoginActivity, Observer {
-                if(_statusLogin.value == true){
-                    Toast.makeText(applicationContext, "Login Success", Toast.LENGTH_SHORT).show()
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                }
-            })
-            _flagStatus.observe(this@LoginActivity, Observer {
-                if(_flagStatus.value == ErrorName.NullEmail){
+            flagStatus.observe(this@LoginActivity, Observer {
+                if(flagStatus.value == ErrorName.NullEmailAndPass){
                     layout_login_email.setError("Please Input Email Field")
-                }
-                else if(_flagStatus.value == ErrorName.NullPassword){
                     layout_login_password.setError("Please Input Password Field")
                 }
-                else if(_flagStatus.value == ErrorName.InvalidEmail){
+                else if(flagStatus.value == ErrorName.NullEmail){
+                    layout_login_email.setError("Please Input Email Field")
+                }
+                else if(flagStatus.value == ErrorName.NullPassword){
+                    layout_login_password.setError("Please Input Password Field")
+                }
+                else if(flagStatus.value == ErrorName.InvalidEmail){
                     layout_login_email.setError("Invalid Email Format")
                 }
-                else if(_flagStatus.value == ErrorName.ErrorNetwork){
+                else if(flagStatus.value == ErrorName.ErrorNetwork){
                     DialogHandling().basicAlert(this@LoginActivity, "Notification", "Network Error", "close")
                 }
-                else if(_flagStatus.value == ErrorName.InvalidLogin){
+                else if(flagStatus.value == ErrorName.InvalidLogin){
                     DialogHandling().basicAlert(this@LoginActivity, "Notification", "Wrong Username Or Password", "close")
+                }
+            })
+            dataLogin.observe(this@LoginActivity, Observer {
+                if(it.status == "SUCCESS"){
+                    //save token
+                    BaseApplication.token = it.data.token
+                    Toast.makeText(applicationContext, "Login Success", Toast.LENGTH_SHORT).show()
+                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                 }
             })
         }
 
         btn_login_signin.setOnClickListener {
             loginViewModel.validateLogin(et_login_email.text.toString(), et_login_password.text.toString())
-//            val flag = loginViewModel.flagStatus
-
-        } //end on login on click listener
-    }
+        }
+    } //end override oncreate
 }
+
 
 
 
