@@ -57,8 +57,11 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 if(it.status == "SUCCESS"){
                     //save token
                     BaseApplication.token = it.data.token
-                    startActivity(Intent(this@LoginActivity, MainActivity::class.java))
                     finish()
+                    val intent = Intent(this@LoginActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                 }
             })
         }
