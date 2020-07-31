@@ -25,6 +25,9 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
 sealed class ErrorName{
     object NotValidLength : ErrorName()
     object NotAlphaNumeric : ErrorName()
+    object NetworkError : ErrorName()
+    object FailedToRecognizeOTP : ErrorName()
+    object OTPCanNotBeBlank : ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

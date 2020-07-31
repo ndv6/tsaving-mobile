@@ -4,11 +4,9 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.example.tsaving.vm.OTPViewModel
 import kotlinx.android.synthetic.main.verify_email.*
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +28,22 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         job = Job()
 
         otpViewModel.apply {
-            _error.observe(this@OTPActivity, Observer { layout_otp_token })
+            _error.observe(this@OTPActivity, Observer {
+                if (it == ErrorName.OTPCanNotBeBlank) {
+                    layout_otp_token.setError("OTP can not be blank")
+                } else if (it == ErrorName.NetworkError) {
+                    layout_otp_token.setError("Network Error")
+                } else if (it == ErrorName.FailedToRecognizeOTP) {
+                    layout_otp_token.setError("Failed to recognize OTP")
+                }
+            })
+
+            isValid.observe(this@OTPActivity, Observer {
+                if (isValid.value == true) {
+                    startActivity(Intent(this@OTPActivity, MainActivity::class.java))
+                    finish()
+                }
+            })
         }
 
         et_otp_token.addTextChangedListener(object: TextWatcher {
@@ -52,17 +65,6 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         btn_otp_send.setOnClickListener {
             val cust_email = intent.getStringExtra("cust_email").toString()
             otpViewModel.onValidate(et_otp_token.text.toString(), cust_email)
-
-            val valid = otpViewModel.isValid
-            val errorMsg = otpViewModel._error.value
-
-            if (valid.value == false) {
-                layout_otp_token.setError(errorMsg)
-            } else {
-                layout_otp_token.setError(errorMsg)
-                startActivity(Intent(this@OTPActivity, MainActivity::class.java))
-                finish()
-            }
         }
     }
 }
