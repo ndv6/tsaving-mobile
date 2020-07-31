@@ -49,7 +49,7 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) { repo.login(request) }
-                Log.i("result", result.toString())
+                Log.i("result", result.data.toString())
                 _statusLogin.value = true
                 _flagStatus.value = null
             } catch (t: Throwable) {
