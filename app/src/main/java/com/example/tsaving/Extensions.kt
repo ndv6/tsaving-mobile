@@ -21,10 +21,6 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
     })
 }
 
-fun validateName(actionError: () -> Unit) : Boolean{
-    return  true
-}
-
 sealed class ErrorName{
     object NotValidLength : ErrorName()
     object NotAlphaNumeric : ErrorName()
