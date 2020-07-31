@@ -57,10 +57,8 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 if(it.status == "SUCCESS"){
                     //save token
                     BaseApplication.token = it.data.token
-                    finish()
                     startActivity(Intent(this@LoginActivity, MainActivity::class.java))
-                    Toast.makeText(applicationContext, "Login Success", Toast.LENGTH_SHORT).show()
-
+                    finish()
                 }
             })
         }
