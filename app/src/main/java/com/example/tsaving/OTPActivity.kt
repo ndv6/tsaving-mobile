@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.OTPViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.verify_email.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -34,9 +33,9 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                 if (it == ErrorName.NullOTP) {
                     layout_otp_token.setError("OTP can not be blank")
                 } else if (it == ErrorName.NetworkError) {
-                    layout_otp_token.setError("Network Error")
+                    DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Network Error", "close")
                 } else if (it == ErrorName.FailedToRecognizeOTP) {
-                    layout_otp_token.setError("Failed to recognize OTP")
+                    DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Failed to recognize OTP", "close")
                 }
             })
 
@@ -45,6 +44,16 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                     startActivity(Intent(this@OTPActivity, MainActivity::class.java))
                     finish()
                 }
+            })
+
+            statusPB.observe(this@OTPActivity, Observer {
+                if(it == true){
+                    isLoadingLogin(true)
+                }
+                else{
+                    isLoadingLogin(false)
+                }
+
             })
         }
 

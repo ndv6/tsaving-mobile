@@ -16,8 +16,10 @@ class OTPViewModel : ViewModel(),
     var repo = TsavingRepository()
     var _error  = MutableLiveData<ErrorName>()
     var isValid = MutableLiveData<Boolean>()
+    var statusPB = MutableLiveData<Boolean>()
 
     fun onValidate(otp: String, email: String) {
+        statusPB.value = true
         if (otp.isBlank()) {
             _error.value = ErrorName.NullOTP
             isValid.value = false
@@ -25,8 +27,8 @@ class OTPViewModel : ViewModel(),
             var request = VerifyRequestModel(otp, email)
             viewModelScope.launch{
                 try {
+                    statusPB.value = false
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
-                    Log.i("response", result.status)
                     if (result.status == "SUCCESS") {
                         _error.setValue(null)
                         isValid.setValue(true)
@@ -36,6 +38,7 @@ class OTPViewModel : ViewModel(),
                     }
                     return@launch
                 } catch (t: Throwable) {
+                    statusPB.value = false
                     when (t) {
                         is IOException -> {
                             _error.setValue(ErrorName.NetworkError)
