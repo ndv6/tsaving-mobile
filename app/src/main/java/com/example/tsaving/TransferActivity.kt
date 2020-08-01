@@ -37,7 +37,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         btn_tf_transfer.setOnClickListener {
             val checkAmount = transferViewModel.validateTransfer(et_tf_amount_input.text.toString())
             if(!checkAmount){
-                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
+//                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
             } else{
                 Toast.makeText(applicationContext,"Good To Go", Toast.LENGTH_SHORT).show()
             }

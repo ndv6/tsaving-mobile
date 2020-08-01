@@ -2,6 +2,8 @@ package com.example.tsaving
 
 import android.app.Application
 import android.content.Context
+import android.content.DialogInterface
+import androidx.appcompat.app.AlertDialog
 import com.example.tsaving.model.response.TokenResponse
 
 class BaseApplication : Application() {
@@ -16,8 +18,7 @@ class BaseApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         appContext = this@BaseApplication
+
     }
-
-
 }
 
