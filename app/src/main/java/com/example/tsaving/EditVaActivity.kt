@@ -7,8 +7,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.LifecycleOwner
+import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.EditVaViewModel
 import kotlinx.android.synthetic.main.activity_va_edit.*
+import java.util.*
 
 class EditVaActivity: AppCompatActivity(), LifecycleOwner {
 
@@ -18,6 +20,8 @@ class EditVaActivity: AppCompatActivity(), LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_edit)
         lifecycle.addObserver(editVaViewModel)
+
+        val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
 
         btn_vae_save.setOnClickListener {
             val label = et_vae_label.text.toString()
