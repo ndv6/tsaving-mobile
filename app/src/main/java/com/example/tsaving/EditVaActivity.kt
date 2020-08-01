@@ -1,41 +1,64 @@
 package com.example.tsaving
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
+import android.widget.ArrayAdapter
+import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.LifecycleObserver
-import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.vm.EditVaViewModel
+import com.example.tsaving.webservice.TsavingRepository
+import com.google.gson.internal.bind.ArrayTypeAdapter
 import kotlinx.android.synthetic.main.activity_va_edit.*
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlin.coroutines.CoroutineContext
 
 class EditVaActivity: AppCompatActivity(), CoroutineScope {
+    lateinit var job: Job
 
-    private val editVaViewModel : EditVaViewModel = EditVaViewModel()
+//    var vaNum = intent.getStringExtra("va_num")
+    val vaNum = "2007301876003"
+    var vaLabel = "Tabungan Rumah"
+    var vaColor = "Yellow"
 
+    val editVaViewModel : EditVaViewModel = EditVaViewModel(TsavingRepository(), vaNum)
+
+    override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_edit)
-        lifecycle.addObserver(editVaViewModel)
 
-        var vaNum = intent.getStringExtra("va_num")
         tv_vae_num.text = vaNum
+        et_vae_label.setText(vaLabel)
 
-//        editVaViewModel.apply {
-//            data.observe(this@EditVaActivity, androidx.lifecycle.Observer {
-//            }
-//        }
+//        val spinner: Spinner = findViewById(R.id.sp_vae_color)
 
+//        val adapter = ArrayAdapter.createFromResource(
+//            this,
+//            R.array.color_va,
+//            android.R.layout.simple_spinner_item
+//        )
+
+//        spinner.setSelection(adapter.)
+
+
+//        sp_vae_color.selectedItem
+//
+//
 
         btn_vae_save.setOnClickListener {
-            val label = et_vae_label.text.toString()
-            val status = editVaViewModel.validateEditVa(label)
+            vaLabel = et_vae_label.text.toString()
+            Log.i("TAG", vaLabel)
+            vaColor = sp_vae_color.selectedItem.toString()
+            val status = editVaViewModel.validateEditVa(vaLabel)
             if (!status) {
                 Toast.makeText(applicationContext, "Please input data", Toast.LENGTH_SHORT).show()
             } else {
+                editVaViewModel.fetchVaEditData(vaLabel, vaColor)
                 startActivity(Intent(this, VADetailsActivity::class.java))
             }
         }

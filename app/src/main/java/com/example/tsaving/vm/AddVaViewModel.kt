@@ -41,7 +41,7 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
         viewModelScope.launch{
             try {
                 val result = withContext(Dispatchers.IO){repo.createVa(request)}
-                Log.i("result", result.message.toString())
+//                Log.i("result", result.message.toString())
                 _status.setValue(true)
             } catch (t: Throwable) {
                 when (t) {

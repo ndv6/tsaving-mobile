@@ -4,8 +4,6 @@ import com.example.tsaving.BaseApplication
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
-import com.example.tsaving.model.response.AddVaResponseModel
-import retrofit2.http.Body
 
 class TsavingRepository {
     private var webService: WebServices = webServices
