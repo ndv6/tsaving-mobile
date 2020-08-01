@@ -1,4 +1,3 @@
-
 package com.example.tsaving
 
 import android.app.Activity
@@ -27,6 +26,14 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
 sealed class ErrorName{
     object NotValidLength : ErrorName()
     object NotAlphaNumeric : ErrorName()
+    object NullAmount : ErrorName()
+    object InvalidLogin : ErrorName()
+    object NullEmail : ErrorName()
+    object NullPassword : ErrorName()
+    object InvalidEmail : ErrorName()
+    object ErrorNetwork : ErrorName()
+    object ErrorBadRequest : ErrorName()
+    object NullEmailAndPass : ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

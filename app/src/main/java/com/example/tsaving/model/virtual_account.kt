@@ -1,14 +1,25 @@
 package com.example.tsaving.model
 
+import android.os.Parcelable
+import com.google.gson.annotations.SerializedName
+import kotlinx.android.parcel.Parcelize
 import java.util.*
 
-class VirtualAccount (id: Int, num: String, accNum: String, balance: Int, color: String, label: String, created: Date, updated: Date) {
-    var vaId: Int = id
-    var vaNum: String = num
-    var accountNum: String = accNum
-    var vaBalance: Int = balance
-    var vaColor: String = color
-    var vaLabel: String = label
-    var createdAt: Date = created
-    var updatedAt: Date = updated
-}
+@Parcelize
+class VirtualAccount (
+    @SerializedName("va_id")
+    val vaId: Int?,
+    @SerializedName("va_num")
+    val vaNum: String?,
+    @SerializedName("account_num")
+    val accNum: String?,
+    @SerializedName("va_balance")
+    val vaBalance: Int,
+    @SerializedName("va_color")
+    val vaColor: String,
+    @SerializedName("va_label")
+    val vaLabel: String,
+    @SerializedName("created_at")
+    val createdAt: Date,
+    @SerializedName("updated_at")
+    val updatedAt: Date) : Parcelable

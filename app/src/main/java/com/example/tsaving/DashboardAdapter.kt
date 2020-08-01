@@ -1,37 +1,38 @@
 package com.example.tsaving
 
 import android.content.Intent
+import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tsaving.model.VirtualAccount
 
-class DashboardRecyclerViewAdapter: RecyclerView.Adapter<DashboardRecyclerViewAdapter.DashboardItemHolder>() {
+class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): RecyclerView.Adapter<DashboardRecyclerViewAdapter.DashboardItemHolder>() {
     var vaList: List<VirtualAccount> = listOf<VirtualAccount>()
 
-    data class DashboardItemHolder (val view: View) :RecyclerView.ViewHolder(view) {
+     inner class DashboardItemHolder (val view: View) :RecyclerView.ViewHolder(view) {
         fun bindData(va: VirtualAccount) {
             val tvLabel = view.findViewById<TextView>(R.id.tv_item_list_va_label)
             val tvBalance = view.findViewById<TextView>(R.id.tv_item_list_va_balance)
-            val btnVaDetail = view.findViewById<Button>(R.id.btn_item_list_va_detail)
+            val tvVaNum = view.findViewById<TextView>(R.id.tv_item_list_va_num)
+            val cvDetail = view.findViewById<CardView>(R.id.cv_item_list_va)
+
             tvLabel.text = va.vaLabel
-            tvBalance.text = va.vaBalance.toString()
-            btnVaDetail.setOnClickListener {
-                val intent = Intent(view.context, VADetailsActivity::class.java)
-                intent.putExtra("va_label", va.vaLabel)
-                intent.putExtra("va_accnum", va.accountNum)
-                intent.putExtra("va_balance", va.vaBalance)
-                intent.putExtra("va_color", va.vaColor)
-                view.context.startActivity(intent)
+            tvVaNum.text = va.vaNum
+            tvBalance.text = "Rp. ${va.vaBalance}"
+            cvDetail.setOnClickListener {
+                listener(va)
             }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashboardItemHolder {
-        val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.va_item_list, null)
+        val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.va_item_list, parent,false)
         return DashboardItemHolder((layoutView))
     }
 

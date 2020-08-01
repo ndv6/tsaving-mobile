@@ -1,13 +1,21 @@
 package com.example.tsaving
 
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import androidx.lifecycle.Observer
+import androidx.lifecycle.LifecycleOwner
+import com.example.tsaving.vm.AddVaViewModel
 import kotlinx.android.synthetic.main.activity_add_va.*
 
-class AddVaFragment: androidx.fragment.app.Fragment() {
+
+class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
+
+    private val addVaViewModel: AddVaViewModel = AddVaViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -18,20 +26,25 @@ class AddVaFragment: androidx.fragment.app.Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        btn_addva_back.setOnClickListener{
-            fragmentManager?.beginTransaction()?.replace(R.id.flContent, DashboardFragment())?.commit()
+
+        addVaViewModel.errorLabel.observe(this, Observer{
+                newErrorName -> layout_addva_label.setError(newErrorName)
+        })
+        addVaViewModel.status.observe(this, Observer { it ->
+            if(it == true){
+                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
+            }else{
+                ErrorDialogHandling(requireContext(), "Ga bisa", "No").errorResponseDialog()
+            }
+        })
+
+        et_addva_label?.afterTextChanged {
+            layout_addva_label.setError(null)
         }
-
-        btn_addva_submit.setOnClickListener{
+        btn_addva_submit.setOnClickListener {
+            val color = sp_addva_color.selectedItem.toString()
             val label = et_addva_label.text.toString()
-//            val color = spinner_color.
-
-            if (label.isEmpty()){
-                Toast.makeText(context,"Please input data", Toast.LENGTH_SHORT).show()
-            }
-            else{
-                fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
-            }
+            addVaViewModel.validateAddVa(label,color)
         }
 
         super.onViewCreated(view, savedInstanceState)
