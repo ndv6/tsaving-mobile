@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope {
             var repo: TsavingRepository = TsavingRepository()
 
             //please change email & passwordnya from edit text then delete this comment
-            var request: LoginRequestModel = LoginRequestModel("vc@gmail.com", "vcvcvc")
+            var request: LoginRequestModel = LoginRequestModel("testing@apa.com", "testing")
             Log.i("login req :", request.toString())
 
             lifecycleScope.launch {

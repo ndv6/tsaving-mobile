@@ -20,12 +20,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".UpdatePasswordActivity"/>
         <activity android:name=".MainActivity"/>
         <activity android:name=".RegisterActivity"/>
         <activity android:name=".TransferActivity" />
         <activity android:name=".OTPActivity"/>
         <activity android:name=".VADetailsActivity"/>
-        <activity android:name=".UpdatePasswordActivity" />
         <activity android:name=".EditVaActivity"/>
     </application>
 

@@ -2,7 +2,6 @@ package com.example.tsaving.webservice
 
 import android.content.Context
 import android.content.Intent
-import androidx.core.content.ContextCompat
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.ResponseModel
@@ -11,16 +10,18 @@ import com.example.tsaving.model.request.UpdatePasswordRequestModel
 import com.example.tsaving.model.response.UpdatePasswordResponseModel
 import com.example.tsaving.vm.UpdatePasswordViewModel
 import okhttp3.Interceptor
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import okhttp3.internal.connection.ConnectInterceptor
+import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
 
 const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTA6NTQ6NTcuMTg1MzUyKzA3OjAwIn0.TzZi9MLnlhI4DTG3CDX2gQ257KRx6DHtOR1026zkYuA"
+const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTM6MDg6MDkuNTQ1NzgrMDc6MDAifQ.YtDrManolqO4-VH6hf-3bzIC1qEw52uaKvq3JQF6qgU"
 const val accept = "Accept: application/json"
 
 interface WebServices {
@@ -51,7 +52,7 @@ interface WebServices {
     suspend fun login(@Body body: LoginRequestModel): ResponseModel
 
     @POST(VERIFY_ACCOUNT)
-    suspend fun verifyAccount()
+    suspend fun verifyAccount(@Body body: VerifyRequestModel): VerifyAccountResponseModel
 
     @GET(VIEW_PROFILE)
     suspend fun viewProfile()
@@ -62,7 +63,6 @@ interface WebServices {
     @PATCH(UPDATE_PASSWORD)
     suspend fun  updatePassword(@Body body: UpdatePasswordRequestModel): UpdatePasswordResponseModel
 
-//    @Headers(jwtAuth, contentType, accept)
     @GET(DASHBOARD)
     suspend fun dashboard() : ResponseModel
 
@@ -96,10 +96,12 @@ interface WebServices {
 
 class HeaderInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
+//        set your login token
         var req = chain.request()
-        req = req.newBuilder().addHeader("Content-Type", "application/json")
-            .addHeader("Accept", "application/json")
-            .addHeader("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTA6NTQ6NTcuMTg1MzUyKzA3OjAwIn0.TzZi9MLnlhI4DTG3CDX2gQ257KRx6DHtORasdfjdofA")
+        req = req.newBuilder().header("Content-Type", "application/json")
+            .header("User-Agent", "tsaving-mobile")
+            .header("Accept", "application/json")
+            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo2LCJhY2NvdW50X251bSI6IjIwMDczMDgyMjQiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMToxMjozNy40Njk0NjQrMDc6MDAifQ.6SMFpVZ3xul1MVoKDlQJ_ahTvRNpCTxdb49J-DgH0sA")
             .build()
         return chain.proceed(req)
     }
@@ -119,13 +121,14 @@ class UnauthInterceptor (val ctx: Context) : Interceptor {
     }
 }
 
+val ohc = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build()
+
 //singleton
 val webServices: WebServices by lazy {
     Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8000/")
         .addConverterFactory(GsonConverterFactory.create())
-        .client(OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).build())
-        .client(OkHttpClient.Builder().addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build())
+        .client(ohc)
         .build()
         .create(WebServices::class.java)
 }

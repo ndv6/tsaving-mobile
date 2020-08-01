@@ -1,6 +1,5 @@
 package com.example.tsaving
 
-
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -25,6 +24,14 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
         updatePasswordViewModel.errorOldPassword.observe(this, Observer { newErrorName -> layout_oldpassword.setError(newErrorName)})
         updatePasswordViewModel.errorNewPassword.observe(this, Observer { newErrorName -> layout_newpassword.setError(newErrorName)})
         updatePasswordViewModel.errorConfirmPassword.observe(this, Observer { newErrorName -> layout_confirmpassword.setError(newErrorName)})
+
+        updatePasswordViewModel.status.observe(this, Observer { it ->
+            if(it == true){
+                ErrorDialogHandling(this,"Bisa Nih", "Yes").errorResponseDialog()
+            }else{
+                ErrorDialogHandling(this,"Gabisa Nih", "No").errorResponseDialog()
+            }
+        })
 
         et_up_oldpassword?.afterTextChanged{
                 if (et_up_oldpassword.text.toString().length < 6) {
@@ -55,18 +62,8 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
             val oldPassword = et_up_oldpassword.text.toString()
             val newPassword = et_up_newpassword.text.toString()
             val confirmPassword = et_up_confirmpassword.text.toString()
-//            val intent = Intent(this, ProfileFragment::class.java)
-//            startActivity(intent)
 
             val cek = updatePasswordViewModel.onValidate(oldPassword,newPassword,confirmPassword)
-
-            if(cek == 0){
-                val intent = Intent(this, ProfileFragment::class.java)
-                startActivity(intent)
-            }
-
-            //ErrorDialogHandling(this, "Change Password ", "Password Updated").errorResponseDialog()
-
 
         }
 

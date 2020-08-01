@@ -1,6 +1,7 @@
 package com.example.tsaving.vm
 
 
+import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
@@ -21,84 +22,54 @@ class UpdatePasswordViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
     lateinit var job: Job
     override val coroutineContext: CoroutineContext
         get() = job + Dispatchers.Main
-    fun onCreate(){
-        job = Job()
-
-    }
-
-    var repo = TsavingRepository()
-    var request = UpdatePasswordRequestModel("oldpassword", "newpassword")
-    var isValid = MutableLiveData<Boolean>()
-    var _error = MutableLiveData<String>()
-
-    fun onCallApi() {
-        viewModelScope.launch {
-            try {
-                val result = withContext(Dispatchers.IO) {
-                    repo.updatePassword(request)
-                }
-                println("hahaha "+result)
-                if (result.status == "SUCCESS") {
-                    isValid.setValue(true)
-                }
-            } catch (t: Throwable) {
-                when (t) {
-                    is IOException -> {
-                        _error.setValue("Network Error")
-                        isValid.setValue(true)
-                    }
-                    is HttpException -> {
-                        val code = t.code()
-                        val errMsg = t.response().toString()
-                        _error.setValue("HTTP Error $code $errMsg ")
-                        isValid.setValue(true)
-                    }
-                }
-            }
-        }
-    }
-
-
-    private val _oldPassword = MutableLiveData<String>()
-    private val _newPassword = MutableLiveData<String>()
-    private val _confirmPassword = MutableLiveData<String>()
 
     private val _errorOldPassword = MutableLiveData<String>()
     private val _errorNewPassword = MutableLiveData<String>()
     private val _errorConfirmPassword = MutableLiveData<String>()
-
-    val oldPassword: LiveData<String> = _oldPassword
-    val newPassword: LiveData<String> = _newPassword
-    val confirmPassword: LiveData<String> = _confirmPassword
+    private val _status = MutableLiveData<Boolean>()
 
     val errorOldPassword: LiveData<String> = _errorOldPassword
     val errorNewPassword: LiveData<String> = _errorNewPassword
     val errorConfirmPassword: LiveData<String> = _errorConfirmPassword
+    val status: LiveData<Boolean> = _status
 
-    fun onValidate(oldPassword: String, newPassword: String, confirmPassword: String) :Int {
-        var status: Int = 0
+    fun onValidate(oldPassword: String, newPassword: String, confirmPassword: String) {
+        job = Job()
+        var repo = TsavingRepository()
         if (oldPassword.isBlank()) {
             _errorOldPassword.value = ErrorPassword.ISBLANK.message
-            status = 1
         }
         if (newPassword.isBlank()) {
             _errorNewPassword.value = ErrorPassword.ISBLANK.message
-            status = 1
         }
         if (confirmPassword.isBlank()) {
             _errorConfirmPassword.value = ErrorPassword.ISBLANK.message
-            status = 1
         }
 
         if (!oldPassword.isBlank() && !newPassword.isBlank() && !confirmPassword.isBlank()) {
             if (confirmPassword != newPassword) {
                 _errorConfirmPassword.value = ErrorPassword.NOTMATCH.message
-                status = 1
             }
         }
-        return status
 
-
+        var request = UpdatePasswordRequestModel(oldPassword, newPassword)
+        Log.i("request", request.toString())
+        viewModelScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) {
+                    repo.updatePassword(request)
+                }
+                Log.i("response", result.toString())
+                _status.setValue(true)
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> Log.i("Error", t.message.toString())
+                    is HttpException -> {
+                        _status.setValue(false)
+                    }
+                }
+            }
+        }
     }
 }
 
