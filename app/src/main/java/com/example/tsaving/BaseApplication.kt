@@ -8,7 +8,9 @@ class BaseApplication : Application() {
     companion object {
         lateinit var appContext: Context
         lateinit var token:String
-        lateinit var accNum:String
+        lateinit var custEmail:String
+        lateinit var custName:String
+        lateinit var accNumber:String
     }
 
     override fun onCreate() {

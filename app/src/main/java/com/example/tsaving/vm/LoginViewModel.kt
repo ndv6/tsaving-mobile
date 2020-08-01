@@ -54,7 +54,6 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
             try {
                 _statusPB.value = false
                 val result = withContext(Dispatchers.IO) { repo.login(request) }
-                Log.i("result", result.data.toString())
                 if(result.status == "SUCCESS"){
                     _flagStatus.value = null
                     _dataLogin.value = result
@@ -66,10 +65,8 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
                         _flagStatus.value = ErrorName.ErrorNetwork
                     }
                     is HttpException -> {
-                        //Please change this to handle error with Sekar's dialog box then delete this comment
                         val code = t.code()
                         val errMsg = t.response().toString()
-                        Log.i("login error message", t.response().toString())
                         _flagStatus.value = ErrorName.InvalidLogin
                     }
                 }

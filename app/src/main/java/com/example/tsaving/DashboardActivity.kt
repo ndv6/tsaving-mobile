@@ -34,7 +34,6 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         lifecycle.addObserver(dashboardViewModel)
-
         dashboardAdapter = DashboardRecyclerViewAdapter {
             val intent = Intent(requireActivity(), VADetailsActivity::class.java)
             intent.putExtra("va_detail", it)
@@ -49,7 +48,7 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
 
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
-                BaseApplication.accNum = it.data.accountNum
+                BaseApplication.accNumber = it.data.accountNum
                 tv_dashboard_name.text = it.data.custName
                 tv_dashboard_email.text = it.data.custEmail
                 tv_dashboard_acc_num.text = it.data.accountNum
