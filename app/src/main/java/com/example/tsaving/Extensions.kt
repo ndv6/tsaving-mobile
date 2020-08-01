@@ -21,9 +21,6 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
     })
 }
 
-fun validateName(actionError: () -> Unit) : Boolean{
-    return  true
-}
 
 sealed class ErrorName{
     object NotValidLength : ErrorName()
@@ -33,6 +30,9 @@ sealed class ErrorName{
     object NullEmail : ErrorName()
     object NullPassword : ErrorName()
     object InvalidEmail : ErrorName()
+    object ErrorNetwork : ErrorName()
+    object ErrorBadRequest : ErrorName()
+    object NullEmailAndPass : ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{
@@ -46,4 +46,3 @@ fun String.FormatDecimal() : String{
 fun String.IsEmailValid(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
-
