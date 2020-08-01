@@ -28,8 +28,12 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         swipeRefreshLayout = view.findViewById(R.id.srl_transaction_history)
         lifecycle.addObserver(transactionHistoryViewModel)
+
+        rv_transaction_history.adapter = transactionHistoryAdapter
+        rv_transaction_history.layoutManager = LinearLayoutManager(context)
 
         transactionHistoryViewModel.apply {
             dataWrapper.observe(this@TransactionHistoryFragment, Observer {
@@ -37,6 +41,9 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
                 transactionHistoryAdapter.notifyDataSetChanged()
             })
         }
+
+        //ScrollListener
+        //vivsible item = total/vis. vis 50% total, call
 
         swipeRefreshLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
             //API Call, Page++ here
@@ -50,11 +57,8 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
 
         })
 
-        rv_transaction_history.adapter = transactionHistoryAdapter
-        rv_transaction_history.layoutManager = LinearLayoutManager(context)
+
 
         //rv_transaction_history.addOnScrollListener()
-
-        super.onViewCreated(view, savedInstanceState)
     }
 }

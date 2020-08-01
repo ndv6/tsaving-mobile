@@ -37,7 +37,7 @@ class TransactionHistoryAdapter :
         viewType: Int
     ): TransactionHistoryViewHolder {
         val viewItem =
-            LayoutInflater.from(parent.context).inflate(R.layout.transaction_history_item, null)
+            LayoutInflater.from(parent.context).inflate(R.layout.transaction_history_item, parent,false)
         return TransactionHistoryViewHolder(viewItem)
     }
 
