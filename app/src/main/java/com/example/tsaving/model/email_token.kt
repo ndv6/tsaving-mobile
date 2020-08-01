@@ -1,7 +1,11 @@
 package com.example.tsaving.model
 
-class EmailToken (id: Int, tkn: String, eml: String) {
-    val emailTokenId = id
-    val token = tkn
-    val email = eml
-}
+import com.google.gson.annotations.SerializedName
+
+class EmailToken (
+    @SerializedName("et_id")
+    val et_id: Int,
+    @SerializedName("token")
+    val token: String,
+    @SerializedName("email")
+    val email: String)

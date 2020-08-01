@@ -71,7 +71,3 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
         }
     } //end override oncreate
 }
-
-
-
-
