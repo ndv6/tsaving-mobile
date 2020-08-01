@@ -34,11 +34,14 @@ class VADetailsActivity : AppCompatActivity() {
         btn_vad_addbalance.setOnClickListener {
             val intent = Intent(this, TransferActivity::class.java)
             intent.putExtra("va_detail", va)
+            intent.putExtra("tf_type", "main-to-va")
             startActivity(intent)
         }
+
         btn_vad_trftomain.setOnClickListener {
             val intent = Intent(this, TransferActivity::class.java)
             intent.putExtra("va_detail", va)
+            intent.putExtra("tf_type", "va-to-main")
             startActivity(intent)
         }
 
