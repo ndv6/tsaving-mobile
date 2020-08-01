@@ -19,7 +19,7 @@ class VADetailsActivity : Activity() {
             //for modified later
 //            val dataParam = listOf("VA Tabungan Rumah", "200728001001", "Main Account", "200728001" )
 //            intent.putExtra("data_page", "ha")
-//            intent.putExtra("test", arrayOf("2","3"))
+            intent.putExtra("tfType", "main-to-va" )
             startActivity(intent)
         }
         btn_vad_trftomain.setOnClickListener {

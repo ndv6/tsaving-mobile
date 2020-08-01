@@ -31,14 +31,14 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         et_amount = findViewById(R.id.et_tf_amount_input)
         et_amount.addTextChangedListener(textWatcher)
         lifecycle.addObserver(transferViewModel)
-
         job = Job()
+        val transferType = intent.getStringExtra("tfType")
         //adding oncreate event from model
-        //live data harus dihandle disini
 
+        //live data must be handled here
         transferViewModel.apply {
-            _statusTransfer.observe(this@TransferActivity, Observer {
-                if(_statusTransfer.value == true){
+            statusTransfer.observe(this@TransferActivity, Observer {
+                if(statusTransfer.value == true){
 //                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Success", "Close")
                     finish()
                     startActivity(getIntent())
