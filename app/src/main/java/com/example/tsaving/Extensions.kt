@@ -24,6 +24,9 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
 sealed class ErrorName{
     object NotValidLength : ErrorName()
     object NotAlphaNumeric : ErrorName()
+    object NetworkError : ErrorName()
+    object FailedToRecognizeOTP : ErrorName()
+    object NullOTP : ErrorName()
     object NullAmount : ErrorName()
     object InvalidLogin : ErrorName()
     object NullEmail : ErrorName()
