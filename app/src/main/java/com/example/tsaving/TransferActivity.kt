@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.vm.TransferViewModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -33,6 +34,8 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         lifecycle.addObserver(transferViewModel)
         job = Job()
         val transferType = intent.getStringExtra("tfType")
+
+
         //adding oncreate event from model
 
         //live data must be handled here

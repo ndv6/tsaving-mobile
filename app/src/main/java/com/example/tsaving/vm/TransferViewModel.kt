@@ -40,20 +40,16 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
     fun apiTransferToVa(va_num : String, va_balance: Int){
         var repo: TsavingRepository = TsavingRepository()
 
-        //please change email & passwordnya from edit text then delete this comment
         var request: TransferToVaRequestModel = TransferToVaRequestModel(va_num, va_balance)
         Log.i("login req :", request.toString())
 
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) { repo.transferVa(request) }
-                Log.i("result", result.toString())
                 if(result.status == "SUCCESS") {
-                    Log.i("a","hahahaha")
                     _statusTransfer.setValue(true)
                 }
                 else {
-                    Log.i("a","huhuhu")
                     _statusTransfer.setValue(false)
                 }
             }catch (t: Throwable) {
@@ -63,18 +59,14 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
 //                        _flagStatus.value = ErrorName.ErrorNetwork
                     }
                     is HttpException -> {
-                        //Please change this to handle error with Sekar's dialog box then delete this comment
                         val code = t.code()
                         val errMsg = t.response().toString()
                         Log.i("login error message", t.response().toString())
                         _statusTransfer.setValue(false)
 
-//                        _flagStatus.value = ErrorName.InvalidLogin
                     }
                 }
             }
         }
-        // Here, please code what the app will do if API call succeed, then delete this comment
-//
     }
 }
