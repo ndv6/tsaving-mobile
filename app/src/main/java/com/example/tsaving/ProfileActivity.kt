@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ProgressBar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -36,6 +37,14 @@ class ProfileFragment : Fragment(), LifecycleOwner {
         btn_profile_change_password.setOnClickListener {
             startActivity(Intent(activity, UpdatePasswordActivity::class.java))
         }
+
+        viewModel.loading.observe(viewLifecycleOwner, Observer { isLoading ->
+            if (isLoading) {
+                pb_profile.visibility = ProgressBar.VISIBLE
+            } else {
+                pb_profile.visibility = ProgressBar.GONE
+            }
+        })
 
         viewModel.data.observe(viewLifecycleOwner, Observer { newData ->
             tv_profile_acc_num.text = newData.data.account_num

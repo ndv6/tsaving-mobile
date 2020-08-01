@@ -14,11 +14,15 @@ class ProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), Cor
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
+    private var _loading = MutableLiveData<Boolean>()
+    val loading: LiveData<Boolean> = _loading
+
     private val _data = MutableLiveData<ProfileResponseModel>()
     val data: LiveData<ProfileResponseModel> = _data
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    private fun fetchDashboardData() {
+    private fun fetchProfileData() {
+        _loading.value = true
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {tsRepo.viewProfile()}
@@ -33,5 +37,6 @@ class ProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), Cor
                 }
             }
         }
+        _loading.value = false
     }
 }
