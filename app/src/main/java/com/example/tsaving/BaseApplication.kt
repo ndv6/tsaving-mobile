@@ -8,6 +8,7 @@ class BaseApplication : Application() {
     companion object {
         lateinit var appContext: Context
         lateinit var token:String
+        lateinit var accNum:String
     }
 
     override fun onCreate() {

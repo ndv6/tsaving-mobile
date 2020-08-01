@@ -49,6 +49,7 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
 
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
+                BaseApplication.accNum = it.data.accountNum
                 tv_dashboard_name.text = it.data.custName
                 tv_dashboard_email.text = it.data.custEmail
                 tv_dashboard_acc_num.text = it.data.accountNum
