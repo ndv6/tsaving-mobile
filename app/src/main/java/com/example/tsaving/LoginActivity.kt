@@ -3,7 +3,6 @@ package com.example.tsaving
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -70,9 +69,7 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     isLoadingLogin(true)
                 }
                 else{
-                    Handler().postDelayed({
-                        isLoadingLogin(false)
-                    }, 1000)
+                    isLoadingLogin(false)
                 }
 
             })
