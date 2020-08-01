@@ -3,6 +3,8 @@ package com.example.tsaving.vm
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.example.tsaving.DialogHandling
+import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
@@ -14,21 +16,25 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 
-class DashboardViewModel (private val tsRepo: TsavingRepository): ViewModel(),
+class DashboardViewModel (private val tsRepo: TsavingRepository, val triggerPgbr: (isVisible: Boolean) -> Unit): ViewModel(),
     CoroutineScope, LifecycleObserver {
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
-    private var _data = MutableLiveData<ResponseModel>()
-    var data : LiveData<ResponseModel> = _data
+    private var _data = MutableLiveData<DashboardResponseModel>()
+    var data : LiveData<DashboardResponseModel> = _data
+    private var _errMessage = MutableLiveData<String>()
+    var errMessage : LiveData<String> = _errMessage
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
-    private fun fetchDashboardData() {
+    fun fetchDashboardData() {
         viewModelScope.launch {
+            triggerPgbr(false)
             try {
                 val result = withContext(Dispatchers.IO) {tsRepo.dashboard()}
                 _data.value = result
-                Log.i("result", result.toString())
+                triggerPgbr(true)
             } catch (t: Throwable) {
+                _errMessage.value = t.message
                 when (t) {
                     is IOException -> println(t.message)
                     is HttpException -> println(t.message)
@@ -36,4 +42,4 @@ class DashboardViewModel (private val tsRepo: TsavingRepository): ViewModel(),
             }
         }
     }
-    }
+}

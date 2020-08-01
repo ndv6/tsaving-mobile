@@ -19,7 +19,7 @@ class OTPViewModel : ViewModel(),
 
     fun onValidate(otp: String, email: String) {
         if (otp.isBlank()) {
-            _error.value = ErrorName.OTPCanNotBeBlank
+            _error.value = ErrorName.NullOTP
             isValid.value = false
         } else {
             var request = VerifyRequestModel(otp, email)
