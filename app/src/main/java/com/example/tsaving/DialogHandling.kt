@@ -5,13 +5,9 @@ import android.content.Context
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 
-class DialogHandling : Activity() {
-
-//    DialogHandling().basicAlert(this@TransferActivity, "title", "message", "btn_txt")
-
-    val positiveButtonClick = { dialog: DialogInterface, which: Int -> }
-
+class DialogHandling(val callback: () -> Unit) {
     fun basicAlert(ctx: Context, title: String, message: String, button: String){
+        val positiveButtonClick = { dialog: DialogInterface, which: Int -> callback()}
         val builder = AlertDialog.Builder(ctx)
         with(builder)
         {
@@ -21,5 +17,4 @@ class DialogHandling : Activity() {
             show()
         }
     }
-
 }

@@ -1,23 +1,16 @@
 package com.example.tsaving
 
-import android.app.Activity
 import android.content.Intent
-import android.opengl.Visibility
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.tsaving.model.DashboardResponseModel
-import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.webservice.TsavingRepository
-import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_dashboard.*
-import kotlinx.android.synthetic.main.nav_header_drawer.*
-import java.util.*
 
 class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
     private var dashboardViewModel: DashboardViewModel = DashboardViewModel(TsavingRepository(), ::isLoading)
@@ -46,6 +39,7 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
         rv_dashboard_va_list.adapter = dashboardAdapter
         rv_dashboard_va_list.layoutManager = LinearLayoutManager(context)
 
+//        api listener
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
                 BaseApplication.accNumber = it.data.accountNum
@@ -56,10 +50,15 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
                 dashboardAdapter.vaList = it.data.virtualAccounts
                 dashboardAdapter.notifyDataSetChanged()
             })
+            errMessage.observe(this@DashboardFragment, Observer {
+                DialogHandling(::fetchApi).basicAlert(view.context, "Dashboard can not be loaded", it, "Reload")
+            })
         }
     }
 
-    fun isLoading(isFetching: Boolean) : Unit {
+    private fun fetchApi() = dashboardViewModel.fetchDashboardData()
+
+    private fun isLoading(isFetching: Boolean) : Unit {
         if (isFetching) {
             pb_dashboard.visibility = View.GONE
             cl_dashboard.visibility = View.VISIBLE
