@@ -16,10 +16,12 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
     //mutable val
     val _flagError = MutableLiveData<ErrorName>()
     val _statusTransfer = MutableLiveData<Boolean>()
+    val _statusPB = MutableLiveData<Boolean>()
 
     //imutable val
     val flagError: LiveData<ErrorName> = _flagError
     val statusTransfer: LiveData<Boolean> = _statusTransfer
+    val statusPB : LiveData<Boolean> = _statusPB
 
     fun callTransferToMain( va_num: String,amount: String){
         if(amount.isBlank()){
@@ -36,7 +38,9 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
         Log.i("login req :", request.toString())
 
         viewModelScope.launch {
+            _statusPB.value = true
             try {
+                _statusPB.value = false
                 val result = withContext(Dispatchers.IO) { repo.transferVa(request) }
                 if(result.status == "SUCCESS") {
                     _flagError.value = null
