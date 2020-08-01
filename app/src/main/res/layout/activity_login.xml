@@ -29,29 +29,47 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/img_login_view"/>
-
-    <EditText
-        android:id="@+id/et_login_email"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_login_email"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:hint="Email"
-        android:layout_margin="15dp"
-        android:background="@drawable/edittext_rounded"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_login_title"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <EditText
+            android:id="@+id/et_login_email"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="Email"
+            android:inputType="textEmailAddress"
+            />
+    </com.google.android.material.textfield.TextInputLayout >
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/layout_login_password"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:errorEnabled="true"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:passwordToggleEnabled="true"
+        app:layout_constraintTop_toBottomOf="@+id/layout_login_email"
+        app:layout_constraintEnd_toEndOf="parent">
+
 
     <EditText
         android:id="@+id/et_login_password"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:hint="Password"
-        android:layout_margin="15dp"
-        android:background="@drawable/edittext_rounded"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_login_email"
-        app:layout_constraintEnd_toEndOf="parent"/>
-
+        android:inputType="textPassword"
+        />
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/btn_login_signin"
         android:layout_width="match_parent"
@@ -63,7 +81,7 @@
         android:background="@drawable/button_rounded"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/et_login_password" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_login_password" />
 
     <TextView
         android:id="@+id/tv_login_question"
