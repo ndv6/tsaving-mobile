@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -56,6 +57,8 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 if(it.status == "SUCCESS"){
                     //save token
                     BaseApplication.token = it.data.token
+                    BaseApplication.custEmail = it.data.cust_email
+                    BaseApplication.custName = it.data.cust_name
                     finish()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
@@ -63,10 +66,31 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     startActivity(intent)
                 }
             })
+
+            statusPB.observe(this@LoginActivity, Observer {
+                if(it == true){
+                    isLoadingLogin(true)
+                }
+                else{
+                    isLoadingLogin(false)
+                }
+
+            })
         }
 
         btn_login_signin.setOnClickListener {
+//            isLoadingLogin(true)
             loginViewModel.validateLogin(et_login_email.text.toString(), et_login_password.text.toString())
         }
+
     } //end override oncreate
+    fun isLoadingLogin(isFetching: Boolean) {
+        if (isFetching) {
+            cl_login.visibility = View.GONE
+            pb_login.visibility = View.VISIBLE
+        } else {
+            cl_login.visibility = View.VISIBLE
+            pb_login.visibility = View.GONE
+        }
+    }
 }
