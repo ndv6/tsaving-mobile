@@ -36,6 +36,19 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         val tf_type = intent.getStringExtra("tfType")
         val va_num = intent.getStringExtra("va_num")
         val va_label = intent.getStringExtra("va_label")
+        //set page data here because it from previous page so dont need set at model
+        if(tf_type == "main-to-va"){
+            tv_tf_from_name.text = "Main Account"
+            tv_tf_from_num.text = BaseApplication.accNumber
+            tv_tf_to_name.text = va_label
+            tv_tf_to_num.text  = va_num
+        }
+        else{
+            tv_tf_from_name.text = va_label
+            tv_tf_from_num.text = va_num
+            tv_tf_to_name.text = "Main Account"
+            tv_tf_to_num.text  = BaseApplication.accNumber
+        }
 
 
         //live data must be handled here
@@ -49,19 +62,18 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
                 }
             })
+            flagError.observe(this@TransferActivity)
         }
 
         //logic for submit transfer
         btn_tf_transfer.setOnClickListener {
-            val checkAmount = transferViewModel.validateTransfer(et_tf_amount_input.text.toString())
-            if(!checkAmount){
-                layout_tf_amout.setError("Please Input Amount")
-//                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
-            } else{
-                layout_tf_amout.setError(null)
-                transferViewModel.apiTransferToVa("2007307563001", 5000)
-//                val statusTf = transferViewModel.statusTransfer // this is wrong bro
+            if(tf_type == "main-to-va"){
+                transferViewModel.callTransferToMain(va_num.toString(), et_tf_amount_input.text.toString())
             }
+            else if(tf_type == "main-to-va"){
+                //semangat :)
+            }
+
 
         }
         btn_tf_back.setOnClickListener {
