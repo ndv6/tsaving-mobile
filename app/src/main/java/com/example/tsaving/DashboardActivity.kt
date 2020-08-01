@@ -16,6 +16,7 @@ import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.webservice.TsavingRepository
 import de.hdodenhof.circleimageview.CircleImageView
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import kotlinx.android.synthetic.main.nav_header_drawer.*
 import java.util.*
 
 class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
