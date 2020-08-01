@@ -54,6 +54,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
             numFrom.observe(this@TransferActivity, Observer { tv_tf_from_num.text = it })
             labelTo.observe(this@TransferActivity, Observer { tv_tf_to_name.text = it })
             numTo.observe(this@TransferActivity, Observer { tv_to_tf_num.text = it })
+
         }
 
         //logic for submit transfer
@@ -67,9 +68,6 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                 transferViewModel.apiTransferToVa("2007307563001", 5000)
 //                val statusTf = transferViewModel.statusTransfer // this is wrong bro
             }
-
-
-
 
         }
         btn_tf_back.setOnClickListener {

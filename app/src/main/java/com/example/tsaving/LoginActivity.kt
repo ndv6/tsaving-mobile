@@ -47,10 +47,10 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     layout_login_email.setError("Invalid Email Format")
                 }
                 else if(flagStatus.value == ErrorName.ErrorNetwork){
-                    DialogHandling().basicAlert(this@LoginActivity, "Notification", "Network Error", "close")
+                    DialogHandling({}).basicAlert(this@LoginActivity, "Notification", "Network Error", "close")
                 }
                 else if(flagStatus.value == ErrorName.InvalidLogin){
-                    DialogHandling().basicAlert(this@LoginActivity, "Notification", "Wrong Username Or Password", "close")
+                    DialogHandling({}).basicAlert(this@LoginActivity, "Notification", "Wrong Username / Password", "close")
                 }
             })
             dataLogin.observe(this@LoginActivity, Observer {
