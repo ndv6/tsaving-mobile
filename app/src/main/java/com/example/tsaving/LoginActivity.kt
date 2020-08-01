@@ -30,7 +30,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
         tv_login_signup.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
-
         loginViewModel.apply {
             flagStatus.observe(this@LoginActivity, Observer {
                 if(flagStatus.value == ErrorName.NullEmailAndPass){
@@ -59,7 +58,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     BaseApplication.token = it.data.token
                     BaseApplication.custEmail = it.data.cust_email
                     BaseApplication.custName = it.data.cust_name
-                    finish()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
