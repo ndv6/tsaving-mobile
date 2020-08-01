@@ -29,7 +29,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
         tv_login_signup.setOnClickListener {
             startActivity(Intent(this@LoginActivity, RegisterActivity::class.java))
         }
-
         loginViewModel.apply {
             flagStatus.observe(this@LoginActivity, Observer {
                 if(flagStatus.value == ErrorName.NullEmailAndPass){

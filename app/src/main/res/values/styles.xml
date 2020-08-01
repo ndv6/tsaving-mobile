@@ -32,4 +32,3 @@
         <item name="android:textStyle">bold</item>
         <item name="android:layout_marginStart">20sp</item>
     </style>
-</resources>
