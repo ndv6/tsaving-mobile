@@ -15,4 +15,10 @@
     <color name="colorPinkLight">#eec3ca</color>
     <color name="colorBlush">#ea7484</color>
     <color name="colorChampagne">#fbde93</color>
+    <color name="colorBlue">#D6EAF8</color>
+    <color name="colorRed">#FADBD8</color>
+    <color name="colorGreen">#D4EFDF</color>
+    <color name="colorYellow">#FCF3CF</color>
+    <color name="colorOrange">#FAE5D3</color>
+    <color name="colorPurple">#EBDEF0</color>
 </resources>
