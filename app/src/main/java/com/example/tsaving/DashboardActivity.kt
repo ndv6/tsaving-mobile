@@ -48,11 +48,11 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
 
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
-                tv_dashboard_name.text = it.data.cust_name
-                tv_dashboard_email.text = it.data.cust_email
-                tv_dashboard_acc_num.text = it.data.account_num
-                tv_dashboard_acc_balance.text = "Rp. ${it.data.account_balance}"
-                dashboardAdapter.vaList = it.data.virtual_accounts
+                tv_dashboard_name.text = it.data.custName
+                tv_dashboard_email.text = it.data.custEmail
+                tv_dashboard_acc_num.text = it.data.accountNum
+                tv_dashboard_acc_balance.text = "Rp. ${it.data.accountBalance}"
+                dashboardAdapter.vaList = it.data.virtualAccounts
                 dashboardAdapter.notifyDataSetChanged()
             })
         }
