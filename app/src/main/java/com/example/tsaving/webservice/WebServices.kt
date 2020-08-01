@@ -73,7 +73,7 @@ interface WebServices {
     suspend fun createVa()
 
     @PUT(UPDATE_VA)
-    suspend fun updateVa(@Path("va_num") vaNum: String, @Body body:EditVaRequestModel) : EditVaResponse
+    suspend fun updateVa(@Path("va_num") vaNum: String, @Body body:EditVaRequestModel, @Header("Authorization") token: String) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)

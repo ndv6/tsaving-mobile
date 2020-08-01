@@ -42,14 +42,12 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope {
             android.R.layout.simple_spinner_item
         )
 
-        spinner.setSelection(adapter.)
+//        spinner.setSelection(adapter.)
 
 
 //        sp_vae_color.selectedItem
 //
 //
-
-
 
         btn_vae_save.setOnClickListener {
             val label = et_vae_label.text.toString()
