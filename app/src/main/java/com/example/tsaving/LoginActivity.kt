@@ -3,13 +3,13 @@ package com.example.tsaving
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
+import android.os.Handler
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.LoginViewModel
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.verify_email.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
@@ -64,10 +64,33 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     startActivity(intent)
                 }
             })
+
+            statusPB.observe(this@LoginActivity, Observer {
+                if(it == true){
+                    isLoadingLogin(true)
+                }
+                else{
+                    Handler().postDelayed({
+                        isLoadingLogin(false)
+                    }, 1000)
+                }
+
+            })
         }
 
         btn_login_signin.setOnClickListener {
+//            isLoadingLogin(true)
             loginViewModel.validateLogin(et_login_email.text.toString(), et_login_password.text.toString())
         }
+
     } //end override oncreate
+    fun isLoadingLogin(isFetching: Boolean) {
+        if (isFetching) {
+            cl_login.visibility = View.GONE
+            pb_login.visibility = View.VISIBLE
+        } else {
+            cl_login.visibility = View.VISIBLE
+            pb_login.visibility = View.GONE
+        }
+    }
 }
