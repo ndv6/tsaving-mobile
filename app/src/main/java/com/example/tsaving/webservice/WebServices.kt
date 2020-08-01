@@ -2,8 +2,11 @@ package com.example.tsaving.webservice
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.example.tsaving.BaseApplication
+import com.example.tsaving.ErrorDialogHandling
 import com.example.tsaving.LoginActivity
+import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
@@ -13,15 +16,12 @@ import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.EditVaResponse
+import com.example.tsaving.model.response.LoginResponseModel
 import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-
-const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTM6MDg6MDkuNTQ1NzgrMDc6MDAifQ.YtDrManolqO4-VH6hf-3bzIC1qEw52uaKvq3JQF6qgU"
-const val accept = "Accept: application/json"
 
 interface WebServices {
     companion object {
@@ -46,7 +46,7 @@ interface WebServices {
     suspend fun register()
 
     @POST(LOGIN)
-    suspend fun login(@Body body: LoginRequestModel): ResponseModel
+    suspend fun login(@Body body: LoginRequestModel): LoginResponseModel
 
     @POST(VERIFY_ACCOUNT)
     suspend fun verifyAccount(@Body body: VerifyRequestModel): VerifyAccountResponseModel
@@ -58,7 +58,7 @@ interface WebServices {
     suspend fun updateProfile()
 
     @GET(DASHBOARD)
-    suspend fun dashboard() : ResponseModel
+    suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
 
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()
@@ -90,12 +90,11 @@ interface WebServices {
 
 class HeaderInterceptor: Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
-//        set your login token
+//        token parse from parameter
         var req = chain.request()
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
-            .header("Authorization", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxLCJhY2NvdW50X251bSI6IjIwMDczMDE4NzYiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMDo0NDoxNy45NjA3NjMrMDc6MDAifQ.sTkk_OA2hf_olFaxlX6wtrSerCNO___5IREWV3L13_Q")
             .build()
         return chain.proceed(req)
     }
