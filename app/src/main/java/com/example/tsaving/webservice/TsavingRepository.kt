@@ -19,7 +19,7 @@ class TsavingRepository {
     suspend fun updatePhoto() = webService.updatePhoto()
     suspend fun transferVa() = webService.transferToVa()
     suspend fun listVa() = webService.listVa()
-    suspend fun createVa(body: AddVaRequestModel) = webService.createVa(body)
+    suspend fun createVa(body: AddVaRequestModel) = webService.createVa(body,BaseApplication.token)
     suspend fun updateVa(vaNum: String) = webService.updateVa(vaNum)
     suspend fun transferVaToMainAccount(vaNum: String) = webService.transferVaToMainAccount(vaNum)
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)

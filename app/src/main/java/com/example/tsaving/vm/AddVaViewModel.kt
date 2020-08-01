@@ -33,23 +33,26 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
         if(label.isBlank()) {
             _errorLabel.value = "Please input this field"
         }
+        else{
+            var repo = TsavingRepository()
 
-        var repo = TsavingRepository()
+            var request = AddVaRequestModel(color,label)
 
-        var request = AddVaRequestModel(color,label)
-
-        viewModelScope.launch{
-            try {
-                val result = withContext(Dispatchers.IO){repo.createVa(request)}
-                Log.i("result", result.message.toString())
-                _status.setValue(true)
-            } catch (t: Throwable) {
-                when (t) {
-                    is IOException -> Log.i("io exception", t.message.toString())
-                    is HttpException -> _status.setValue(false)
+            viewModelScope.launch{
+                try {
+                    val result = withContext(Dispatchers.IO){repo.createVa(request)}
+                    Log.i("result", result.message.toString())
+                    _status.setValue(true)
+                } catch (t: Throwable) {
+                    when (t) {
+                        is IOException -> Log.i("io exception", t.message.toString())
+                        is HttpException -> _status.setValue(false)
+                    }
                 }
             }
         }
+
+
     }
 
 

@@ -70,7 +70,7 @@ interface WebServices {
     suspend fun listVa()
 
     @POST(CREATE_VA)
-    suspend fun createVa(@Body body:AddVaRequestModel) : AddVaResponseModel
+    suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : AddVaResponseModel
 
     @PUT(UPDATE_VA)
     suspend fun updateVa(@Path("va_num") vaNum: String)

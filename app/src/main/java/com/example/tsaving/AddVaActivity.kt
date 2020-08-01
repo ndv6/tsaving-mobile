@@ -1,14 +1,12 @@
 package com.example.tsaving
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.tsaving.vm.AddVaViewModel
 import kotlinx.android.synthetic.main.activity_add_va.*
 
@@ -32,9 +30,13 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
         })
         addVaViewModel.status.observe(this, Observer { it ->
             if(it == true){
-                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
+//                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
+//                    cl_addva.visibility = View.GONE
+//                    pb_addva.visibility = View.VISIBLE
+                    startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
-                ErrorDialogHandling(requireContext(), "Ga bisa", "No").errorResponseDialog()
+                ErrorDialogHandling(requireContext(), "An Error has occured.", "No").errorResponseDialog()
+                DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
             }
         })
 
@@ -46,7 +48,6 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             val label = et_addva_label.text.toString()
             addVaViewModel.validateAddVa(label,color)
         }
-
         super.onViewCreated(view, savedInstanceState)
     }
 }
