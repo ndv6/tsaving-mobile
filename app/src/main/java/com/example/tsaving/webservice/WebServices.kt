@@ -20,7 +20,7 @@ import retrofit2.http.*
 
 
 const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wNy0zMFQyMTowMDoyNy4xMzExNzkrMDc6MDAifQ.jrRQ4wpR1cbinDSmi9KrGhstVuB58vK6Ef8t1VbHZw0"
+const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjo5LCJhY2NvdW50X251bSI6IjIwMDcyMzg3NTgiLCJleHBpcmVkIjoiMjAyMC0wOC0wMVQxNTo1OTo1Ny44NDE3NTQrMDc6MDAifQ.wZ9CFHdDHJ-e-5wMSUnZrJTpZYsbb_FgrwUFEg7hqGA"
 const val accept = "Accept: application/json"
 
 interface WebServices {
