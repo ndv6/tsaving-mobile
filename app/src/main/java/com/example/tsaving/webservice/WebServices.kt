@@ -2,16 +2,22 @@ package com.example.tsaving.webservice
 
 import android.content.Context
 import android.content.Intent
+import android.widget.Toast
 import com.example.tsaving.BaseApplication
+import com.example.tsaving.ErrorDialogHandling
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
+import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
+import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.EditVaResponse
+import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.LoginResponseModel
 import com.example.tsaving.model.response.VerifyAccountResponseModel
 import retrofit2.Retrofit
@@ -66,14 +72,14 @@ interface WebServices {
     suspend fun listVa()
 
     @POST(CREATE_VA)
-    suspend fun createVa(body: AddVaRequestModel)
+    suspend fun createVa(@Body body:AddVaRequestModel) : AddVaResponseModel
 
     @PUT(UPDATE_VA)
     suspend fun updateVa(
         @Path("va_num") vaNum: String,
-        body: EditVaRequestModel,
-        token: String
-    )
+        @Body body: EditVaRequestModel,
+        @Header("Authorization") token: String
+    ) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)

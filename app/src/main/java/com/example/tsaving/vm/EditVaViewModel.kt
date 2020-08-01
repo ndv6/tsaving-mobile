@@ -10,12 +10,17 @@ import retrofit2.HttpException
 import java.io.IOException
 import kotlin.coroutines.CoroutineContext
 
-class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String) : ViewModel(), CoroutineScope {
+class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String) : ViewModel(), CoroutineScope, LifecycleObserver {
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
     private var _data = MutableLiveData<EditVaResponse>()
     var data : LiveData<EditVaResponse> = _data
+
+    private var _statusPB = MutableLiveData<Boolean>()
+    var statusPB : LiveData<Boolean> = _statusPB
+
+    fun validateEditVa(label: String) :Boolean = !label.isBlank()
 
     fun fetchVaEditData(vaLabel:String, vaColor:String){
 
@@ -24,7 +29,7 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
         viewModelScope.launch {
             try {
                 val result= withContext(Dispatchers.IO) {tsRepo.updateVa(vaNum, request)}
-//                _data.value = result
+                _data.value = result
                 Log.i("result", result.toString())
             }catch (t: Throwable){
                 when (t) {
@@ -35,5 +40,4 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
         }
     }
 
-    fun validateEditVa(label: String) :Boolean = !label.isBlank()
 }

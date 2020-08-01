@@ -2,8 +2,12 @@ package com.example.tsaving.webservice
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.model.DashboardResponseModel
+import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.EditVaResponse
+import com.example.tsaving.model.response.AddVaResponseModel
+import retrofit2.http.Body
 
 class TsavingRepository {
     private var webService: WebServices = webServices
@@ -18,7 +22,7 @@ class TsavingRepository {
     suspend fun transferVa() = webService.transferToVa()
     suspend fun listVa() = webService.listVa()
     suspend fun createVa(body: AddVaRequestModel) = webService.createVa(body)
-    suspend fun updateVa(vaNum: String) = webService.updateVa(vaNum)
+    suspend fun updateVa(vaNum: String, body: EditVaRequestModel) : EditVaResponse = webService.updateVa(vaNum, body, BaseApplication.token)
     suspend fun transferVaToMainAccount(vaNum: String) = webService.transferVaToMainAccount(vaNum)
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
     suspend fun listTransactionHistory(page: Int) = webService.listTransactionHistory(page)
