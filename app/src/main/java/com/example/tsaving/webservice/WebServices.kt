@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
+import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
@@ -17,10 +18,6 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
 
-
-const val contentType = "Content-Type: application/json"
-const val jwtAuth = "Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJjdXN0X2lkIjoxMywiYWNjb3VudF9udW0iOiIyMDA3MjYyOTI1IiwiZXhwaXJlZCI6IjIwMjAtMDctMzBUMTM6MDg6MDkuNTQ1NzgrMDc6MDAifQ.YtDrManolqO4-VH6hf-3bzIC1qEw52uaKvq3JQF6qgU"
-const val accept = "Accept: application/json"
 
 interface WebServices {
     companion object {
@@ -57,7 +54,7 @@ interface WebServices {
     suspend fun updateProfile()
 
     @GET(DASHBOARD)
-    suspend fun dashboard() : ResponseModel
+    suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
 
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()

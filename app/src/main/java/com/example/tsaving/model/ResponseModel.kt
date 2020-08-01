@@ -3,10 +3,10 @@ package com.example.tsaving.model
 data class ResponseModel(
     val status: String,
     val message: String,
-    val data: DashboardResponse
+    val data: DashboardResponseModel
 )
 
-data class DashboardResponse (
+data class DashboardResponseModel(
     val cust_name: String,
     val cust_email: String,
     val account_num: String,
