@@ -58,7 +58,6 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     BaseApplication.token = it.data.token
                     BaseApplication.custEmail = it.data.cust_email
                     BaseApplication.custName = it.data.cust_name
-                    finish()
                     val intent = Intent(this@LoginActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
