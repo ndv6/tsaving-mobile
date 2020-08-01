@@ -22,14 +22,18 @@ class VADetailsActivity : AppCompatActivity() {
         }
         btn_vad_addbalance.setOnClickListener {
             val intent = Intent(this, TransferActivity::class.java)
-            //for modified later
-//            val dataParam = listOf("VA Tabungan Rumah", "200728001001", "Main Account", "200728001" )
-//            intent.putExtra("data_page", "ha")
-            intent.putExtra("tfType", "main-to-va" )
+            //this one will modified after vadetail merged to develop
+            intent.putExtra("tf_type", "main-to-va" )
+            intent.putExtra("va_num", "2007307563001" )
+            intent.putExtra("va_label", "Tabungan Rumah" )
             startActivity(intent)
         }
         btn_vad_trftomain.setOnClickListener {
             val intent = Intent(this, TransferActivity::class.java)
+            //this one will modified after vadetail merged to develop
+            intent.putExtra("tf_type", "va-to-main" )
+            intent.putExtra("va_num", "2007307563001" )
+            intent.putExtra("va_label", "Tabungan Rumah" )
             startActivity(intent)
         }
     }

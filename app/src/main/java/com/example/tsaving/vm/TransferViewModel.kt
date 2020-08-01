@@ -22,7 +22,6 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
     val flagError : LiveData<ErrorName> = _flagError
     val statusTransfer: LiveData<Boolean> = _statusTransfer
 
-
     fun validateTransfer(amount: String){
 
     }

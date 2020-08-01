@@ -33,28 +33,22 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         et_amount.addTextChangedListener(textWatcher)
         lifecycle.addObserver(transferViewModel)
         job = Job()
-        val transferType = intent.getStringExtra("tfType")
+        val tf_type = intent.getStringExtra("tfType")
+        val va_num = intent.getStringExtra("va_num")
+        val va_label = intent.getStringExtra("va_label")
 
-
-        //adding oncreate event from model
 
         //live data must be handled here
         transferViewModel.apply {
             statusTransfer.observe(this@TransferActivity, Observer {
                 if(statusTransfer.value == true){
-//                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Success", "Close")
                     finish()
                     startActivity(getIntent())
                     Toast.makeText(this@TransferActivity,"Transfer Success", Toast.LENGTH_SHORT).show()
                 }else{
-                    DialogHandling().basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer Failed", "Close")
                 }
             })
-            labelFrom.observe(this@TransferActivity, Observer { tv_tf_from_name.text = it })
-            numFrom.observe(this@TransferActivity, Observer { tv_tf_from_num.text = it })
-            labelTo.observe(this@TransferActivity, Observer { tv_tf_to_name.text = it })
-            numTo.observe(this@TransferActivity, Observer { tv_to_tf_num.text = it })
-
         }
 
         //logic for submit transfer
