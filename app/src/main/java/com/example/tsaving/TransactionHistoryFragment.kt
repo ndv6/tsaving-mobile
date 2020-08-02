@@ -58,10 +58,10 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
         rv_transaction_history?.addOnScrollListener(object : PaginationScrollListener(
             rv_transaction_history.layoutManager as LinearLayoutManager
         ) {
-            override fun loadItems(currentPage: Int, recyclerView: RecyclerView) {
+            override fun loadItems(page: Int, recyclerView: RecyclerView) {
                 transactionHistoryViewModel.apply {
                     if (!isLastPage) {
-                        transactionHistoryViewModel.listTransactionHistory(currentPage)
+                        transactionHistoryViewModel.listTransactionHistory(page)
                         transactionHistoryMutableLiveData.observe(
                             this@TransactionHistoryFragment,
                             Observer {

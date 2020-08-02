@@ -1,7 +1,6 @@
 package com.example.tsaving.webservice
 
 import com.example.tsaving.BaseApplication
-import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.*
 import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.GenericResponseModel
@@ -14,6 +13,7 @@ import com.example.tsaving.model.request.UpdatePasswordRequestModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
+import com.example.tsaving.model.response.DashboardResponseModel
 import com.example.tsaving.model.response.EditVaResponse
 
 class TsavingRepository {
