@@ -64,10 +64,10 @@ interface WebServices {
     suspend fun transferToVa()
 
     @GET(LIST_VA)
-    suspend fun listVa()
+    suspend fun listVa(@Header("Authorization") token: String)
 
     @POST(CREATE_VA)
-    suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : GenericResponseModel<AddVaResponseModel>
+    suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : GenericResponseModel<Any>
 
     @PUT(UPDATE_VA)
     suspend fun updateVa(@Path("va_num") vaNum: String)

@@ -31,10 +31,7 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
                 newErrorName -> layout_addva_label.setError(newErrorName)
         })
         addVaViewModel.status.observe(this, Observer { it ->
-            if(it == true){
-//                loading(1)
-//                startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
-            }else{
+            if(it == false){
                 loading(0)
                 DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
             }

@@ -22,13 +22,12 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
     private val _label = MutableLiveData<String>()
     private val _errorLabel = MutableLiveData<String>()
     private val _status = MutableLiveData<Boolean>()
-    private val _responseVA = MutableLiveData<GenericResponseModel<AddVaResponseModel>>()
-
+    private val _responseVA = MutableLiveData<GenericResponseModel<Any>>()
 
     val label: LiveData<String> = _label
     val errorLabel: LiveData<String> = _errorLabel
     val status: LiveData<Boolean> = _status
-    val responseVA : LiveData<GenericResponseModel<AddVaResponseModel>> = _responseVA
+    val responseVA : LiveData<GenericResponseModel<Any>> = _responseVA
 
     //isblank return false kalau isblank.
     fun validateAddVa(label: String, color: String){
