@@ -8,6 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
+import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.TransferViewModel
 import kotlinx.android.synthetic.main.activity_transfer.*
 import java.text.NumberFormat
@@ -25,6 +26,9 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         et_amount.addTextChangedListener(textWatcher)
         lifecycle.addObserver(transferViewModel)
 
+//        get virtual account data from intent
+        val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
+
         //adding oncreate event from model
         transferViewModel.apply {
             labelFrom.observe(this@TransferActivity, Observer { tv_tf_from_name.text = it })
@@ -37,7 +41,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner {
         btn_tf_transfer.setOnClickListener {
             val checkAmount = transferViewModel.validateTransfer(et_tf_amount_input.text.toString())
             if(!checkAmount){
-                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
+//                DialogHandling().basicAlert(this@TransferActivity, "Notification", "Please Input Amount First", "Close")
             } else{
                 Toast.makeText(applicationContext,"Good To Go", Toast.LENGTH_SHORT).show()
             }
