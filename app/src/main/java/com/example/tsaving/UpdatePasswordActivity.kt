@@ -1,6 +1,6 @@
 package com.example.tsaving
 
-import android.content.Intent
+import android.app.AlertDialog
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -15,7 +15,6 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_password)
-//        lifecycle.addObserver(updatePasswordViewModel)
 
         btn_up_back.setOnClickListener{
             finish()
@@ -26,10 +25,16 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
         updatePasswordViewModel.errorConfirmPassword.observe(this, Observer { newErrorName -> layout_confirmpassword.setError(newErrorName)})
 
         updatePasswordViewModel.status.observe(this, Observer { it ->
-            if(it == true){
-                ErrorDialogHandling(this,"Bisa Nih", "Yes").errorResponseDialog()
-            }else{
-                ErrorDialogHandling(this,"Gabisa Nih", "No").errorResponseDialog()
+            if(it == true) {
+                AlertDialog.Builder(this)
+                    .setTitle("Success")
+                    .setMessage("Password Updated Successfully")
+                    .setPositiveButton(
+                        "OK"
+                    ) { dialog, which -> finish() }
+                    .show()
+            } else {
+                ErrorDialogHandling(this@UpdatePasswordActivity,"Failed", "Unable to Update Password").errorResponseDialog()
             }
         })
 

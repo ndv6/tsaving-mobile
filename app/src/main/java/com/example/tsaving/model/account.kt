@@ -1,10 +1,14 @@
 package com.example.tsaving.model
 
+import com.google.gson.annotations.SerializedName
 import java.util.*
 
-class Account (accId: Int, accNum: String, accBalance: Int, created: Date) {
-    var accountId: Int = accId
-    var accountNum: String = accNum
-    var accountBalance: Int = accBalance
-    var createdAt: Date = created
-}
+class Account (
+    @SerializedName("account_id")
+    val accountId: Int?,
+    @SerializedName("account_num")
+    val accountNum: String?,
+    @SerializedName("account_balance")
+    val accountBalance: Int?,
+    @SerializedName("created_at")
+    val createdAt: Date)

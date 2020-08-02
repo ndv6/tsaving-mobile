@@ -36,39 +36,50 @@ class UpdatePasswordViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
     fun onValidate(oldPassword: String, newPassword: String, confirmPassword: String) {
         job = Job()
         var repo = TsavingRepository()
+        var confirm = true
         if (oldPassword.isBlank()) {
             _errorOldPassword.value = ErrorPassword.ISBLANK.message
+            confirm = false
         }
         if (newPassword.isBlank()) {
             _errorNewPassword.value = ErrorPassword.ISBLANK.message
+            confirm = false
         }
         if (confirmPassword.isBlank()) {
             _errorConfirmPassword.value = ErrorPassword.ISBLANK.message
+            confirm = false
         }
 
         if (!oldPassword.isBlank() && !newPassword.isBlank() && !confirmPassword.isBlank()) {
             if (confirmPassword != newPassword) {
                 _errorConfirmPassword.value = ErrorPassword.NOTMATCH.message
+                confirm = false
             }
         }
 
-        var request = UpdatePasswordRequestModel(oldPassword, newPassword)
-        Log.i("request", request.toString())
-        viewModelScope.launch {
-            try {
-                val result = withContext(Dispatchers.IO) {
-                    repo.updatePassword(request)
-                }
-                Log.i("response", result.toString())
-                _status.setValue(true)
-            } catch (t: Throwable) {
-                when (t) {
-                    is IOException -> Log.i("Error", t.message.toString())
-                    is HttpException -> {
-                        _status.setValue(false)
+        if (confirm == true) {
+            var request = UpdatePasswordRequestModel(oldPassword, newPassword)
+            Log.i("request", request.toString())
+            viewModelScope.launch {
+                try {
+                    val result = withContext(Dispatchers.IO) {
+                        repo.updatePassword(request)
+                    }
+                    Log.i("response", result.toString())
+                    _status.setValue(true)
+                } catch (t: Throwable) {
+                    when (t) {
+                        is IOException -> Log.i("Error", t.message.toString())
+                        is HttpException -> {
+                            _status.setValue(false)
+                            Log.i("Error", t.message.toString())
+                        }
                     }
                 }
             }
+        } else {
+            Log.i("Error", "Error in Update Password Confirmation")
+            _status.setValue(false)
         }
     }
 }
