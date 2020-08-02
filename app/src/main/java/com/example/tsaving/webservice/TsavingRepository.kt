@@ -13,6 +13,7 @@ class TsavingRepository {
     suspend fun register(body: RegisterRequestModel) = webService.register(body)
     suspend fun login(body: LoginRequestModel) = webService.login(body)
     suspend fun verifyAccount(body: VerifyRequestModel) = webService.verifyAccount(body)
+    suspend fun updatePassword(body: UpdatePasswordRequestModel) = webService.updatePassword(BaseApplication.token, body)
     suspend fun viewProfile() = webService.viewProfile(BaseApplication.token)
     suspend fun updateProfile(body: EditProfileRequestModel) = webService.updateProfile(BaseApplication.token, body)
     suspend fun dashboard() : DashboardResponseModel = webService.dashboard(BaseApplication.token)

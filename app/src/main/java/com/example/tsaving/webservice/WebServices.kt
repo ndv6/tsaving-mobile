@@ -9,12 +9,7 @@ import com.example.tsaving.model.request.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.model.response.*
-import com.example.tsaving.model.response.AddVaResponseModel
-import com.example.tsaving.model.response.*
-import com.example.tsaving.model.response.RegisterResponse
-import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -28,6 +23,7 @@ interface WebServices {
         const val VIEW_PROFILE = "me/profile"
         const val UPDATE_PHOTO = "me/update-photo"
         const val UPDATE_PROFILE = "me/update"
+        const val UPDATE_PASSWORD = "me/update-password"
         const val TRANSFER_VA = "me/transfer-va"
         const val LIST_VA = "me/va"
         const val CREATE_VA = "me/va/create"
@@ -53,6 +49,9 @@ interface WebServices {
 
     @PUT(UPDATE_PROFILE)
     suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : GenericResponseModel<Any>
+
+    @PATCH(UPDATE_PASSWORD)
+    suspend fun  updatePassword(@Header("Authorization") token: String, @Body body: UpdatePasswordRequestModel): GenericResponseModel<Any>
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
