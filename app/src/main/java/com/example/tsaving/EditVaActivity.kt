@@ -31,20 +31,20 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_edit)
         lifecycle.addObserver(editVaViewModel)
-        job = Job()
-
-        btn_vae_back.setOnClickListener{
-            finish()
-        }
 
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
-
-        editVaViewModel.vaNum = va.vaNum.toString()
         val adapter = ArrayAdapter.createFromResource(
             this@EditVaActivity,
             R.array.color_va,
             android.R.layout.simple_spinner_item
         )
+
+        btn_vae_back.setOnClickListener{
+            finish()
+        }
+
+
+        editVaViewModel.vaNum = va.vaNum.toString()
 
 
         tv_vae_num.text = va.vaNum
@@ -61,14 +61,23 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 til_vae_label.setError("Please Input New Label")
             } else {
                 editVaViewModel.fetchVaEditData(newVaLabel, newVaColor)
-                val intent = Intent(this@EditVaActivity, MainActivity::class.java)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                startActivity(intent)
             }
         }
 
         editVaViewModel.apply {
+            flagStatus.observe(this@EditVaActivity, androidx.lifecycle.Observer {
+                if(it == false){
+                    DialogHandling({}).basicAlert(this@EditVaActivity, "Notification", "Network Error", "close")
+                }
+            })
+            data.observe(this@EditVaActivity, androidx.lifecycle.Observer {
+                if (it.status == "SUCCESS"){
+                    val intent = Intent(this@EditVaActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
+            })
             statusPB.observe(this@EditVaActivity, androidx.lifecycle.Observer {
                 if(it == true){
                     isLoadingEditVa(true)

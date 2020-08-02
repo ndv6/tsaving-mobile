@@ -20,6 +20,9 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
     private var _statusPB = MutableLiveData<Boolean>()
     var statusPB : LiveData<Boolean> = _statusPB
 
+    private var _flagStatus = MutableLiveData<Boolean>()
+    var flagStatus : LiveData<Boolean> = _flagStatus
+
     fun validateEditVa(label: String) :Boolean = !label.isBlank()
 
     fun fetchVaEditData(vaLabel:String, vaColor:String){
@@ -30,13 +33,22 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
             try {
                 _statusPB.value = false
                 val result= withContext(Dispatchers.IO) {tsRepo.updateVa(vaNum, request)}
-                _data.value = result
-                Log.i("result", result.toString())
+                if (result.status == "SUCCESS"){
+                    _flagStatus.value = true
+                    _data.value = result
+                    Log.i("result", result.toString())
+                }
             }catch (t: Throwable){
                 _statusPB.value = false
                 when (t) {
-                    is IOException -> println(t.message)
-                    is HttpException -> println(t.message)
+                    is IOException -> {
+                        _flagStatus.value = false
+                        println(t.message)
+                    }
+                    is HttpException -> {
+                        _flagStatus.value = false
+                        println(t.message)
+                    }
                 }
             }
         }
