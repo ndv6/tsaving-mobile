@@ -2,9 +2,9 @@ package com.example.tsaving.vm
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.webservice.TsavingRepository
-import kotlin.coroutines.CoroutineContext
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
@@ -14,32 +14,38 @@ class OTPViewModel : ViewModel(),
     LifecycleObserver {
 
     var repo = TsavingRepository()
-    var _error  = MutableLiveData<String>()
+    var _error  = MutableLiveData<ErrorName>()
     var isValid = MutableLiveData<Boolean>()
+    var statusPB = MutableLiveData<Boolean>()
 
-    fun onValidate(otp: String) {
+    fun onValidate(otp: String, email: String) {
+        statusPB.value = true
         if (otp.isBlank()) {
-            _error.value = "OTP can not be empty"
+            _error.value = ErrorName.NullOTP
             isValid.value = false
         } else {
-//            TODO : get token and email from view
-            var request = VerifyRequestModel("testing", "testing@apa.com")
+            var request = VerifyRequestModel(otp, email)
             viewModelScope.launch{
                 try {
+                    statusPB.value = false
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
                     if (result.status == "SUCCESS") {
+                        _error.setValue(null)
                         isValid.setValue(true)
+                    } else {
+                        _error.setValue(ErrorName.FailedToRecognizeOTP)
+                        isValid.setValue(false)
                     }
+                    return@launch
                 } catch (t: Throwable) {
+                    statusPB.value = false
                     when (t) {
                         is IOException -> {
-                            _error.setValue("Network Error")
+                            _error.setValue(ErrorName.NetworkError)
                             isValid.setValue(false)
                         }
                         is HttpException -> {
-                            val code = t.code()
-                            val errMsg = t.response().toString()
-                            _error.setValue("HTTP Error $code $errMsg")
+                            _error.setValue(ErrorName.FailedToRecognizeOTP)
                             isValid.setValue(false)
                         }
                     }

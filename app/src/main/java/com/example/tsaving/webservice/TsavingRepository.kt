@@ -1,18 +1,18 @@
 package com.example.tsaving.webservice
-import com.example.tsaving.model.request.AddVaRequestModel
+
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.model.DashboardResponseModel
+import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.request.RegisterRequestModel
 import com.example.tsaving.model.response.EditVaResponse
-import com.example.tsaving.model.response.AddVaResponseModel
-import retrofit2.http.Body
 
 class TsavingRepository {
     private var webService: WebServices = webServices
 
-    suspend fun register() = webService.register()
+    suspend fun register(body: RegisterRequestModel) = webService.register(body)
     suspend fun login(body: LoginRequestModel) = webService.login(body)
     suspend fun verifyAccount(body: VerifyRequestModel) = webService.verifyAccount(body)
     suspend fun viewProfile() = webService.viewProfile()

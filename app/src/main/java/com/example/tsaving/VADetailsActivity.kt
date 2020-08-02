@@ -16,8 +16,7 @@ class VADetailsActivity : AppCompatActivity() {
         setContentView(R.layout.activity_va_details)
 
         btn_vad_back.setOnClickListener{
-            val intent = Intent(this, MainActivity::class.java)
-            startActivity(intent)
+            finish()
         }
 
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())

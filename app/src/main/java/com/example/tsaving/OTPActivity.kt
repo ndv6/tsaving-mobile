@@ -4,11 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.widget.Toast
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import androidx.lifecycle.lifecycleScope
 import com.example.tsaving.vm.OTPViewModel
 import kotlinx.android.synthetic.main.verify_email.*
 import kotlinx.coroutines.CoroutineScope
@@ -30,7 +29,32 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         job = Job()
 
         otpViewModel.apply {
-            _error.observe(this@OTPActivity, Observer { layout_otp_token })
+            _error.observe(this@OTPActivity, Observer {
+                if (it == ErrorName.NullOTP) {
+                    layout_otp_token.setError("OTP can not be blank")
+                } else if (it == ErrorName.NetworkError) {
+                    DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Network Error", "close")
+                } else if (it == ErrorName.FailedToRecognizeOTP) {
+                    DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Failed to recognize OTP", "close")
+                }
+            })
+
+            isValid.observe(this@OTPActivity, Observer {
+                if (isValid.value == true) {
+                    startActivity(Intent(this@OTPActivity, MainActivity::class.java))
+                    finish()
+                }
+            })
+
+            statusPB.observe(this@OTPActivity, Observer {
+                if(it == true){
+                    isLoadingLogin(true)
+                }
+                else{
+                    isLoadingLogin(false)
+                }
+
+            })
         }
 
         et_otp_token.addTextChangedListener(object: TextWatcher {
@@ -50,16 +74,18 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         })
 
         btn_otp_send.setOnClickListener {
-            otpViewModel.onValidate(et_otp_token.text.toString())
-            val valid = otpViewModel.isValid
-            val errorMsg = otpViewModel._error.value
-            if (valid.value == false) {
-                layout_otp_token.setError(errorMsg)
-            } else {
-                layout_otp_token.setError(null)
-                startActivity(Intent(this@OTPActivity, MainActivity::class.java))
-                finish()
-            }
+            val cust_email = intent.getStringExtra("cust_email").toString()
+            otpViewModel.onValidate(et_otp_token.text.toString(), cust_email)
+        }
+    }
+
+    fun isLoadingLogin(isFetching: Boolean) {
+        if (isFetching) {
+            layout_otp_token.visibility = View.GONE
+            pb_otp.visibility = View.VISIBLE
+        } else {
+            layout_otp_token.visibility = View.VISIBLE
+            pb_otp.visibility = View.GONE
         }
     }
 }
