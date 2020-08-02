@@ -6,6 +6,7 @@ import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
+import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
@@ -51,10 +52,10 @@ interface WebServices {
     suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
 
     @GET(VIEW_PROFILE)
-    suspend fun viewProfile()
+    suspend fun viewProfile(@Header("Authorization") token: String) : GenericResponseModel<ProfileResponse>
 
     @PUT(UPDATE_PROFILE)
-    suspend fun updateProfile()
+    suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : GenericResponseModel<Any>
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
