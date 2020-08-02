@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.tsaving.model.ErrorModel
-import com.example.tsaving.model.response.ResponseModel
+import com.example.tsaving.model.response.GenericResponseModel
 import com.example.tsaving.model.response.TransactionHistoryResponseData
 import com.example.tsaving.webservice.TsavingRepository
 import com.google.gson.Gson
@@ -59,7 +59,7 @@ class TransactionHistoryViewModel(
                     is HttpException -> {
                         val errorBody = Gson().fromJson(
                             t.response()!!.errorBody()!!.charStream(),
-                            ResponseModel::class.java
+                            GenericResponseModel::class.java
                         )
                         errorMutableLiveData.value = ErrorModel(t.message(), errorBody.message)
                     }
