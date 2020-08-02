@@ -1,6 +1,5 @@
 package com.example.tsaving
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
@@ -8,12 +7,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.LoginViewModel
+
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
     lateinit var job: Job
+
     private val loginViewModel = LoginViewModel()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 

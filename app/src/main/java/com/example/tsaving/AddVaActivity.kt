@@ -1,14 +1,14 @@
 package com.example.tsaving
 
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import com.example.tsaving.vm.AddVaViewModel
 import kotlinx.android.synthetic.main.activity_add_va.*
 
@@ -31,10 +31,18 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
                 newErrorName -> layout_addva_label.setError(newErrorName)
         })
         addVaViewModel.status.observe(this, Observer { it ->
-            if(it == true){
-                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
+            if(it == false){
+                loading(0)
+                DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
+            }
+        })
+
+        addVaViewModel.responseVA.observe(this, Observer {
+            if (it.status == "SUCCESS"){
+                loading(1)
+                startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
-                ErrorDialogHandling(requireContext(), "Ga bisa", "No").errorResponseDialog()
+                DialogHandling({}).basicAlert(requireContext(), "Notification", it.message, "close")
             }
         })
 
@@ -45,8 +53,19 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             val color = sp_addva_color.selectedItem.toString()
             val label = et_addva_label.text.toString()
             addVaViewModel.validateAddVa(label,color)
+
+        }
+        super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun loading(status :Int){
+        if (status == 1){
+            cl_addva.visibility = View.VISIBLE
+            pb_addva.visibility = View.GONE
+        }else{
+            cl_addva.visibility = View.GONE
+            pb_addva.visibility = View.VISIBLE
         }
 
-        super.onViewCreated(view, savedInstanceState)
     }
 }

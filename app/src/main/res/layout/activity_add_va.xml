@@ -8,7 +8,7 @@
     android:background="@color/colorWhite">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/constraintlayout_addva"
+        android:id="@+id/cl_addva"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     <TextView
@@ -101,13 +101,13 @@
         android:layout_height="wrap_content"
         android:text = "SUBMIT"
         android:layout_margin="50dp"
-        style = "@style/ButtonCancel"
+        style = "@style/ButtonPrimary"
         app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.core.widget.ContentLoadingProgressBar
-        android:id="@+id/progressbar_addva"
+        android:id="@+id/pb_addva"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
