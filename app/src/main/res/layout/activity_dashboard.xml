@@ -61,7 +61,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="10sp"
-            android:layout_marginStart="8sp"
             app:layout_constraintStart_toStartOf="@id/cv_dashboard_account"/>
 
         <View
