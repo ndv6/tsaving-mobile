@@ -9,15 +9,14 @@ import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
+import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttp
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
-import com.example.tsaving.model.response.AddVaResponseModel
-import com.example.tsaving.model.response.LoginResponseModel
-import com.example.tsaving.model.response.VerifyAccountResponseModel
+import com.example.tsaving.model.response.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -51,10 +50,10 @@ interface WebServices {
     suspend fun verifyAccount(@Body body: VerifyRequestModel): VerifyAccountResponseModel
 
     @GET(VIEW_PROFILE)
-    suspend fun viewProfile()
+    suspend fun viewProfile(@Header("Authorization") token: String) : ProfileResponseModel
 
     @PUT(UPDATE_PROFILE)
-    suspend fun updateProfile()
+    suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : EditProfileResponseModel
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel

@@ -37,9 +37,21 @@ enum class ErrorAddress(val message: String) {
     ISBLANK("Address cannot be blank")
 }
 
-class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), CoroutineScope, LifecycleObserver {
-    private val CHANNEL : String = "Android"
-    
+enum class ErrorNetwork(val message: String) {
+    NOCONNECTION("Failed to update, please check your connection"),
+}
+
+enum class UpdateStatus() {
+    INIT,
+    SUCCESS,
+    FAILED,
+    EMAIL_CHANGED
+}
+
+class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), CoroutineScope,
+    LifecycleObserver {
+    private val CHANNEL: String = "Android"
+
     private var job: Job = Job()
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
@@ -55,11 +67,17 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
     private var _errorAddress = MutableLiveData<String>()
     val errorAddress: LiveData<String> = _errorAddress
 
+    private var _errorNetwork = MutableLiveData<String>()
+    val errorNetwork: LiveData<String> = _errorNetwork
+
     private var _loadingPage = MutableLiveData<Boolean>()
     val loadingPage: LiveData<Boolean> = _loadingPage
 
     private var _loadingButton = MutableLiveData<Boolean>()
     val loadingButton: LiveData<Boolean> = _loadingButton
+
+    private var _updateStatus = MutableLiveData<UpdateStatus>()
+    val updateStatus: LiveData<UpdateStatus> = _updateStatus
 
     private var _data = MutableLiveData<ProfileResponseModel>()
     val data: LiveData<ProfileResponseModel> = _data
@@ -71,21 +89,26 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
         _errorAddress.value = null
         _loadingPage.value = true
         _loadingButton.value = false
+        _updateStatus.value = UpdateStatus.INIT
     }
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun fetchProfileData() {
         viewModelScope.launch {
             try {
-                val result = withContext(Dispatchers.IO) {tsRepo.viewProfile()}
+                val result = withContext(Dispatchers.IO) { tsRepo.viewProfile() }
                 Log.i("EditProfileViewModel", result.toString())
                 if (result.status == "SUCCESS") {
                     _data.value = result
                 }
             } catch (t: Throwable) {
                 when (t) {
-                    is IOException -> println(t.message)
-                    is HttpException -> println(t.message)
+                    is IOException -> {
+                        _errorNetwork.value = ErrorNetwork.NOCONNECTION.message
+                    }
+                    is HttpException -> {
+                        _errorNetwork.value = ErrorNetwork.NOCONNECTION.message
+                    }
                 }
             }
         }
@@ -180,23 +203,41 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
             }
         }
 
-        if (isValid) {
-            var request = EditProfileRequestModel(inputName, inputEmail, inputPhone, inputAddress, CHANNEL)
-            viewModelScope.launch {
-                try {
-                    val result = withContext(Dispatchers.IO) { tsRepo.updateProfile(request) }
-                    Log.i("EditProfileViewModel", result.toString())
-                } catch (t: Throwable) {
-                    when (t) {
-                        is IOException -> Log.i("EditProfileViewModel", t.message.toString())
-                        is HttpException -> Log.i("EditProfileViewModel", t.message.toString())
+        _loadingButton.value = false
+
+        return isValid
+    }
+
+    fun updateData(
+        inputName: String,
+        inputEmail: String,
+        inputPhone: String,
+        inputAddress: String
+    ) {
+        var request =
+            EditProfileRequestModel(inputName, inputEmail, inputPhone, inputAddress, CHANNEL)
+        Log.i("EditProfileViewModel", request.toString())
+        viewModelScope.launch {
+            try {
+                val result = withContext(Dispatchers.IO) { tsRepo.updateProfile(request) }
+                if (inputEmail != _data.value?.data?.cust_email) {
+                    _updateStatus.value = UpdateStatus.EMAIL_CHANGED
+                } else {
+                    _updateStatus.value = UpdateStatus.SUCCESS
+                }
+
+            } catch (t: Throwable) {
+                when (t) {
+                    is IOException -> {
+                        _errorNetwork.value = ErrorNetwork.NOCONNECTION.message
+                        _updateStatus.value = UpdateStatus.FAILED
+                    }
+                    is HttpException -> {
+                        _errorNetwork.value = ErrorNetwork.NOCONNECTION.message
+                        _updateStatus.value = UpdateStatus.FAILED
                     }
                 }
             }
         }
-
-        _loadingButton.value = false
-
-        return isValid
     }
 }
