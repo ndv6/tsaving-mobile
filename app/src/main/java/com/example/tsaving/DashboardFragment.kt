@@ -1,16 +1,22 @@
 package com.example.tsaving
 
 import android.content.Intent
+import android.graphics.Color
+import android.graphics.drawable.Drawable
 import android.os.Bundle
+import android.os.Parcelable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import java.util.ArrayList
 
 class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
     private var dashboardViewModel: DashboardViewModel = DashboardViewModel(TsavingRepository(), ::isLoading)
@@ -38,6 +44,19 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
         }
         rv_dashboard_va_list.adapter = dashboardAdapter
         rv_dashboard_va_list.layoutManager = LinearLayoutManager(context)
+
+        iv_dashboard_search.setOnClickListener{
+            val dbSearchFragment = DashboardSearchFragment()
+            val bundle = Bundle()
+            bundle.putParcelableArrayList("va_list", dashboardAdapter.vaList as ArrayList<VirtualAccount>)
+            dbSearchFragment.arguments = bundle
+            fragmentManager?.beginTransaction()?.replace(R.id.flContent, dbSearchFragment, "dashboard_search")?.commit()
+        }
+
+        iv_dashboard_sort.setOnClickListener{
+            dashboardAdapter.vaList = dashboardAdapter.vaList.reversed()
+            dashboardAdapter.notifyDataSetChanged()
+        }
 
 //        api listener
         dashboardViewModel.apply {

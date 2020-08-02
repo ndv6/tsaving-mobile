@@ -176,7 +176,8 @@
 
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:layout_marginEnd="5dp">
 
                 <TextView
                     android:id="@+id/tv_dashboard_static_va"
@@ -189,6 +190,25 @@
                     android:layout_marginStart="8sp"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintStart_toStartOf="parent"/>
+
+                <ImageView
+                    android:id="@+id/iv_dashboard_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_sort_24"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintBottom_toTopOf="@id/div_dashboard_va"/>
+
+                <ImageView
+                    android:id="@+id/iv_dashboard_search"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/ic_baseline_search_24"
+                    android:layout_marginEnd="10dp"
+                    app:layout_constraintBottom_toTopOf="@id/div_dashboard_va"
+                    app:layout_constraintEnd_toStartOf="@id/iv_dashboard_sort"
+                    app:layout_constraintTop_toTopOf="@id/iv_dashboard_sort" />
 
                 <View
                     android:id="@+id/div_dashboard_va"
