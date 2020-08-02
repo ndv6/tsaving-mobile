@@ -43,6 +43,7 @@ sealed class ErrorName{
     object ErrorBadRequest : ErrorName()
     object NullEmailAndPass : ErrorName()
     object InvalidTransferToVA : ErrorName()
+    object LoginUnAuthorized : ErrorName()
     object  Null: ErrorName()
 }
 //Thousand separator func

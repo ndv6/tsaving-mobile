@@ -69,7 +69,12 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
                     is HttpException -> {
                         val code = t.code()
                         val errMsg = t.response().toString()
-                        _flagStatus.value = ErrorName.InvalidLogin
+                        Log.i("response", code.toString())
+                        if (code == 401) {
+                            _flagStatus.value = ErrorName.LoginUnAuthorized
+                        } else {
+                            _flagStatus.value = ErrorName.InvalidLogin
+                        }
                     }
                 }
             }

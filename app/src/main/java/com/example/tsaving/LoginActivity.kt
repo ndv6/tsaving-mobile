@@ -51,6 +51,13 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 else if(flagStatus.value == ErrorName.InvalidLogin){
                     DialogHandling({}).basicAlert(this@LoginActivity, "Notification", "Wrong Username / Password", "close")
                 }
+                else if(flagStatus.value == ErrorName.LoginUnAuthorized){
+                    val intent = Intent(this@LoginActivity, OTPActivity::class.java)
+                    intent.putExtra("page", "login")
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                }
             })
             dataLogin.observe(this@LoginActivity, Observer {
                 if(it.status == "SUCCESS"){

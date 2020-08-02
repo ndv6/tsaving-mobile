@@ -28,6 +28,11 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         lifecycle.addObserver(otpViewModel)
         job = Job()
 
+        var page = intent.getStringExtra("page")
+        if (page == "login") {
+            tv_verify_login.visibility = View.VISIBLE
+        }
+
         otpViewModel.apply {
             _error.observe(this@OTPActivity, Observer {
                 if (it == ErrorName.NullOTP) {
