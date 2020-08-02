@@ -18,6 +18,7 @@ import com.example.tsaving.model.response.EditVaResponse
 
 class TsavingRepository {
     private var webService: WebServices = webServices
+    private var tnotifService: WebServices = tnotifServices
 
     suspend fun register(body: RegisterRequestModel) = webService.register(body)
     suspend fun login(body: LoginRequestModel) = webService.login(body)
@@ -34,5 +35,6 @@ class TsavingRepository {
     suspend fun updateVa(vaNum: String, body: EditVaRequestModel) : EditVaResponse = webService.updateVa(vaNum, body, BaseApplication.token)
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
     suspend fun listTransactionHistory(page: Int) = webService.listTransactionHistory(page)
-    suspend fun sendEmail() = webService.sendEmail()
+    suspend fun sendEmail(body: SendMailRequest) = tnotifService.sendEmail(body)
+    suspend fun getToken(body: GetTokenRequest) = webService.getToken(body)
 }

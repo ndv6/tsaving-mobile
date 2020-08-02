@@ -44,6 +44,8 @@ sealed class ErrorName{
     object NullEmailAndPass : ErrorName()
     object InvalidTransferToVA : ErrorName()
     object InvalidTransferToMain :ErrorName()
+    object LoginUnAuthorized : ErrorName()
+    object ErrorSendMail : ErrorName()
     object  Null: ErrorName()
 }
 //Thousand separator func
