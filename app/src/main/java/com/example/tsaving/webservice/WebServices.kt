@@ -5,16 +5,10 @@ import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
-import com.example.tsaving.model.request.AddVaRequestModel
-import com.example.tsaving.model.request.EditProfileRequestModel
-import com.example.tsaving.model.request.EditVaRequestModel
-import com.example.tsaving.model.request.LoginRequestModel
-import com.example.tsaving.model.request.TransferToVaRequestModel
-import com.example.tsaving.model.request.RegisterRequestModel
+import com.example.tsaving.model.request.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.AddVaResponseModel

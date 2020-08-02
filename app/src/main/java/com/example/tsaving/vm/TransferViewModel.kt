@@ -18,13 +18,15 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
     val _flagError = MutableLiveData<ErrorName>()
     val _statusTransfer = MutableLiveData<Boolean>()
     val _statusPB = MutableLiveData<Boolean>()
+    val _statusTransferMain = MutableLiveData<Boolean>()
 
     //imutable val
     val flagError: LiveData<ErrorName> = _flagError
     val statusTransfer: LiveData<Boolean> = _statusTransfer
     val statusPB : LiveData<Boolean> = _statusPB
+    val statusTransferMain : LiveData<Boolean> = _statusTransferMain
 
-    fun callTransferToMain(va_num: String,amount: String){
+    fun callTransferToVa(va_num: String, amount: String){
         if(amount.isBlank() || amount == "0"){
             _flagError.value = ErrorName.NullAmount
         }
@@ -33,7 +35,7 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
         }
     }
 
-    fun callVaToMain(va_num: String, amount: String){
+    fun callTransferToMain(va_num: String, amount: String){
         if(amount.isBlank() || amount == "0"){
             _flagError.value = ErrorName.NullAmount
         }else{
@@ -90,24 +92,24 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
                 Log.i( "res :" ,result.toString())
                 if(result.status == "SUCCESS") {
                     _flagError.value = null
-                    _statusTransfer.setValue(true)
+                    _statusTransferMain.setValue(true)
                 }
                 else {
                     _flagError.value = ErrorName.InvalidTransferToMain
-                    _statusTransfer.setValue(false)
+                    _statusTransferMain.setValue(false)
                 }
             }catch (t: Throwable) {
                 when (t) {
                     is IOException -> {
                         _flagError.value = ErrorName.ErrorNetwork
-                        _statusTransfer.setValue(false)
+                        _statusTransferMain.setValue(false)
                     }
                     is HttpException -> {
                         val code = t.code()
                         val errMsg = t.response().toString()
                         Log.i("Transfer to Main Error", t.response().toString())
                         _flagError.value = ErrorName.InvalidTransferToMain
-                        _statusTransfer.setValue(false)
+                        _statusTransferMain.setValue(false)
                     }
                 }
             }

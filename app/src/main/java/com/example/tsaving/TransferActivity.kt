@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 
 import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.TransferViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -68,6 +67,16 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     Toast.makeText(this@TransferActivity,"Successfully Add Balance To Your Virtual Account", Toast.LENGTH_LONG).show()
                 }
             })
+            statusTransferMain.observe(this@TransferActivity, Observer {
+                if(statusTransferMain.value == true){
+                    val intent = Intent(this@TransferActivity, MainActivity::class.java)
+                    //add flag intent to clear all previous activity so when user press back its not return to this activity again
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
+                    Toast.makeText(this@TransferActivity,"Successfully Move Balance to Main", Toast.LENGTH_LONG).show()
+                }
+            })
             flagError.observe(this@TransferActivity, Observer {
                 if(it == ErrorName.NullAmount){
                     layout_tf_amout.setError("Please Input Amount")
@@ -76,6 +85,9 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Network Error", "close")
                 }
                 else if(it == ErrorName.InvalidTransferToVA){
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer To Virtual Account Failed", "close")
+                }
+                else if(it == ErrorName.InvalidTransferToMain){
                     DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer To Main Account Failed", "close")
                 }
             })
@@ -93,11 +105,10 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         btn_tf_transfer.setOnClickListener {
             val amount = et_tf_amount_input.text.toString().replace(",", "")
             if(tf_type.toString() == "main-to-va"){
-                transferViewModel.callTransferToMain(va.vaNum.toString() , amount)
+                transferViewModel.callTransferToVa(va.vaNum.toString() , amount)
             }
             else if(tf_type.toString() == "va-to-main"){
-                //va to main disini
-                transferViewModel.callVaToMain(va.vaNum.toString(),amount)
+                transferViewModel.callTransferToMain(va.vaNum.toString(),amount)
             }
         }
         btn_tf_back.setOnClickListener {
