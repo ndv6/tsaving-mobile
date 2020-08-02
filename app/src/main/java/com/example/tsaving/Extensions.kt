@@ -23,6 +23,7 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
     })
 }
 
+
 sealed class ErrorName{
     object NotValidLength : ErrorName()
     object NotAlphaNumeric : ErrorName()
@@ -41,6 +42,7 @@ sealed class ErrorName{
     object ErrorNetwork : ErrorName()
     object ErrorBadRequest : ErrorName()
     object NullEmailAndPass : ErrorName()
+    object InvalidTransferToVA : ErrorName()
     object  Null: ErrorName()
 }
 //Thousand separator func
