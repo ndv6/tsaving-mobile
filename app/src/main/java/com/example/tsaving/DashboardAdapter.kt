@@ -27,17 +27,17 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
             tvLabel.text = va.vaLabel
             tvVaNum.text = va.vaNum
             tvBalance.text = "Rp. ${va.vaBalance}"
-            if (va.vaColor == "Red") {
+            if (va.vaColor.toLowerCase() == "red") {
                 tvColor.setBackgroundResource(R.color.colorRed)
-            } else if (va.vaColor == "Orange") {
+            } else if (va.vaColor.toLowerCase() == "orange") {
                 tvColor.setBackgroundResource(R.color.colorOrange)
-            } else if (va.vaColor == "Green") {
+            } else if (va.vaColor.toLowerCase() == "green") {
                 tvColor.setBackgroundResource(R.color.colorGreen)
-            }else if (va.vaColor == "Yellow"){
+            }else if (va.vaColor.toLowerCase() == "yellow"){
                 tvColor.setBackgroundResource(R.color.colorYellow)
-            }else if(va.vaColor == "Blue"){
+            }else if(va.vaColor.toLowerCase() == "blue"){
                 tvColor.setBackgroundResource(R.color.colorBlue)
-            }else if(va.vaColor == "Purple"){
+            }else if(va.vaColor.toLowerCase() == "purple"){
                 tvColor.setBackgroundResource(R.color.colorPurple)
             }
             cvDetail.setOnClickListener {
