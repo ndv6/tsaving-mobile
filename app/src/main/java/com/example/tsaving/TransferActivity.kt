@@ -56,25 +56,28 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         }
 
         transferViewModel.apply {
-            statusTransfer.observe(this@TransferActivity, Observer {
-                if(statusTransfer.value == true){
-                    println("status changed")
+            dataTFVA.observe(this@TransferActivity, Observer {
+                if(it.status == "SUCCESS"){
                     val intent = Intent(this@TransferActivity, MainActivity::class.java)
-                    //add flag intent to clear all previous activity so when user press back its not return to this activity again
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                    Toast.makeText(this@TransferActivity,"Successfully Add Balance To Your Virtual Account", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
                 }
             })
-            statusTransferMain.observe(this@TransferActivity, Observer {
-                if(statusTransferMain.value == true){
+            dataTFVAToMain.observe(this@TransferActivity, Observer {
+                if(it.status == "SUCCESS"){
                     val intent = Intent(this@TransferActivity, MainActivity::class.java)
-                    //add flag intent to clear all previous activity so when user press back its not return to this activity again
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                    Toast.makeText(this@TransferActivity,"Successfully Move Balance to Main", Toast.LENGTH_LONG).show()
+                    Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
+                }
+                else{
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
                 }
             })
             flagError.observe(this@TransferActivity, Observer {
