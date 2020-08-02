@@ -50,7 +50,7 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
             })
 
             isValid.observe(this@OTPActivity, Observer {
-                if (isValid.value == true) {
+                if (it == true) {
                     login(cust_email, cust_password)
                 }
             })

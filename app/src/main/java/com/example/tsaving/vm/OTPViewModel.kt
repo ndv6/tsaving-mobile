@@ -34,8 +34,6 @@ class OTPViewModel : ViewModel(),
             isValid.value = false
         } else {
             var request = VerifyRequestModel(otp, email)
-            Log.i("validate", otp)
-            Log.i("validate", email)
             viewModelScope.launch{
                 try {
                     statusPB.value = false
@@ -68,14 +66,11 @@ class OTPViewModel : ViewModel(),
     fun login(email: String, password: String){
         statusLogin.value = false
         var request = LoginRequestModel(email, password)
-        Log.i("request", email)
-        Log.i("request", password)
         viewModelScope.launch {
             try {
                 statusPB.value = false
                 val result = withContext(Dispatchers.IO) { repo.login(request) }
                 if(result.status == "SUCCESS"){
-                    isValid.setValue(true)
                     dataLogin.value = result
                     statusLogin.value = true
                 }
