@@ -51,6 +51,7 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
                 registerViewModel.dataRegister.observe(this, Observer { it ->
                     startActivity(Intent(this@RegisterActivity, OTPActivity::class.java))
                     intent.putExtra("cust_email", it.data.email)
+                    intent.putExtra("cust_password", et_register_password.text.toString())
                     finish()
                 })
             }

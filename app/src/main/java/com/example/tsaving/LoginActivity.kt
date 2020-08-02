@@ -54,6 +54,8 @@ class LoginActivity : AppCompatActivity(), CoroutineScope, LifecycleOwner {
                 else if(flagStatus.value == ErrorName.LoginUnAuthorized){
                     val intent = Intent(this@LoginActivity, OTPActivity::class.java)
                     intent.putExtra("page", "login")
+                    intent.putExtra("cust_email", et_login_email.text.toString())
+                    intent.putExtra("cust_password", et_login_password.text.toString())
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
