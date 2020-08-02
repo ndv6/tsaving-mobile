@@ -65,7 +65,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
-                    Toast.makeText(this@TransferActivity,"Transfer Success", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@TransferActivity,"Successfully Add Balance To Your Virtual Account", Toast.LENGTH_LONG).show()
                 }
             })
             flagError.observe(this@TransferActivity, Observer {

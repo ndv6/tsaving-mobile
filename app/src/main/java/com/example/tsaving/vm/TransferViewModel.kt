@@ -24,7 +24,7 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
     val statusPB : LiveData<Boolean> = _statusPB
 
     fun callTransferToMain( va_num: String,amount: String){
-        if(amount.isBlank()){
+        if(amount.isBlank() || amount == "0"){
             _flagError.value = ErrorName.NullAmount
         }
         else{
