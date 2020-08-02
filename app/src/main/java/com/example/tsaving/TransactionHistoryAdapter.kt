@@ -6,7 +6,6 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.tsaving.model.response.TransactionHistoryResponseData
-import java.util.*
 
 class TransactionHistoryAdapter :
     RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
@@ -25,10 +24,17 @@ class TransactionHistoryAdapter :
             val createdAt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_created_at)
 
-            tranAmt.text = position.transferAmount.currencyFormatter("IDR")
-            destAccount.text = position.destinationAccount
-            fromAccount.text = position.fromAccount
+            /* Placeholder string is used to prevent lint.
+                    the IDE does not allow concatenating string on TextView's setText
+             */
+            val fromAccountPlaceholderString = "From : " + position.fromAccount
+            val destAccountPlaceholderString = "To      : " + position.destinationAccount
+
+            destAccount.text = destAccountPlaceholderString
+            fromAccount.text = fromAccountPlaceholderString
             desc.text = position.description
+            tranAmt.text = position.transferAmount.currencyFormatter("IDR")
+            tranAmt.formatTransactionAmount(position.description)
             createdAt.text = position.createdAt.toString()
         }
     }
