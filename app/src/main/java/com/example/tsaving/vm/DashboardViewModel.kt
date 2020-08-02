@@ -31,7 +31,7 @@ class DashboardViewModel (private val tsRepo: TsavingRepository, val triggerPgbr
             triggerPgbr(false)
             try {
                 val result = withContext(Dispatchers.IO) {tsRepo.dashboard()}
-                _data.value = result
+//                _data.value = result
                 triggerPgbr(true)
             } catch (t: Throwable) {
                 _errMessage.value = t.message
