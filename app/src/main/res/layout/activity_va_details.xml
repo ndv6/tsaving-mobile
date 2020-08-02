@@ -57,7 +57,6 @@
                 />
         </androidx.appcompat.widget.Toolbar>
 
-
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id = "@+id/cl_title"
             android:layout_width="match_parent"
@@ -91,6 +90,7 @@
                 android:layout_height="match_parent"
                 android:drawableRight="@drawable/ic_baseline_edit_24"
                 android:backgroundTint="@color/colorWhite"
+                android:gravity="right"
                 app:layout_constraintStart_toEndOf="@+id/tv_vad_label"
                 app:layout_constraintEnd_toStartOf="@+id/btn_vad_delete"
 
@@ -101,6 +101,7 @@
                 android:layout_width="50dp"
                 android:layout_height="match_parent"
                 android:drawableLeft= "@drawable/ic_baseline_delete_24"
+                android:gravity="right"
                 android:backgroundTint="@color/colorWhite"
                 app:layout_constraintStart_toEndOf="@+id/btn_vad_edit"
                 app:layout_constraintEnd_toEndOf="@+id/cl_title"
@@ -109,6 +110,29 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:id = "@+id/cl_vadetails_colorlabel"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="0dp"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/cl_title"-->
+<!--            app:layout_constraintEnd_toEndOf="@id/cl_title"-->
+<!--            app:layout_constraintTop_toTopOf="@id/cl_title"-->
+<!--            app:layout_constraintBottom_toBottomOf="@id/cl_title"-->
+<!--            >-->
+
+<!--            <TextView-->
+<!--                android:layout_width="17dp"-->
+<!--                android:layout_height="75dp"-->
+<!--                android:background="@color/colorPrimary"-->
+<!--                app:layout_constraintBottom_toBottomOf="@id/cl_vadetails_colorlabel"-->
+<!--                app:layout_constraintStart_toStartOf="@id/cl_vadetails_colorlabel"-->
+<!--                app:layout_constraintTop_toTopOf="@id/cl_vadetails_colorlabel" />-->
+
+
+
+
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id ="@+id/cl_vadetails_content"
             android:layout_width="match_parent"
@@ -218,7 +242,7 @@
         />
     <Button
         android:id = "@+id/btn_vad_trftomain"
-        android:layout_width="60dp"
+        android:layout_width="50dp"
         android:layout_height="match_parent"
         android:gravity="center"
         android:drawableLeft= "@drawable/ic_baseline_compare_arrows_24"
