@@ -5,6 +5,8 @@ import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.RegisterRequestModel
+import com.example.tsaving.model.response.DataLogin
+import com.example.tsaving.model.response.GenericResponseModel
 import com.example.tsaving.model.response.RegisterResponse
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
@@ -19,10 +21,10 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
     private val _flagStatus = MutableLiveData<ErrorName>()
-    private val _dataRegister = MutableLiveData<RegisterResponse>()
+    private val _dataRegister = MutableLiveData<GenericResponseModel<RegisterResponse>>()
 
     val flagStatus: LiveData<ErrorName> = _flagStatus
-    val dataRegister: LiveData<RegisterResponse> = _dataRegister
+    val dataRegister: LiveData<GenericResponseModel<RegisterResponse>> = _dataRegister
 
     fun onValidate(name: String,address: String,phone: String,email: String,password: String,channel: String){
         var repo: TsavingRepository = TsavingRepository()

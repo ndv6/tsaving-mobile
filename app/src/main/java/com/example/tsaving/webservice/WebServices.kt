@@ -14,7 +14,6 @@ import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.AddVaResponseModel
-import com.example.tsaving.model.response.LoginResponseModel
 import com.example.tsaving.model.response.RegisterResponse
 import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
@@ -41,7 +40,7 @@ interface WebServices {
     }
 
     @POST(REGISTER)
-    suspend fun register(@Body body: RegisterRequestModel): RegisterResponse
+    suspend fun register(@Body body: RegisterRequestModel): GenericResponseModel<RegisterResponse>
 
     @POST(LOGIN)
     suspend fun login(@Body body: LoginRequestModel): GenericResponseModel<DataLogin>
