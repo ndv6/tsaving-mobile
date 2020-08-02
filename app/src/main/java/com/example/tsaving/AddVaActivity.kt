@@ -30,12 +30,10 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
         })
         addVaViewModel.status.observe(this, Observer { it ->
             if(it == true){
-//                ErrorDialogHandling( requireContext(),"Bisa Nih di Update", "Yes").errorResponseDialog()
-//                    cl_addva.visibility = View.GONE
-//                    pb_addva.visibility = View.VISIBLE
+                    loading(1)
                     startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
-                ErrorDialogHandling(requireContext(), "An Error has occured.", "No").errorResponseDialog()
+                loading(0)
                 DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
             }
         })
@@ -47,7 +45,19 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             val color = sp_addva_color.selectedItem.toString()
             val label = et_addva_label.text.toString()
             addVaViewModel.validateAddVa(label,color)
+
         }
         super.onViewCreated(view, savedInstanceState)
+    }
+
+    fun loading(status :Int){
+        if (status == 1){
+            cl_addva.visibility = View.VISIBLE
+            pb_addva.visibility = View.GONE
+        }else{
+            cl_addva.visibility = View.GONE
+            pb_addva.visibility = View.VISIBLE
+        }
+
     }
 }
