@@ -23,15 +23,17 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
     fun validateEditVa(label: String) :Boolean = !label.isBlank()
 
     fun fetchVaEditData(vaLabel:String, vaColor:String){
-
+        _statusPB.value = true
         val request = EditVaRequestModel(vaLabel, vaColor)
 
         viewModelScope.launch {
             try {
+                _statusPB.value = false
                 val result= withContext(Dispatchers.IO) {tsRepo.updateVa(vaNum, request)}
                 _data.value = result
                 Log.i("result", result.toString())
             }catch (t: Throwable){
+                _statusPB.value = false
                 when (t) {
                     is IOException -> println(t.message)
                     is HttpException -> println(t.message)

@@ -1,5 +1,6 @@
 package com.example.tsaving
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -20,7 +21,7 @@ class VADetailsActivity : AppCompatActivity() {
         }
 
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
-        tv_vad_accnumber.text = va.accNum
+        tv_vad_accnumber.text = va.vaNum
         tv_vad_label.text = va.vaLabel
         tv_vad_vabalance.text = "Rp. ${va.vaBalance}"
         layout_vad.setBackgroundColor(ContextCompat.getColor(this, colorStringToColor(va.vaColor)))

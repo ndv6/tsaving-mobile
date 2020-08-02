@@ -1,11 +1,10 @@
 package com.example.tsaving
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
-import android.widget.Toast
+import android.view.View
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.model.VirtualAccount
@@ -21,10 +20,7 @@ import kotlin.coroutines.CoroutineContext
 class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
     lateinit var job: Job
 
-//    var vaNum = intent.getStringExtra("va_num")
-    val vaNum = "2007301876003"
-    var vaLabel = "Tabungan Rumah"
-    var vaColor = "Yellow"
+    var vaNum = String()
 
     val editVaViewModel : EditVaViewModel = EditVaViewModel(TsavingRepository(), vaNum)
 
@@ -33,44 +29,47 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_va_edit)
-
+        lifecycle.addObserver(editVaViewModel)
+        job = Job()
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
 
-        tv_vae_num.text = vaNum
-        et_vae_label.setText(vaLabel)
-
+        editVaViewModel.vaNum = va.vaNum.toString()
         val adapter = ArrayAdapter.createFromResource(
-            this,
+            this@EditVaActivity,
             R.array.color_va,
             android.R.layout.simple_spinner_item
         )
 
-        sp_vae_color.setSelection(adapter.getPosition(vaColor))
 
+        tv_vae_num.text = va.vaNum
+        et_vae_label.setText(va.vaLabel)
+        sp_vae_color.setSelection(adapter.getPosition(va.vaColor))
 
         et_vae_label?.afterTextChanged { til_vae_label.setError(null) }
 
         btn_vae_save.setOnClickListener {
-            vaLabel = et_vae_label.text.toString()
-            vaColor = sp_vae_color.selectedItem.toString()
-            val status = editVaViewModel.validateEditVa(vaLabel)
+            val newVaLabel = et_vae_label.text.toString()
+            val newVaColor = sp_vae_color.selectedItem.toString()
+            val status = editVaViewModel.validateEditVa(newVaLabel)
             if (!status) {
                 til_vae_label.setError("Please Input New Label")
             } else {
-                editVaViewModel.fetchVaEditData(vaLabel, vaColor)
-                startActivity(Intent(this, VADetailsActivity::class.java))
+                editVaViewModel.fetchVaEditData(newVaLabel, newVaColor)
+                val intent = Intent(this@EditVaActivity, MainActivity::class.java)
+                startActivity(intent)
             }
         }
 
-        statusPB.observe(this, Observer {
-            if(it == true){
-                isLoadingLogin(true)
-            }
-            else{
-                isLoadingLogin(false)
-            }
-
-        })
+        editVaViewModel.apply {
+            statusPB.observe(this@EditVaActivity, androidx.lifecycle.Observer {
+                if(it == true){
+                    isLoadingEditVa(true)
+                }
+                else{
+                    isLoadingEditVa(false)
+                }
+            })
+        }
     }
 
     fun isLoadingEditVa(isFetching: Boolean) {
