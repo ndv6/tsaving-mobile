@@ -9,6 +9,9 @@ import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.UpdatePasswordRequestModel
+import com.example.tsaving.model.response.UpdatePasswordResponseModel
+import com.example.tsaving.vm.UpdatePasswordViewModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
@@ -34,6 +37,7 @@ interface WebServices {
         const val VIEW_PROFILE = "me/profile"
         const val UPDATE_PHOTO = "me/update-photo"
         const val UPDATE_PROFILE = "me/update"
+        const val UPDATE_PASSWORD = "me/update-password"
         const val TRANSFER_VA = "me/transfer-va"
         const val LIST_VA = "me/va"
         const val CREATE_VA = "me/va/create"
@@ -42,6 +46,7 @@ interface WebServices {
         const val DELETE_VA = "me/va/{va_num}"
         const val LIST_TRANSACTION_HISTORY = "me/transaction/{page}"
         const val SEND_EMAIL = "sendMail"
+
     }
 
     @POST(REGISTER)
@@ -58,6 +63,9 @@ interface WebServices {
 
     @PUT(UPDATE_PROFILE)
     suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : GenericResponseModel<Any>
+
+    @PATCH(UPDATE_PASSWORD)
+    suspend fun  updatePassword(@Header("Authorization") token: String, @Body body: UpdatePasswordRequestModel): GenericResponseModel<Any>
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
