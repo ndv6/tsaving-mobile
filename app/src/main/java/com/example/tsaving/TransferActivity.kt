@@ -125,7 +125,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             layout_tf_amout.setError(null)
             et_amount.removeTextChangedListener(this);
-            val stringAmount = s.toString()
+            val stringAmount = s.toString().trimStart('0')
             et_amount.setText(stringAmount.FormatDecimal())
             et_amount.addTextChangedListener(this)
             et_amount.setSelection(et_amount.getText().toString().length);

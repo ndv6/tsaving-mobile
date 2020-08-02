@@ -69,9 +69,6 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
                          _statusTransfer.setValue(false)
                     }
                     is HttpException -> {
-                        val code = t.code()
-                        val errMsg = t.response().toString()
-                        Log.i("login error message", t.response().toString())
                         _flagError.value = ErrorName.InvalidTransferToVA
                         _statusTransfer.setValue(false)
                     }
