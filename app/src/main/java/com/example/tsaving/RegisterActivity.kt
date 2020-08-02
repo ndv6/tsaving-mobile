@@ -29,33 +29,62 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
             finish()
         }
 
-        registerViewModel.flagStatus.observe(this, Observer{ it ->
-            if (it == ErrorName.NullName){ il_register_name.setError("Please Input Name Field")}
+        lifecycle.addObserver(registerViewModel)
 
-            if (it == ErrorName.NullAddress){ il_register_address.setError("Please Input Address Field") }
-            if (it == ErrorName.NullPhone){ il_register_phone.setError("Please Input Phone Field") }
+        registerViewModel.apply {
+            flagStatus.observe(this@RegisterActivity, Observer { it ->
+                if (it == ErrorName.NullName) {
+                    il_register_name.setError("Please Input Name Field")
+                }
 
-            if (it == ErrorName.NullEmail){ il_register_email.setError("Please Input Email Field") }
-            else if(it == ErrorName.InvalidEmail){ il_register_email.setError("Invalid Email Format") }
+                if (it == ErrorName.NullAddress) {
+                    il_register_address.setError("Please Input Address Field")
+                }
+                if (it == ErrorName.NullPhone) {
+                    il_register_phone.setError("Please Input Phone Field")
+                }
 
-            if (it == ErrorName.NullPassword){ il_register_password.setError("Please Input Password Field") }
-            else if(it == ErrorName.NotValidLength){ il_register_password.setError("Password Min 6 Character") }
+                if (it == ErrorName.NullEmail) {
+                    il_register_email.setError("Please Input Email Field")
+                } else if (it == ErrorName.InvalidEmail) {
+                    il_register_email.setError("Invalid Email Format")
+                }
 
-            if (it == ErrorName.ErrorNetwork){
-                DialogHandling({}).basicAlert(this@RegisterActivity, "Notification", "Network Error", "close")
-            }
-            if (it == ErrorName.InvalidRegister){
-                DialogHandling({}).basicAlert(this@RegisterActivity, "Notification", "Unable Register, Your Email OR Phone Number has been added", "close")
-            }
-            if(it == ErrorName.Null){
-                registerViewModel.dataRegister.observe(this, Observer { it ->
-                    startActivity(Intent(this@RegisterActivity, OTPActivity::class.java))
-                    intent.putExtra("cust_email", it.data.email)
+                if (it == ErrorName.NullPassword) {
+                    il_register_password.setError("Please Input Password Field")
+                } else if (it == ErrorName.NotValidLength) {
+                    il_register_password.setError("Password Min 6 Character")
+                }
+
+                if (it == ErrorName.ErrorNetwork) {
+                    DialogHandling({}).basicAlert(
+                        this@RegisterActivity,
+                        "Notification",
+                        "Network Error",
+                        "close"
+                    )
+                }
+                if (it == ErrorName.InvalidRegister) {
+                    DialogHandling({}).basicAlert(
+                        this@RegisterActivity,
+                        "Notification",
+                        "Unable Register, Your Email OR Phone Number has been added",
+                        "close"
+                    )
+                }
+            })
+
+            dataRegister.observe(this@RegisterActivity, Observer { it ->
+                if (it.status == "SUCCESS") {
+                    val intent = Intent(this@RegisterActivity, OTPActivity::class.java)
+                    intent.putExtra("cust_email", et_register_email.text.toString())
                     intent.putExtra("cust_password", et_register_password.text.toString())
+                    startActivity(intent)
                     finish()
-                })
-            }
-        })
+                }
+            })
+        }
+
 
         et_register_name?.afterTextChanged { il_register_name.setError(null) }
         et_register_address?.afterTextChanged { il_register_address.setError(null) }
