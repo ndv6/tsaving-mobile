@@ -44,7 +44,7 @@ interface WebServices {
     suspend fun register(@Body body: RegisterRequestModel): RegisterResponse
 
     @POST(LOGIN)
-    suspend fun login(@Body body: LoginRequestModel): LoginResponseModel
+    suspend fun login(@Body body: LoginRequestModel): GenericResponseModel<DataLogin>
 
     @POST(VERIFY_ACCOUNT)
     suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
