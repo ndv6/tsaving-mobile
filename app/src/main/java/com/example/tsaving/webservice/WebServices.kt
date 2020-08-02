@@ -5,15 +5,10 @@ import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
-import com.example.tsaving.model.request.AddVaRequestModel
-import com.example.tsaving.model.request.EditProfileRequestModel
-import com.example.tsaving.model.request.LoginRequestModel
-import com.example.tsaving.model.request.TransferToVaRequestModel
-import com.example.tsaving.model.request.RegisterRequestModel
+import com.example.tsaving.model.request.*
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.RegisterResponse
@@ -66,7 +61,7 @@ interface WebServices {
     suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<Any>
 
     @GET(LIST_VA)
-    suspend fun listVa(@Header("Authorization") token: String)
+    suspend fun listVa()
 
     @POST(CREATE_VA)
     suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : GenericResponseModel<Any>
@@ -75,7 +70,7 @@ interface WebServices {
     suspend fun updateVa(@Path("va_num") vaNum: String)
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
-    suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
+    suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String,@Body body:TransferToMainRequestModel, @Header("Authorization") token: String ) : GenericResponseModel<Any>
 
     @POST(DELETE_VA)
     suspend fun deleteVa(@Path("va_num") vaNum: String)

@@ -96,10 +96,9 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                 transferViewModel.callTransferToMain(va.vaNum.toString() , amount)
             }
             else if(tf_type.toString() == "va-to-main"){
-                //semangat :) va to main logic will be written in another branch
+                //va to main disini
+                transferViewModel.callVaToMain(va.vaNum.toString(),amount)
             }
-
-
         }
         btn_tf_back.setOnClickListener {
             finish()
