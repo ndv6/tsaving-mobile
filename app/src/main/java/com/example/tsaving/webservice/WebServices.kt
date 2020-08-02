@@ -4,6 +4,7 @@ import android.content.Context
 import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
+import com.example.tsaving.model.DashboardModel
 import com.example.tsaving.model.request.*
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
@@ -62,7 +63,7 @@ interface WebServices {
     suspend fun  updatePassword(@Header("Authorization") token: String, @Body body: UpdatePasswordRequestModel): GenericResponseModel<Any>
 
     @GET(DASHBOARD)
-    suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
+    suspend fun dashboard(@Header("Authorization") token: String) : GenericResponseModel<DashboardModel>
 
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()
