@@ -1,11 +1,14 @@
 package com.example.tsaving.vm
 
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ViewModel
+import com.example.tsaving.IsEmailValid
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.ErrorName
-import com.example.tsaving.IsEmailValid
 import com.example.tsaving.model.request.LoginRequestModel
-import com.example.tsaving.model.response.LoginResponseModel
+import com.example.tsaving.model.response.DataLogin
+import com.example.tsaving.model.response.GenericResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -13,15 +16,14 @@ import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
 
-
 class LoginViewModel : ViewModel(), LifecycleObserver {
 
     val _flagStatus = MutableLiveData<ErrorName>()
-    val _dataLogin = MutableLiveData<LoginResponseModel>()
+    val _dataLogin = MutableLiveData<GenericResponseModel<DataLogin>>()
     var _statusPB = MutableLiveData<Boolean>()
 
     val flagStatus : LiveData<ErrorName> = _flagStatus
-    val dataLogin : LiveData<LoginResponseModel> = _dataLogin
+    val dataLogin : LiveData<GenericResponseModel<DataLogin>> = _dataLogin
     var statusPB : LiveData<Boolean> = _statusPB
 
     fun validateLogin(email: String, password: String ){
@@ -73,6 +75,5 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
             }
         }
     }
-
 
 }

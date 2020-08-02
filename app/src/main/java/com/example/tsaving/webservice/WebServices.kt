@@ -6,15 +6,24 @@ import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
+import com.example.tsaving.model.request.EditProfileRequestModel
+import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
 import com.example.tsaving.model.response.UpdatePasswordResponseModel
 import com.example.tsaving.vm.UpdatePasswordViewModel
+import com.example.tsaving.model.request.TransferToVaRequestModel
+import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.model.response.*
+import com.example.tsaving.model.response.AddVaResponseModel
+import com.example.tsaving.model.response.*
+import com.example.tsaving.model.response.RegisterResponse
+import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -41,22 +50,22 @@ interface WebServices {
     }
 
     @POST(REGISTER)
-    suspend fun register()
+    suspend fun register(@Body body: RegisterRequestModel): GenericResponseModel<RegisterResponse>
 
     @POST(LOGIN)
-    suspend fun login(@Body body: LoginRequestModel): LoginResponseModel
+    suspend fun login(@Body body: LoginRequestModel): GenericResponseModel<DataLogin>
 
     @POST(VERIFY_ACCOUNT)
     suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
 
     @GET(VIEW_PROFILE)
-    suspend fun viewProfile()
+    suspend fun viewProfile(@Header("Authorization") token: String) : GenericResponseModel<ProfileResponse>
 
     @PUT(UPDATE_PROFILE)
-    suspend fun updateProfile()
+    suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : GenericResponseModel<Any>
 
     @PATCH(UPDATE_PASSWORD)
-    suspend fun  updatePassword(@Header("Authorization") token: String, @Body body: UpdatePasswordRequestModel): UpdatePasswordResponseModel
+    suspend fun  updatePassword(@Header("Authorization") token: String, @Body body: UpdatePasswordRequestModel): GenericResponseModel<Any>
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
@@ -64,17 +73,21 @@ interface WebServices {
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()
 
-    @POST(TRANSFER_VA)
-    suspend fun transferToVa()
+    @PUT(TRANSFER_VA)
+    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<Any>
 
     @GET(LIST_VA)
-    suspend fun listVa()
+    suspend fun listVa(@Header("Authorization") token: String)
 
     @POST(CREATE_VA)
-    suspend fun createVa(@Body body:AddVaRequestModel) : AddVaResponseModel
+    suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : GenericResponseModel<Any>
 
     @PUT(UPDATE_VA)
-    suspend fun updateVa(@Path("va_num") vaNum: String)
+    suspend fun updateVa(
+        @Path("va_num") vaNum: String,
+        @Body body: EditVaRequestModel,
+        @Header("Authorization") token: String
+    ) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
@@ -126,4 +139,3 @@ val webServices: WebServices by lazy {
         .build()
         .create(WebServices::class.java)
 }
-

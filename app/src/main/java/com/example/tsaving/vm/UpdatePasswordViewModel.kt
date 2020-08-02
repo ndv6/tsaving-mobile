@@ -5,7 +5,6 @@ import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
-import com.example.tsaving.model.response.UpdatePasswordResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
 import retrofit2.HttpException
