@@ -33,4 +33,8 @@
         <item name="android:layout_marginStart">20sp</item>
     </style>
 
+    <style name = "card_with_shadow">
+        <item name = "android:background">@drawable/section_rounded</item>
+    </style>
+
 </resources>
