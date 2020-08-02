@@ -7,7 +7,8 @@ import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.LoginRequestModel
-import com.example.tsaving.model.response.LoginResponseModel
+import com.example.tsaving.model.response.DataLogin
+import com.example.tsaving.model.response.GenericResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,11 +19,11 @@ import java.io.IOException
 class LoginViewModel : ViewModel(), LifecycleObserver {
 
     val _flagStatus = MutableLiveData<ErrorName>()
-    val _dataLogin = MutableLiveData<LoginResponseModel>()
+    val _dataLogin = MutableLiveData<GenericResponseModel<DataLogin>>()
     var _statusPB = MutableLiveData<Boolean>()
 
     val flagStatus : LiveData<ErrorName> = _flagStatus
-    val dataLogin : LiveData<LoginResponseModel> = _dataLogin
+    val dataLogin : LiveData<GenericResponseModel<DataLogin>> = _dataLogin
     var statusPB : LiveData<Boolean> = _statusPB
 
     fun validateLogin(email: String, password: String ){

@@ -42,6 +42,7 @@ class TransferViewModel : ViewModel(), LifecycleObserver{
             try {
                 _statusPB.value = false
                 val result = withContext(Dispatchers.IO) { repo.transferVa(request) }
+                Log.i( "res :" ,result.toString())
                 if(result.status == "SUCCESS") {
                     _flagError.value = null
                     _statusTransfer.setValue(true)

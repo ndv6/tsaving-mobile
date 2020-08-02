@@ -2,12 +2,9 @@ package com.example.tsaving.webservice
 
 import android.content.Context
 import android.content.Intent
-import android.widget.Toast
 import com.example.tsaving.BaseApplication
-import com.example.tsaving.ErrorDialogHandling
 import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
-import com.example.tsaving.model.ResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
@@ -15,10 +12,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
-import com.example.tsaving.model.response.TransferToVaResponse
 import com.example.tsaving.model.response.AddVaResponseModel
-import com.example.tsaving.model.response.LoginResponseModel
-import com.example.tsaving.model.response.VerifyAccountResponseModel
+import com.example.tsaving.model.response.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -46,10 +41,10 @@ interface WebServices {
     suspend fun register()
 
     @POST(LOGIN)
-    suspend fun login(@Body body: LoginRequestModel): LoginResponseModel
+    suspend fun login(@Body body: LoginRequestModel): GenericResponseModel<DataLogin>
 
     @POST(VERIFY_ACCOUNT)
-    suspend fun verifyAccount(@Body body: VerifyRequestModel): VerifyAccountResponseModel
+    suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
 
     @GET(VIEW_PROFILE)
     suspend fun viewProfile()
@@ -64,7 +59,7 @@ interface WebServices {
     suspend fun updatePhoto()
 
     @PUT(TRANSFER_VA)
-    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): TransferToVaResponse
+    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<TransferToVaResponse>
 
     @GET(LIST_VA)
     suspend fun listVa()

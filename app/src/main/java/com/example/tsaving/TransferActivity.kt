@@ -10,7 +10,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
-import com.example.tsaving.vm.DashboardViewModel
+
+import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.TransferViewModel
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
@@ -18,6 +19,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlin.coroutines.CoroutineContext
 import kotlinx.android.synthetic.main.activity_transfer.*
+import java.util.*
 
 
 class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
@@ -37,24 +39,23 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         lifecycle.addObserver(transferViewModel)
         job = Job()
         val tf_type = intent.getStringExtra("tf_type")
-        val va_num = intent.getStringExtra("va_num")
-        val va_label = intent.getStringExtra("va_label")
-        //set page data here because it from previous page so dont need set at model
+        //set page data here because it from previous page so dont need set at viewmodel
+        //        get virtual account data from intent
+        val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
+
         if(tf_type == "main-to-va"){
             tv_tf_from_name.text = "Main Account"
             tv_tf_from_num.text = BaseApplication.accNumber
-            tv_tf_to_name.text = va_label
-            tv_tf_to_num.text  = va_num
+            tv_tf_to_name.text = va.vaLabel
+            tv_tf_to_num.text  = va.vaNum
         }
         else{
-            tv_tf_from_name.text = va_label
-            tv_tf_from_num.text = va_num
+            tv_tf_from_name.text = va.vaLabel
+            tv_tf_from_num.text = va.vaNum
             tv_tf_to_name.text = "Main Account"
             tv_tf_to_num.text  = BaseApplication.accNumber
         }
 
-
-        //live data must be handled here
         transferViewModel.apply {
             statusTransfer.observe(this@TransferActivity, Observer {
                 if(statusTransfer.value == true){
@@ -92,7 +93,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         btn_tf_transfer.setOnClickListener {
             val amount = et_tf_amount_input.text.toString().replace(",", "")
             if(tf_type.toString() == "main-to-va"){
-                transferViewModel.callTransferToMain(va_num.toString(), amount)
+                transferViewModel.callTransferToMain(va.vaNum.toString() , amount)
             }
             else if(tf_type.toString() == "va-to-main"){
                 //semangat :)

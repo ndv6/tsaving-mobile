@@ -18,7 +18,9 @@ class RegisterActivity: Activity() {
         }
 
         btn_register_signup.setOnClickListener {
-            startActivity(Intent(this@RegisterActivity, OTPActivity::class.java))
+            val intent = Intent(this, OTPActivity::class.java)
+            intent.putExtra("cust_email", et_register_email.text.toString())
+            startActivity(intent)
         }
     }
 }
