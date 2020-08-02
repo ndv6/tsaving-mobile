@@ -19,6 +19,9 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
         btn_up_back.setOnClickListener{
             finish()
         }
+        btn_up_cancel.setOnClickListener{
+            finish()
+        }
 
         updatePasswordViewModel.errorOldPassword.observe(this, Observer { newErrorName -> layout_oldpassword.setError(newErrorName)})
         updatePasswordViewModel.errorNewPassword.observe(this, Observer { newErrorName -> layout_newpassword.setError(newErrorName)})
