@@ -3,7 +3,8 @@ package com.example.tsaving.vm
 import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
-import com.example.tsaving.model.response.ProfileResponseModel
+import com.example.tsaving.model.response.GenericResponseModel
+import com.example.tsaving.model.response.ProfileResponse
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
 import retrofit2.HttpException
@@ -17,8 +18,8 @@ class ProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(), Cor
     private var _loading = MutableLiveData<Boolean>()
     val loading: LiveData<Boolean> = _loading
 
-    private val _data = MutableLiveData<ProfileResponseModel>()
-    val data: LiveData<ProfileResponseModel> = _data
+    private val _data = MutableLiveData<GenericResponseModel<ProfileResponse>>()
+    val data: LiveData<GenericResponseModel<ProfileResponse>> = _data
 
     @OnLifecycleEvent(Lifecycle.Event.ON_CREATE)
     private fun fetchProfileData() {

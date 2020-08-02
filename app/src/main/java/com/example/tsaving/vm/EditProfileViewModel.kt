@@ -4,7 +4,8 @@ import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.EditProfileRequestModel
-import com.example.tsaving.model.response.ProfileResponseModel
+import com.example.tsaving.model.response.GenericResponseModel
+import com.example.tsaving.model.response.ProfileResponse
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
 import retrofit2.HttpException
@@ -79,8 +80,8 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
     private var _updateStatus = MutableLiveData<UpdateStatus>()
     val updateStatus: LiveData<UpdateStatus> = _updateStatus
 
-    private var _data = MutableLiveData<ProfileResponseModel>()
-    val data: LiveData<ProfileResponseModel> = _data
+    private var _data = MutableLiveData<GenericResponseModel<ProfileResponse>>()
+    val data: LiveData<GenericResponseModel<ProfileResponse>> = _data
 
     init {
         _errorName.value = null
@@ -216,14 +217,19 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
     ) {
         var request =
             EditProfileRequestModel(inputName, inputEmail, inputPhone, inputAddress, CHANNEL)
-        Log.i("EditProfileViewModel", request.toString())
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) { tsRepo.updateProfile(request) }
-                if (inputEmail != _data.value?.data?.cust_email) {
-                    _updateStatus.value = UpdateStatus.EMAIL_CHANGED
+                Log.i("EditProfileViewModel", result.status)
+                if (result.status == "SUCCESS") {
+                    if (inputEmail != _data.value?.data?.cust_email) {
+                        _updateStatus.value = UpdateStatus.EMAIL_CHANGED
+                    } else {
+                        _updateStatus.value = UpdateStatus.SUCCESS
+                    }
                 } else {
-                    _updateStatus.value = UpdateStatus.SUCCESS
+                    _errorNetwork.value = ErrorNetwork.NOCONNECTION.message
+                    _updateStatus.value = UpdateStatus.FAILED
                 }
 
             } catch (t: Throwable) {

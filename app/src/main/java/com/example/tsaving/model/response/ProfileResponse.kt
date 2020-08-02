@@ -1,12 +1,6 @@
 package com.example.tsaving.model.response
 
-data class ProfileResponseModel(
-    val status: String,
-    val message: String,
-    val data: CustomerResponse
-)
-
-data class CustomerResponse(
+data class ProfileResponse(
     val cust_id: Int,
     val account_num: String,
     val cust_name: String,

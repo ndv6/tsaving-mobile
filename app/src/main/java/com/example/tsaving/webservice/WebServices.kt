@@ -50,10 +50,10 @@ interface WebServices {
     suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
 
     @GET(VIEW_PROFILE)
-    suspend fun viewProfile(@Header("Authorization") token: String) : ProfileResponseModel
+    suspend fun viewProfile(@Header("Authorization") token: String) : GenericResponseModel<ProfileResponse>
 
     @PUT(UPDATE_PROFILE)
-    suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : EditProfileResponseModel
+    suspend fun updateProfile(@Header("Authorization") token: String, @Body body: EditProfileRequestModel) : GenericResponseModel<Any>
 
     @GET(DASHBOARD)
     suspend fun dashboard(@Header("Authorization") token: String) : DashboardResponseModel
