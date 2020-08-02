@@ -55,6 +55,9 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             addVaViewModel.validateAddVa(label,color)
 
         }
+        btn_addva_cancel.setOnClickListener{
+            startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
+        }
         super.onViewCreated(view, savedInstanceState)
     }
 
