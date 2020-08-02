@@ -5,6 +5,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import android.widget.Toast.LENGTH_SHORT
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
 import com.example.tsaving.vm.AddVaViewModel
@@ -30,11 +32,18 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
         })
         addVaViewModel.status.observe(this, Observer { it ->
             if(it == true){
-                    loading(1)
-                    startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
+//                loading(1)
+//                startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
                 loading(0)
                 DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
+            }
+        })
+
+        addVaViewModel.responseVA.observe(this, Observer {
+            if (it.status == "SUCCESS"){
+                loading(1)
+                startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }
         })
 

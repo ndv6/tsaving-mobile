@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.response.AddVaResponseModel
+import com.example.tsaving.model.response.GenericResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.android.synthetic.main.activity_add_va.*
 import kotlinx.coroutines.*
@@ -21,11 +22,13 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
     private val _label = MutableLiveData<String>()
     private val _errorLabel = MutableLiveData<String>()
     private val _status = MutableLiveData<Boolean>()
+    private val _responseVA = MutableLiveData<GenericResponseModel<AddVaResponseModel>>()
 
 
     val label: LiveData<String> = _label
     val errorLabel: LiveData<String> = _errorLabel
     val status: LiveData<Boolean> = _status
+    val responseVA : LiveData<GenericResponseModel<AddVaResponseModel>> = _responseVA
 
     //isblank return false kalau isblank.
     fun validateAddVa(label: String, color: String){
@@ -43,6 +46,7 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
                     val result = withContext(Dispatchers.IO){repo.createVa(request)}
                     Log.i("result", result.message.toString())
                     _status.setValue(true)
+                    _responseVA.value = result
                 } catch (t: Throwable) {
                     when (t) {
                         is IOException -> Log.i("io exception", t.message.toString())

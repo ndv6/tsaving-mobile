@@ -5,6 +5,7 @@ import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.AddVaResponseModel
+import com.example.tsaving.model.response.GenericResponseModel
 import retrofit2.http.Body
 
 class TsavingRepository {
@@ -19,7 +20,7 @@ class TsavingRepository {
     suspend fun updatePhoto() = webService.updatePhoto()
     suspend fun transferVa() = webService.transferToVa()
     suspend fun listVa() = webService.listVa()
-    suspend fun createVa(body: AddVaRequestModel) = webService.createVa(body,BaseApplication.token)
+    suspend fun createVa(body: AddVaRequestModel) : GenericResponseModel<AddVaResponseModel> = webService.createVa(body,BaseApplication.token)
     suspend fun updateVa(vaNum: String) = webService.updateVa(vaNum)
     suspend fun transferVaToMainAccount(vaNum: String) = webService.transferVaToMainAccount(vaNum)
     suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
