@@ -10,6 +10,7 @@ import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.EditVaViewModel
 import com.example.tsaving.webservice.TsavingRepository
+import kotlinx.android.synthetic.main.activity_va_details.*
 import kotlinx.android.synthetic.main.activity_va_edit.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -31,6 +32,11 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
         setContentView(R.layout.activity_va_edit)
         lifecycle.addObserver(editVaViewModel)
         job = Job()
+
+        btn_vae_back.setOnClickListener{
+            finish()
+        }
+
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
 
         editVaViewModel.vaNum = va.vaNum.toString()
@@ -56,6 +62,8 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
             } else {
                 editVaViewModel.fetchVaEditData(newVaLabel, newVaColor)
                 val intent = Intent(this@EditVaActivity, MainActivity::class.java)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                 startActivity(intent)
             }
         }
