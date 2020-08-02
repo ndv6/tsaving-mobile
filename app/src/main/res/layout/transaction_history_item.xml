@@ -24,7 +24,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="10dp"
-                android:text="DEPOSIT_TO_MAIN_ACCOUNT"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -37,9 +36,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="15dp"
-                android:text="2020202020"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/img_transaction_history"
                 app:layout_constraintTop_toBottomOf="@+id/tv_transaction_history_item_title" />
 
             <TextView
@@ -49,9 +47,8 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="5dp"
                 android:layout_marginBottom="5dp"
-                android:text="PARTNER"
-                android:textSize="20sp"
-                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="15sp"
+                app:layout_constraintStart_toEndOf="@id/img_transaction_history"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_from_account" />
 
             <TextView
@@ -61,7 +58,6 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:text="50000"
                 android:textSize="30sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_title" />
@@ -75,13 +71,22 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="24dp"
-                android:text="2020-02-01 15:19:33 GMT"
                 android:textAlignment="textEnd"
-                android:textSize="15sp"
+                android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/tv_transaction_history_item_dest_account"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_tran_amount" />
 
+            <ImageView
+                android:id="@+id/img_transaction_history"
+                android:contentDescription=""
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:srcCompat="@mipmap/ic_launcher_round"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
