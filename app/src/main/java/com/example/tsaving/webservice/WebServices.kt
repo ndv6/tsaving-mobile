@@ -10,8 +10,6 @@ import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
-import com.example.tsaving.model.response.UpdatePasswordResponseModel
-import com.example.tsaving.vm.UpdatePasswordViewModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
@@ -86,8 +84,8 @@ interface WebServices {
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String,@Body body:TransferToMainRequestModel, @Header("Authorization") token: String ) : GenericResponseModel<Any>
 
-    @POST(DELETE_VA)
-    suspend fun deleteVa(@Path("va_num") vaNum: String)
+    @DELETE(DELETE_VA)
+    suspend fun deleteVa(@Path("va_num") vaNum: String, @Header("Authorization") token: String )
 
     @GET(LIST_TRANSACTION_HISTORY)
     suspend fun listTransactionHistory(
