@@ -80,8 +80,11 @@ class MainActivity: AppCompatActivity() {
     private fun callLogout(){
         val positiveButtonClick = { dialog: DialogInterface, which: Int ->
             BaseApplication.token = ""
-            startActivity(Intent(this, LoginActivity::class.java))
-            finish()
+            val intent = Intent(this, LoginActivity::class.java)
+            //add flag intent to clear all previous activity so when user press back its not return to this activity again
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            startActivity(intent)
         }
         val builder = AlertDialog.Builder(this)
         with(builder)
