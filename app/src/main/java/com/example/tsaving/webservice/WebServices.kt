@@ -62,7 +62,7 @@ interface WebServices {
     suspend fun updatePhoto()
 
     @PUT(TRANSFER_VA)
-    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<TransferToVaResponse>
+    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<Any>
 
     @GET(LIST_VA)
     suspend fun listVa()
