@@ -7,6 +7,7 @@ import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
+import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
@@ -14,6 +15,8 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
+import com.example.tsaving.model.response.EditVaResponse
+import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.RegisterResponse
@@ -72,7 +75,11 @@ interface WebServices {
     suspend fun createVa(@Body body:AddVaRequestModel, @Header("Authorization") token: String) : GenericResponseModel<Any>
 
     @PUT(UPDATE_VA)
-    suspend fun updateVa(@Path("va_num") vaNum: String)
+    suspend fun updateVa(
+        @Path("va_num") vaNum: String,
+        @Body body: EditVaRequestModel,
+        @Header("Authorization") token: String
+    ) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
@@ -94,7 +101,6 @@ class HeaderInterceptor: Interceptor {
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
-                //disini sebelomnya ada auth
             .build()
         return chain.proceed(req)
     }
