@@ -8,13 +8,14 @@ import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
-import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.AddVaResponseModel
+import com.example.tsaving.model.response.*
 import com.example.tsaving.model.response.RegisterResponse
 import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
@@ -61,8 +62,8 @@ interface WebServices {
     @PATCH(UPDATE_PHOTO)
     suspend fun updatePhoto()
 
-    @POST(TRANSFER_VA)
-    suspend fun transferToVa()
+    @PUT(TRANSFER_VA)
+    suspend fun transferToVa(@Header("Authorization") token: String, @Body body: TransferToVaRequestModel): GenericResponseModel<Any>
 
     @GET(LIST_VA)
     suspend fun listVa()
@@ -93,6 +94,7 @@ class HeaderInterceptor: Interceptor {
         req = req.newBuilder().header("Content-Type", "application/json")
             .header("User-Agent", "tsaving-mobile")
             .header("Accept", "application/json")
+                //disini sebelomnya ada auth
             .build()
         return chain.proceed(req)
     }

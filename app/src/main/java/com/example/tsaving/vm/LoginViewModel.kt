@@ -1,9 +1,11 @@
 package com.example.tsaving.vm
 
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.ViewModel
+import com.example.tsaving.IsEmailValid
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.tsaving.ErrorName
-import com.example.tsaving.IsEmailValid
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.response.DataLogin
 import com.example.tsaving.model.response.GenericResponseModel
@@ -13,7 +15,6 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import retrofit2.HttpException
 import java.io.IOException
-
 
 class LoginViewModel : ViewModel(), LifecycleObserver {
 
@@ -74,6 +75,5 @@ class LoginViewModel : ViewModel(), LifecycleObserver {
             }
         }
     }
-
 
 }

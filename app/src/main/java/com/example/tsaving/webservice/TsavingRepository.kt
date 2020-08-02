@@ -5,6 +5,7 @@ import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
 
@@ -18,7 +19,7 @@ class TsavingRepository {
     suspend fun updateProfile(body: EditProfileRequestModel) = webService.updateProfile(BaseApplication.token, body)
     suspend fun dashboard() : DashboardResponseModel = webService.dashboard(BaseApplication.token)
     suspend fun updatePhoto() = webService.updatePhoto()
-    suspend fun transferVa() = webService.transferToVa()
+    suspend fun transferVa(body: TransferToVaRequestModel) = webService.transferToVa(BaseApplication.token, body)
     suspend fun listVa() = webService.listVa()
     suspend fun createVa(body: AddVaRequestModel) = webService.createVa(body)
     suspend fun updateVa(vaNum: String) = webService.updateVa(vaNum)
