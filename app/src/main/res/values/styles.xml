@@ -33,4 +33,8 @@
         <item name="android:layout_marginStart">20sp</item>
     </style>
 
+<!--    <style name = "va_list">-->
+<!--        <item name = "android:background">@drawable/border_left</item>-->
+<!--    </style>-->
+
 </resources>

@@ -1,6 +1,7 @@
 package com.example.tsaving
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,10 +22,24 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
             val tvBalance = view.findViewById<TextView>(R.id.tv_item_list_va_balance)
             val tvVaNum = view.findViewById<TextView>(R.id.tv_item_list_va_num)
             val cvDetail = view.findViewById<CardView>(R.id.cv_item_list_va)
+            var tvColor = view.findViewById<TextView>(R.id.tv_item_list_va_color)
 
             tvLabel.text = va.vaLabel
             tvVaNum.text = va.vaNum
             tvBalance.text = "Rp. ${va.vaBalance}"
+            if (va.vaColor == "Red") {
+                tvColor.setBackgroundResource(R.color.colorRed)
+            } else if (va.vaColor == "Orange") {
+                tvColor.setBackgroundResource(R.color.colorOrange)
+            } else if (va.vaColor == "Green") {
+                tvColor.setBackgroundResource(R.color.colorGreen)
+            }else if (va.vaColor == "Yellow"){
+                tvColor.setBackgroundResource(R.color.colorYellow)
+            }else if(va.vaColor == "Blue"){
+                tvColor.setBackgroundResource(R.color.colorBlue)
+            }else if(va.vaColor == "Purple"){
+                tvColor.setBackgroundResource(R.color.colorPurple)
+            }
             cvDetail.setOnClickListener {
                 listener(va)
             }
