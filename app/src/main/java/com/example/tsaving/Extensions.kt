@@ -31,12 +31,17 @@ sealed class ErrorName{
     object NullOTP : ErrorName()
     object NullAmount : ErrorName()
     object InvalidLogin : ErrorName()
+    object InvalidRegister : ErrorName()
+    object NullName : ErrorName()
+    object NullPhone : ErrorName()
+    object NullAddress : ErrorName()
     object NullEmail : ErrorName()
     object NullPassword : ErrorName()
     object InvalidEmail : ErrorName()
     object ErrorNetwork : ErrorName()
     object ErrorBadRequest : ErrorName()
     object NullEmailAndPass : ErrorName()
+    object  Null: ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

@@ -7,11 +7,15 @@ import com.example.tsaving.LoginActivity
 import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
+import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.request.VerifyRequestModel
 import com.example.tsaving.model.response.*
+import com.example.tsaving.model.response.AddVaResponseModel
+import com.example.tsaving.model.response.RegisterResponse
+import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -36,10 +40,10 @@ interface WebServices {
     }
 
     @POST(REGISTER)
-    suspend fun register()
+    suspend fun register(@Body body: RegisterRequestModel): GenericResponseModel<RegisterResponse>
 
     @POST(LOGIN)
-    suspend fun login(@Body body: LoginRequestModel): LoginResponseModel
+    suspend fun login(@Body body: LoginRequestModel): GenericResponseModel<DataLogin>
 
     @POST(VERIFY_ACCOUNT)
     suspend fun verifyAccount(@Body body: VerifyRequestModel): GenericResponseModel<EmailResponse>
@@ -118,4 +122,3 @@ val webServices: WebServices by lazy {
         .build()
         .create(WebServices::class.java)
 }
-
