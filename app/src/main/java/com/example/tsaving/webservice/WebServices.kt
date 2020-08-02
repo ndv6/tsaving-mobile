@@ -4,7 +4,6 @@ import android.content.Context
 import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
-import com.example.tsaving.model.DashboardResponseModel
 import com.example.tsaving.model.request.*
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
@@ -90,8 +89,12 @@ interface WebServices {
     @POST(DELETE_VA)
     suspend fun deleteVa(@Path("va_num") vaNum: String)
 
-    @DELETE(LIST_TRANSACTION_HISTORY)
-    suspend fun listTransactionHistory(@Path("page") page: Int)
+    @GET(LIST_TRANSACTION_HISTORY)
+    suspend fun listTransactionHistory(
+        @Header("Authorization") token: String,
+        @Path("page") page: Int
+    ): GenericResponseModel<List<TransactionHistoryResponseData>>
+
 
     @POST(SEND_EMAIL)
     suspend fun sendEmail(@Body body: SendMailRequest) : GenericResponseModel<Any>

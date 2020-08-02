@@ -1,11 +1,10 @@
 package com.example.tsaving
 
-import android.app.Activity
-import android.content.Context
 import android.text.Editable
 import android.text.TextUtils
 import android.text.TextWatcher
 import android.widget.EditText
+import android.widget.TextView
 import java.text.NumberFormat
 import java.util.*
 
@@ -59,4 +58,38 @@ fun String.FormatDecimal() : String{
 
 fun String.IsEmailValid(): Boolean {
     return !TextUtils.isEmpty(this) && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
+}
+
+fun Int.currencyFormatter(currencyCode: String): String {
+    val currency = Currency.getInstance(currencyCode)
+    val format = NumberFormat.getCurrencyInstance()
+    format.maximumFractionDigits = currency.defaultFractionDigits
+    format.currency = currency
+    return format.format(this)
+}
+
+fun TextView.formatTransactionAmount(desc: String) {
+    /* Placeholder text is used to prevent lint.
+        the IDE does not allow concatenating string on TextView's setText
+    */
+    val placeholderString: String
+    when (desc) {
+        "DEPOSIT_TO_MAIN_ACCOUNT" -> {
+            placeholderString = "+${this.text}"
+            this.text = placeholderString
+            this.setTextColor(resources.getColor(R.color.colorDarkGreen))
+        }
+
+        "MAIN_TO_VA" -> {
+            placeholderString = "-${this.text}"
+            this.text = placeholderString
+            this.setTextColor(resources.getColor(R.color.colorRed))
+        }
+
+        "VA_TO_MAIN" -> {
+            placeholderString = "+${this.text}"
+            this.text = placeholderString
+            this.setTextColor(resources.getColor(R.color.colorGreen))
+        }
+    }
 }
