@@ -61,8 +61,8 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     val intent = Intent(this@TransferActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
                     Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
+                    startActivity(intent)
                 }
                 else{
                     DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
@@ -73,8 +73,8 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     val intent = Intent(this@TransferActivity, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                    startActivity(intent)
                     Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
+                    startActivity(intent)
                 }
                 else{
                     DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
