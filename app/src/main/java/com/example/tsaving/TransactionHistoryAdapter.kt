@@ -5,15 +5,16 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.tsaving.model.TransactionHistoryResponseBody
+import com.example.tsaving.model.response.TransactionHistoryResponseData
+import java.util.*
 
 class TransactionHistoryAdapter :
     RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
 
-    var transactionHistoryList: List<TransactionHistoryResponseBody> = listOf()
+    var transactionHistoryList: MutableList<TransactionHistoryResponseData> = mutableListOf()
 
     class TransactionHistoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
-        fun bindData(position: TransactionHistoryResponseBody) {
+        fun bindData(position: TransactionHistoryResponseData) {
             val tranAmt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_tran_amount)
             val destAccount =
@@ -24,7 +25,7 @@ class TransactionHistoryAdapter :
             val createdAt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_created_at)
 
-            tranAmt.text = position.transferAmount.toString()
+            tranAmt.text = position.transferAmount.currencyFormatter("IDR")
             destAccount.text = position.destinationAccount
             fromAccount.text = position.fromAccount
             desc.text = position.description
@@ -37,7 +38,8 @@ class TransactionHistoryAdapter :
         viewType: Int
     ): TransactionHistoryViewHolder {
         val viewItem =
-            LayoutInflater.from(parent.context).inflate(R.layout.transaction_history_item, parent,false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.transaction_history_item, parent, false)
         return TransactionHistoryViewHolder(viewItem)
     }
 

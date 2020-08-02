@@ -6,22 +6,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-        android:id="@+id/srl_transaction_history"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="@color/colorGreyLight"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_transaction_history"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             tools:listitem="@layout/transaction_history_item" />
-
-    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

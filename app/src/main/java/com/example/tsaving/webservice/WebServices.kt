@@ -91,7 +91,11 @@ interface WebServices {
     suspend fun deleteVa(@Path("va_num") vaNum: String)
 
     @GET(LIST_TRANSACTION_HISTORY)
-    suspend fun listTransactionHistory(@Path("page") page: Int): ResponseModelList
+    suspend fun listTransactionHistory(
+        @Header("Authorization") token: String,
+        @Path("page") page: Int
+    ): GenericResponseModel<List<TransactionHistoryResponseData>>
+
 
     @POST(SEND_EMAIL)
     suspend fun sendEmail(@Body body: SendMailRequest) : GenericResponseModel<Any>

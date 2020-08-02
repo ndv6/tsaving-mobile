@@ -1,15 +1,9 @@
-package com.example.tsaving.model
+package com.example.tsaving.model.response
 
 import com.google.gson.annotations.SerializedName
 import java.sql.Timestamp
 
-data class ResponseModelList(
-    val status: String,
-    val message: String,
-    val data: List<TransactionHistoryResponseBody>
-)
-
-data class TransactionHistoryResponseBody(
+data class TransactionHistoryResponseData(
     @SerializedName("account_num")
     val accountNum: String,
 
