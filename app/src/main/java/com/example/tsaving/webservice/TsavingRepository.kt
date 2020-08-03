@@ -33,7 +33,7 @@ class TsavingRepository {
     suspend fun transferVa(body: TransferToVaRequestModel) = webService.transferToVa(BaseApplication.token, body)
     suspend fun transferVaToMainAccount(vaNum: String, body:TransferToMainRequestModel) = webService.transferVaToMainAccount(vaNum,body,BaseApplication.token)
     suspend fun updateVa(vaNum: String, body: EditVaRequestModel) : EditVaResponse = webService.updateVa(vaNum, body, BaseApplication.token)
-    suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum)
+    suspend fun deleteVa(vaNum: String) = webService.deleteVa(vaNum, BaseApplication.token)
     suspend fun listTransactionHistory(page: Int) = webService.listTransactionHistory(BaseApplication.token, page)
     suspend fun sendEmail(body: SendMailRequest) = tnotifService.sendEmail(body)
     suspend fun getToken(body: GetTokenRequest) = webService.getToken(body)

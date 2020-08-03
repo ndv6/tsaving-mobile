@@ -45,7 +45,8 @@ sealed class ErrorName{
     object InvalidTransferToMain :ErrorName()
     object LoginUnAuthorized : ErrorName()
     object ErrorSendMail : ErrorName()
-    object  Null: ErrorName()
+    object UnableDeleteVA : ErrorName()
+    object Null: ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

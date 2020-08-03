@@ -6,6 +6,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -82,6 +83,16 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                     resendOTP(cust_email, it.data.token)
                 }
             })
+
+            isResend.observe(this@OTPActivity, Observer {
+                if (it == true) {
+                    DialogHandling({}).basicAlert(
+                        this@OTPActivity,
+                        "Notification",
+                        "OTP succesfully sent to your email.",
+                        "Close")
+                }
+            })
         }
 
         et_otp_token.addTextChangedListener(object: TextWatcher {
@@ -89,6 +100,11 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
             }
 
             override fun onTextChanged(p0: CharSequence?, start: Int, count: Int, after: Int) {
+                if (count < 0 ) {
+                    layout_otp_token.setError("OTP can not be blank")
+                } else {
+                    layout_otp_token.setError(null)
+                }
             }
 
             override fun afterTextChanged(s: Editable) {
@@ -111,10 +127,10 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
 
     fun isLoadingLogin(isFetching: Boolean) {
         if (isFetching) {
-            layout_otp_token.visibility = View.GONE
+            layout_otp_screen.visibility = View.GONE
             pb_otp.visibility = View.VISIBLE
         } else {
-            layout_otp_token.visibility = View.VISIBLE
+            layout_otp_screen.visibility = View.VISIBLE
             pb_otp.visibility = View.GONE
         }
     }
