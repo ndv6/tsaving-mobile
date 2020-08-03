@@ -3,6 +3,7 @@ package com.example.tsaving
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +27,7 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
 
             tvLabel.text = va.vaLabel
             tvVaNum.text = va.vaNum
-            tvBalance.text = "Rp. ${va.vaBalance}"
+            tvBalance.text = "Rp. ${va.vaBalance.toString().FormatDecimal()}"
             if (va.vaColor.toLowerCase() == "red") {
                 tvColor.setBackgroundResource(R.color.colorRed)
             } else if (va.vaColor.toLowerCase() == "orange") {

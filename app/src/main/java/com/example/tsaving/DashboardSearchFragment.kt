@@ -55,7 +55,7 @@ class DashboardSearchFragment: Fragment(){
                     tv_dashboard_search_not_found.visibility = View.GONE
                     cv_dashboard_search_result.visibility = View.VISIBLE
                     tv_dashboard_search_va_num.text = vaMap[sub]?.vaNum ?: ""
-                    tv_dashboard_search_va_balance.text = vaMap[sub]?.vaBalance.toString() ?: "0"
+                    tv_dashboard_search_va_balance.text = vaMap[sub]?.vaBalance.toString().FormatDecimal() ?: "0"
                     tv_dashboard_search_va_label.text = vaMap[sub]?.vaLabel ?: ""
                 }else {
                     tv_dashboard_search_not_found.text = "Virtual Account not found"
