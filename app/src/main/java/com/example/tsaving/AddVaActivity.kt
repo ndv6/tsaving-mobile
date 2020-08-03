@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,22 +28,31 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        addVaViewModel.errorLabel.observe(this, Observer{
-                newErrorName -> layout_addva_label.setError(newErrorName)
-        })
-        addVaViewModel.status.observe(this, Observer { it ->
-            if(it == false){
-                loading(0)
+
+        addVaViewModel.flagError.observe(this, Observer { it ->
+            if(it == ErrorName.Null){
+                layout_addva_label.setError("Please Fill This Field")
+            }
+            else if(it == ErrorName.ErrorNetwork){
                 DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
+            }
+            else if(it == ErrorName.ErrorBadRequest){
+                DialogHandling({}).basicAlert(requireContext(), "Notification", "Create New Virtual Account Failed", "close")
+            }
+        })
+
+        addVaViewModel.statusPB.observe(this, Observer {
+            if(it){
+                loading(0)
+            }else{
+                loading(1)
             }
         })
 
         addVaViewModel.responseVA.observe(this, Observer {
             if (it.status == "SUCCESS"){
-                loading(1)
+                Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
                 startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
-            }else{
-                DialogHandling({}).basicAlert(requireContext(), "Notification", it.message, "close")
             }
         })
 
