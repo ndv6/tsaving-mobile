@@ -46,7 +46,7 @@ class TransactionHistoryHelper {
                     tranAmtTextView.setTextColor(
                         ContextCompat.getColor(
                             tranAmtTextView.context,
-                            R.color.colorRed
+                            R.color.colorDeepRed
                         )
                     )
                 }
@@ -57,7 +57,7 @@ class TransactionHistoryHelper {
                     tranAmtTextView.setTextColor(
                         ContextCompat.getColor(
                             tranAmtTextView.context,
-                            R.color.colorGreen
+                            R.color.colorDarkGreen
                         )
                     )
                 }
