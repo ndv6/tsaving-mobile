@@ -22,7 +22,13 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
             val tvVaNum = view.findViewById<TextView>(R.id.tv_item_list_va_num)
             val cvDetail = view.findViewById<CardView>(R.id.cv_item_list_va)
 
-            tvLabel.text = va.vaLabel
+            var label = va.vaLabel.toString()
+            if(label.length > 15){
+                tvLabel.text = label.substring(0,15) + "..."
+            }
+            else{
+                tvLabel.text = label
+            }
             tvVaNum.text = va.vaNum
             tvBalance.text = "Rp. ${va.vaBalance}"
             cvDetail.setOnClickListener {
