@@ -83,6 +83,14 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
                     finish()
                 }
             })
+
+            progresBar.observe(this@RegisterActivity, Observer {
+                if (it == true) {
+                    isLoading(true)
+                } else {
+                    isLoading(false)
+                }
+            })
         }
 
 
@@ -110,6 +118,15 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
             )
 
         }
+    }
+
+    private fun isLoading(isFetching: Boolean) : Unit {
+        if (isFetching) {
+            pb_register.visibility = View.GONE
+        } else {
+            pb_register.visibility = View.VISIBLE
+        }
+        return
     }
 
 }
