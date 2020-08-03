@@ -119,5 +119,10 @@ class EditProfileFragment : Fragment(), LifecycleOwner {
             }
 
         }
+
+        btn_edit_profile_cancel.setOnClickListener {
+            fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
+                ?.commit()
+        }
     }
 }
