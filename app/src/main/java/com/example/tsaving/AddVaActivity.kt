@@ -42,7 +42,7 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
                 loading(1)
                 startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
-                DialogHandling({}).basicAlert(requireContext(), "Notification", it.message, "close")
+                DialogHandling({}).basicAlert(requireContext(), "Notification response", it.message, "close")
             }
         })
 

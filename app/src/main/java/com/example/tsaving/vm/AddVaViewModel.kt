@@ -35,6 +35,9 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
         if(label.isBlank()) {
             _errorLabel.value = "Please input this field"
         }
+        else if(label.length > 95){
+            _errorLabel.value = "Max. 95 character"
+        }
         else{
             var repo = TsavingRepository()
 
