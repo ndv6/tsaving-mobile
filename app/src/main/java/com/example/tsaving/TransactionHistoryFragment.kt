@@ -50,7 +50,7 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
 
         getDataFromViewModel(firstPage, rv_transaction_history)
 
-        rv_transaction_history?.addOnScrollListener(paginationScrollListener)
+        rv_transaction_history.addOnScrollListener(paginationScrollListener)
     }
 
     private fun getDataFromViewModel(page: Int, view: RecyclerView) {
