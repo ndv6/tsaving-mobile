@@ -1,9 +1,10 @@
 # tsaving-mobile
 
 ### **Joseph** : 
-   * Dashboard 
-   * Virtual Account List
+   * Dashboard UI and implementation
+   * Recycler View Virtual Account List
    * Retrofit
+   * Navigation drawer implementation and fragment linking
 
 ### **Vici** : 
    * Transaction History
