@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
+import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.response.AddVaResponseModel
 import com.example.tsaving.model.response.GenericResponseModel
@@ -19,43 +20,44 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
     lateinit var job: Job
     override val coroutineContext: CoroutineContext get() = job + Dispatchers.Main
 
-    private val _label = MutableLiveData<String>()
-    private val _errorLabel = MutableLiveData<String>()
-    private val _status = MutableLiveData<Boolean>()
+    private val _statusPB = MutableLiveData<Boolean>()
     private val _responseVA = MutableLiveData<GenericResponseModel<Any>>()
+    private val _flagError = MutableLiveData<ErrorName>()
 
-    val label: LiveData<String> = _label
-    val errorLabel: LiveData<String> = _errorLabel
-    val status: LiveData<Boolean> = _status
+    val flagError: LiveData<ErrorName> = _flagError
+    val statusPB: LiveData<Boolean> = _statusPB
     val responseVA : LiveData<GenericResponseModel<Any>> = _responseVA
 
     //isblank return false kalau isblank.
-    fun validateAddVa(label: String, color: String){
-        var job: Job = Job ()
-        if(label.isBlank()) {
-            _errorLabel.value = "Please input this field"
+    fun validateAddVa(label: String, color: String) {
+        var job: Job = Job()
+        if (label.isBlank()) {
+            _flagError.value = ErrorName.Null
         }
-        else{
+        else if(label.length > 95){
+            _flagError.value = ErrorName.LimitVALabel
+        }
+        else {
+
             var repo = TsavingRepository()
+            var request = AddVaRequestModel(color, label)
 
-            var request = AddVaRequestModel(color,label)
-
-            viewModelScope.launch{
+            viewModelScope.launch {
+                _statusPB.value = true
                 try {
-                    val result = withContext(Dispatchers.IO){repo.createVa(request)}
+                    _statusPB.setValue(false)
+                    val result = withContext(Dispatchers.IO) { repo.createVa(request) }
                     Log.i("result", result.message.toString())
-                    _status.setValue(true)
                     _responseVA.value = result
                 } catch (t: Throwable) {
+                    _statusPB.setValue(false)
                     when (t) {
-                        is IOException -> Log.i("io exception", t.message.toString())
-                        is HttpException -> _status.setValue(false)
+                        is IOException -> _flagError.value = ErrorName.ErrorNetwork
+                        is HttpException -> _flagError.value = ErrorName.ErrorBadRequest
                     }
                 }
             }
         }
-
-
     }
 
 
