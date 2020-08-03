@@ -1,15 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- Lower rectangle (border color) -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorGreyLight" />
+            <solid android:id = "@+id/border_color" android:color="@color/colorRed" />
         </shape>
     </item>
-
     <!-- Upper rectangle (background color) -->
-    <item android:bottom="2dp">
+    <item android:left="16dp">
         <shape android:shape="rectangle">
             <solid android:color="@color/colorWhite" />
         </shape>

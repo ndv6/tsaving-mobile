@@ -47,6 +47,7 @@
                 android:layout_marginTop="5dp"
                 style="@style/dashboard_tv_primary"
                 android:text="Email"
+                android:textSize = "16sp"
                 app:layout_constraintTop_toBottomOf="@id/tv_dashboard_name"
                 app:layout_constraintStart_toEndOf="@id/civ_dashboard"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -60,7 +61,6 @@
             android:textSize="20sp"
             android:textStyle="bold"
             android:layout_marginTop="10sp"
-            android:layout_marginStart="8sp"
             app:layout_constraintStart_toStartOf="@id/cv_dashboard_account"/>
 
         <View

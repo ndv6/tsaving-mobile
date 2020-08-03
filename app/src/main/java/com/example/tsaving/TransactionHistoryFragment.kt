@@ -18,8 +18,9 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
     private val transactionHistoryViewModel: TransactionHistoryViewModel =
         TransactionHistoryViewModel(TsavingRepository())
     private var isLastPage: Boolean = false
+    private val firstPage = 1
 
-    companion object var firstPage = 1
+    private lateinit var paginationScrollListener: PaginationScrollListener
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,53 +38,47 @@ class TransactionHistoryFragment : androidx.fragment.app.Fragment(), LifecycleOw
         rv_transaction_history.adapter = transactionHistoryAdapter
         rv_transaction_history.layoutManager = LinearLayoutManager(context)
 
-        transactionHistoryViewModel.listTransactionHistory(firstPage)
-
-        transactionHistoryViewModel.apply {
-            transactionHistoryMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
-                transactionHistoryAdapter.transactionHistoryList = it
-                transactionHistoryAdapter.notifyDataSetChanged()
-            })
-
-            errorMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
-                DialogHandling({}).basicAlert(
-                    view.context,
-                    it.errorName.toString(),
-                    it.errorMessage,
-                    "Close"
-                )
-            })
-        }
-
-        rv_transaction_history?.addOnScrollListener(object : PaginationScrollListener(
+        paginationScrollListener = object : PaginationScrollListener(
             rv_transaction_history.layoutManager as LinearLayoutManager
         ) {
+            override var isCurrentlyLoading: Boolean = false
+
             override fun loadItems(page: Int, recyclerView: RecyclerView) {
-                transactionHistoryViewModel.apply {
-                    if (!isLastPage) {
-                        transactionHistoryViewModel.listTransactionHistory(page)
-                        transactionHistoryMutableLiveData.observe(
-                            this@TransactionHistoryFragment,
-                            Observer {
-                                transactionHistoryAdapter.transactionHistoryList = it
-                                transactionHistoryAdapter.notifyDataSetChanged()
-                            })
-                    }
-
-                    errorMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
-                        DialogHandling({}).basicAlert(
-                            view.context,
-                            it.errorName,
-                            it.errorMessage,
-                            "Close"
-                        )
-                    })
-
-                    isLastPageMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
-                        isLastPage = it
-                    })
-                }
+                getDataFromViewModel(page, recyclerView)
             }
-        })
+        }
+
+        getDataFromViewModel(firstPage, rv_transaction_history)
+
+        rv_transaction_history?.addOnScrollListener(paginationScrollListener)
+    }
+
+    private fun getDataFromViewModel(page: Int, view: RecyclerView) {
+        transactionHistoryViewModel.apply {
+            paginationScrollListener.isCurrentlyLoading = true
+            isLastPageMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
+                isLastPage = it
+            })
+
+            if (!isLastPage) {
+                transactionHistoryViewModel.listTransactionHistory(page)
+                transactionHistoryMutableLiveData.observe(
+                    this@TransactionHistoryFragment,
+                    Observer {
+                        transactionHistoryAdapter.transactionHistoryList = it
+                        paginationScrollListener.isCurrentlyLoading = false
+                        transactionHistoryAdapter.notifyDataSetChanged()
+                    })
+            }
+
+            errorMutableLiveData.observe(this@TransactionHistoryFragment, Observer {
+                ErrorDialogHandling(
+                    view.context,
+                    it.errorName,
+                    it.errorMessage
+                ).errorResponseDialog()
+                paginationScrollListener.isCurrentlyLoading = false
+            })
+        }
     }
 }
