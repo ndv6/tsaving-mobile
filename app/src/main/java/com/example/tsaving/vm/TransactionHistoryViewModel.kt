@@ -22,7 +22,7 @@ class TransactionHistoryViewModel(
 
     var transactionHistoryMutableLiveData: MutableLiveData<MutableList<TransactionHistoryResponseData>> =
         MutableLiveData()
-    var isLastPageMutableLiveData: MutableLiveData<Boolean> = MutableLiveData()
+    var isLastPageMutableLiveData: MutableLiveData<Boolean> = MutableLiveData(false)
     var errorMutableLiveData: MutableLiveData<ErrorModel> = MutableLiveData()
 
     var job: Job = Job()
@@ -55,10 +55,10 @@ class TransactionHistoryViewModel(
             } catch (t: Throwable) {
                 when (t) {
                     is IOException -> errorMutableLiveData.value =
-                        ErrorModel(t.message!!, t.toString())
+                        ErrorModel(t.message ?: "", t.toString())
                     is HttpException -> {
                         val errorBody = Gson().fromJson(
-                            t.response()!!.errorBody()!!.charStream(),
+                            t.response()?.errorBody()?.charStream(),
                             GenericResponseModel::class.java
                         )
                         errorMutableLiveData.value = ErrorModel(t.message(), errorBody.message)

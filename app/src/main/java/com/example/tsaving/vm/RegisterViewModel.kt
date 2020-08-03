@@ -44,7 +44,7 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
         if(password.isBlank()){ _flagStatus.value = ErrorName.NullPassword}
         else if (password.length < 6){ _flagStatus.value = ErrorName.NotValidLength}
 
-        if(!name.isBlank() && !address.isBlank() && !phone.isBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>6) {
+        if(!name.isBlank() && !address.isBlank() && !phone.isBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>=6) {
             _progresBar.setValue(true)
             var request: RegisterRequestModel =
                 RegisterRequestModel(name, address, phone, email, password, channel)

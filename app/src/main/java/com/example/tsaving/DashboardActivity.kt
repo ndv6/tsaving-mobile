@@ -33,9 +33,6 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
             startActivity(intent)
         }
 
-        civ_dashboard.setOnClickListener{
-            fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
-        }
         rv_dashboard_va_list.adapter = dashboardAdapter
         rv_dashboard_va_list.layoutManager = LinearLayoutManager(context)
 
