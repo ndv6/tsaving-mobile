@@ -33,6 +33,9 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             if(it == ErrorName.Null){
                 layout_addva_label.setError("Please Fill This Field")
             }
+            else if(it == ErrorName.LimitVALabel){
+                layout_addva_label.setError("Max. 95 character")
+            }
             else if(it == ErrorName.ErrorNetwork){
                 DialogHandling({}).basicAlert(requireContext(), "Notification", "Network Error", "close")
             }

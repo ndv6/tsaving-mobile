@@ -33,7 +33,12 @@ class AddVaViewModel : ViewModel(), LifecycleObserver,CoroutineScope {
         var job: Job = Job()
         if (label.isBlank()) {
             _flagError.value = ErrorName.Null
-        } else {
+        }
+        else if(label.length > 95){
+            _flagError.value = ErrorName.LimitVALabel
+        }
+        else {
+
             var repo = TsavingRepository()
             var request = AddVaRequestModel(color, label)
 

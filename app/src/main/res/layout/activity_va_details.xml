@@ -18,7 +18,7 @@
         >
         <androidx.appcompat.widget.Toolbar
             android:id="@+id/tb_vad"
-            android:layout_width="409dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
             android:minHeight="?attr/actionBarSize"
@@ -71,7 +71,7 @@
 
             <TextView
                 android:id="@+id/tv_vad_label"
-                android:layout_width="0dp"
+                android:layout_width="175dp"
                 android:layout_height="match_parent"
                 android:text="Tabungan Rumah"
                 android:textSize="@dimen/text_large"
