@@ -50,6 +50,7 @@ sealed class ErrorName{
     object UnableDeleteVA : ErrorName()
     object InvalidConfirmPassword : ErrorName()
     object Null: ErrorName()
+    object LimitVALabel: ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{
