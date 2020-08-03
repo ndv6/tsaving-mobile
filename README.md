@@ -38,6 +38,7 @@
    * Login UI
    * Register UI & Logic
    * OTP Logic
+   * Logo
 
 ### **Sekar** : 
    * Edit Virtual Account
