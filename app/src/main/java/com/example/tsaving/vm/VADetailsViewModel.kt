@@ -1,5 +1,6 @@
 package com.example.tsaving.vm
 
+import android.util.Log
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -19,12 +20,15 @@ class VADetailsViewModel : ViewModel(), LifecycleObserver {
     var repo = TsavingRepository()
 
     fun onDelete(vaNum: String){
+        Log.i("vaNum", vaNum)
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) {
-                    repo.deleteVa(vaNum)
+                    val res = repo.deleteVa(vaNum)
+                    if (res.isSuccessful) {
+                        isDeleted.postValue(true)
+                    }
                 }
-                isDeleted.setValue(true)
             } catch (t : Throwable) {
                 when (t) {
                     is IOException -> {

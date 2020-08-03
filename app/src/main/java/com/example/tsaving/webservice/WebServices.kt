@@ -85,7 +85,7 @@ interface WebServices {
     suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String,@Body body:TransferToMainRequestModel, @Header("Authorization") token: String ) : GenericResponseModel<Any>
 
     @DELETE(DELETE_VA)
-    suspend fun deleteVa(@Path("va_num") vaNum: String, @Header("Authorization") token: String )
+    suspend fun deleteVa(@Path("va_num") vaNum: String, @Header("Authorization") token: String ) : retrofit2.Response<Unit>
 
     @GET(LIST_TRANSACTION_HISTORY)
     suspend fun listTransactionHistory(

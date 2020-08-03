@@ -1,9 +1,7 @@
 package com.example.tsaving
 
-import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -78,9 +76,8 @@ class VADetailsActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
             startActivity(intent)
         }
 
-        fun deleteVA() = vaDetailsViewModel.onDelete(va.vaNum?: "")
         btn_vad_delete.setOnClickListener {
-            DialogHandling(::deleteVA).ApprovalDialog(
+            DialogHandling({deleteVA(vaNum = va.vaNum?: "")}).ApprovalDialog(
                 this,
                 "Confirm",
                 "Are you sure deleting this virtual account?",
@@ -90,6 +87,8 @@ class VADetailsActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
         }
 
     }
+
+    private fun deleteVA(vaNum: String) = vaDetailsViewModel.onDelete(vaNum)
 
     private fun colorStringToColor(color: String) : Int {
         when (color) {
