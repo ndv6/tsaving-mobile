@@ -46,6 +46,7 @@ sealed class ErrorName{
     object LoginUnAuthorized : ErrorName()
     object ErrorSendMail : ErrorName()
     object UnableDeleteVA : ErrorName()
+    object UnableUpdatePassword : ErrorName()
     object Null: ErrorName()
 }
 //Thousand separator func
