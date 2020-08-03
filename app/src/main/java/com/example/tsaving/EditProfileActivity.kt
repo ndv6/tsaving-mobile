@@ -73,10 +73,13 @@ class EditProfileFragment : Fragment(), LifecycleOwner {
                     }
                 } else if (newUpdateStatus == UpdateStatus.EMAIL_CHANGED) {
                     activity?.let {
-                        val intent = Intent(activity, OTPActivity::class.java)
-                        intent.putExtra("cust_email", et_edit_profile_email.text.toString())
-                        startActivity(intent)
-                        activity!!.finish()
+                        DialogHandling {
+                            BaseApplication.token = ""
+                            val intent = Intent(activity, LoginActivity::class.java)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                            startActivity(intent)
+                        }.basicAlert(it, "Update Success", "Your email has been changed, please verify your email", "Ok")
                     }
                 }
             })
