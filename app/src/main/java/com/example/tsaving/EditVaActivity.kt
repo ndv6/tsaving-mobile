@@ -43,9 +43,11 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
             finish()
         }
 
+        btn_vae_cancel.setOnClickListener{
+            finish()
+        }
 
         editVaViewModel.vaNum = va.vaNum.toString()
-
 
         tv_vae_num.text = va.vaNum
         et_vae_label.setText(va.vaLabel)
