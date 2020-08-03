@@ -4,14 +4,14 @@
     <!-- Lower rectangle (border color) -->
     <item>
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorGreyDark" />
+            <solid android:color="@color/colorGreyLight" />
         </shape>
     </item>
 
     <!-- Upper rectangle (background color) -->
-    <item android:bottom="1dp">
+    <item android:bottom="2dp">
         <shape android:shape="rectangle">
-            <solid android:color="@color/colorGreyLight" />
+            <solid android:color="@color/colorWhite" />
         </shape>
     </item>
 </layer-list>
