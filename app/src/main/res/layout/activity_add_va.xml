@@ -13,31 +13,19 @@
         android:layout_height="match_parent"
         android:padding = "32dp"
         >
-        <TextView
-            android:id="@+id/tv_addva_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:elegantTextHeight="true"
-            android:text="Create Virtual Account"
-            android:textSize="@dimen/text_large"
-            android:textStyle="bold"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tb_vad" />
 
         <TextView
             android:id = "@+id/tv_addva_label"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Label"
-            android:layout_marginTop="64dp"
+            android:layout_marginTop="@dimen/margin_xl"
             android:textStyle="bold"
             android:textSize="@dimen/text_medium"
             android:elegantTextHeight="true"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_addva_title"
+            app:layout_constraintTop_toTopOf="parent"
             />
 
         <com.google.android.material.textfield.TextInputLayout
