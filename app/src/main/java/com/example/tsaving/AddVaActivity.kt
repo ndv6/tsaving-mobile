@@ -42,7 +42,7 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
                 loading(1)
                 startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
             }else{
-                DialogHandling({}).basicAlert(requireContext(), "Notification", it.message, "close")
+                DialogHandling({}).basicAlert(requireContext(), "Notification response", it.message, "close")
             }
         })
 
@@ -54,6 +54,9 @@ class AddVaFragment: androidx.fragment.app.Fragment(),LifecycleOwner {
             val label = et_addva_label.text.toString()
             addVaViewModel.validateAddVa(label,color)
 
+        }
+        btn_addva_cancel.setOnClickListener{
+            startActivity(Intent(this@AddVaFragment.context,MainActivity::class.java))
         }
         super.onViewCreated(view, savedInstanceState)
     }

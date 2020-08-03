@@ -1,6 +1,7 @@
 package com.example.tsaving
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -21,6 +22,7 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
             val tvBalance = view.findViewById<TextView>(R.id.tv_item_list_va_balance)
             val tvVaNum = view.findViewById<TextView>(R.id.tv_item_list_va_num)
             val cvDetail = view.findViewById<CardView>(R.id.cv_item_list_va)
+            var tvColor = view.findViewById<TextView>(R.id.tv_item_list_va_color)
 
             var label = va.vaLabel.toString()
             if(label.length > 15){
@@ -30,7 +32,20 @@ class DashboardRecyclerViewAdapter(val listener : (VirtualAccount) -> Unit): Rec
                 tvLabel.text = label
             }
             tvVaNum.text = va.vaNum
-            tvBalance.text = "Rp. ${va.vaBalance}"
+            tvBalance.text = "Rp. ${va.vaBalance.toString().FormatDecimal()}"
+            if (va.vaColor.toLowerCase() == "red") {
+                tvColor.setBackgroundResource(R.color.colorRed)
+            } else if (va.vaColor.toLowerCase() == "orange") {
+                tvColor.setBackgroundResource(R.color.colorOrange)
+            } else if (va.vaColor.toLowerCase() == "green") {
+                tvColor.setBackgroundResource(R.color.colorGreen)
+            }else if (va.vaColor.toLowerCase() == "yellow"){
+                tvColor.setBackgroundResource(R.color.colorYellow)
+            }else if(va.vaColor.toLowerCase() == "blue"){
+                tvColor.setBackgroundResource(R.color.colorBlue)
+            }else if(va.vaColor.toLowerCase() == "purple"){
+                tvColor.setBackgroundResource(R.color.colorPurple)
+            }
             cvDetail.setOnClickListener {
                 listener(va)
             }

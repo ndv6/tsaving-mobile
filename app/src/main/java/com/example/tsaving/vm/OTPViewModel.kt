@@ -26,12 +26,14 @@ class OTPViewModel : ViewModel(),
     var dataLogin = MutableLiveData<GenericResponseModel<DataLogin>>()
     var dataToken = MutableLiveData<GenericResponseModel<GetTokenResponse>>()
     var statusLogin = MutableLiveData<Boolean>()
+    var isResend = MutableLiveData<Boolean>()
 
     fun onValidate(otp: String, email: String) {
         statusPB.value = true
         if (otp.isBlank()) {
             _error.value = ErrorName.NullOTP
             isValid.value = false
+            statusPB.value = false
         } else {
             var request = VerifyRequestModel(otp, email)
             viewModelScope.launch{
@@ -39,23 +41,20 @@ class OTPViewModel : ViewModel(),
                     statusPB.value = false
                     val result = withContext(Dispatchers.IO) { repo.verifyAccount(request) }
                     if (result.status == "SUCCESS") {
-                        _error.setValue(null)
-                        isValid.setValue(true)
-                    } else {
-                        _error.setValue(ErrorName.FailedToRecognizeOTP)
-                        isValid.setValue(false)
+                        _error.value = null
+                        isValid.value = true
                     }
                     return@launch
                 } catch (t: Throwable) {
                     statusPB.value = false
                     when (t) {
                         is IOException -> {
-                            _error.setValue(ErrorName.NetworkError)
-                            isValid.setValue(false)
+                            _error.value = ErrorName.NetworkError
+                            isValid.value = false
                         }
                         is HttpException -> {
-                            _error.setValue(ErrorName.FailedToRecognizeOTP)
-                            isValid.setValue(false)
+                            _error.value = ErrorName.FailedToRecognizeOTP
+                            isValid.value = false
                         }
                     }
                 }
@@ -66,6 +65,7 @@ class OTPViewModel : ViewModel(),
     fun login(email: String, password: String){
         statusLogin.value = false
         var request = LoginRequestModel(email, password)
+        Log.i("isValid", isValid.value.toString())
         viewModelScope.launch {
             try {
                 statusPB.value = false
@@ -104,18 +104,18 @@ class OTPViewModel : ViewModel(),
                     repo.getToken(request)
                 }
                 if (result.status == "SUCCESS") {
-                    dataToken.setValue(result)
+                    dataToken.value = result
                 }
             } catch (t: Throwable) {
                 statusPB.value = false
                 when (t) {
                     is IOException -> {
-                        _error.setValue(ErrorName.NetworkError)
-                        isValid.setValue(false)
+                        _error.value = ErrorName.NetworkError
+                        isValid.value = false
                     }
                     is HttpException -> {
-                        isValid.setValue(false)
-                        _error.setValue(ErrorName.FailedToRecognizeOTP)
+                        isValid.value = false
+                        _error.value = ErrorName.FailedToRecognizeOTP
                     }
                 }
             }
@@ -132,8 +132,10 @@ class OTPViewModel : ViewModel(),
                     repo.sendEmail(request)
                 }
                 isValid.setValue(true)
+                isResend.setValue(true)
             } catch (t: Throwable) {
                 statusPB.value = false
+                isResend.value = false
                 when (t) {
                     is IOException -> {
                         _error.setValue(ErrorName.NetworkError)

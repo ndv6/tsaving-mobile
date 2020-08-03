@@ -15,14 +15,15 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/cl_transaction_history"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:background="@drawable/border_bottom">
 
             <TextView
                 android:id="@+id/tv_transaction_history_item_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="10dp"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -34,9 +35,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="12dp"
-                android:layout_marginBottom="20dp"
-                android:textSize="15sp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="16dp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toEndOf="@id/img_transaction_history"
                 app:layout_constraintTop_toBottomOf="@+id/tv_transaction_history_item_title" />
 
@@ -47,20 +48,21 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginBottom="8dp"
-                android:textSize="15sp"
-                app:layout_constraintStart_toEndOf="@id/img_transaction_history"
-                app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_from_account"
+                android:textSize="16sp"
                 app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:layout_constraintStart_toEndOf="@id/img_transaction_history"
+                app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_from_account" />
 
             <TextView
                 android:id="@+id/tv_transaction_history_item_tran_amount"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginBottom="5dp"
-                android:textSize="30sp"
+                android:textSize="25sp"
+                app:layout_constraintStart_toEndOf="@id/tv_transaction_history_item_from_account"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_title" />
 
@@ -72,7 +74,7 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="15dp"
-                android:layout_marginBottom="24dp"
+                android:layout_marginBottom="16dp"
                 android:textAlignment="textEnd"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -81,17 +83,16 @@
 
             <ImageView
                 android:id="@+id/img_transaction_history"
-                android:contentDescription=""
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                app:srcCompat="@mipmap/ic_launcher_round"
                 android:layout_marginStart="8dp"
+                android:layout_marginBottom="16dp"
+                android:contentDescription="@string/menu_history"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/tv_transaction_history_item_title"
-                app:layout_constraintBottom_toBottomOf="parent"
-                />
+                app:srcCompat="@mipmap/ic_launcher_round" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 </androidx.constraintlayout.widget.ConstraintLayout>
-

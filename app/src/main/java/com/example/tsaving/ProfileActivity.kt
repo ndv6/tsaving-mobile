@@ -52,14 +52,6 @@ class ProfileFragment : Fragment(), LifecycleOwner {
             tv_profile_email.text = newData.data.cust_email
             tv_profile_phone.text = newData.data.cust_phone
             tv_profile_address.text = newData.data.cust_address
-
-            if (newData.data.is_verified) {
-                tv_profile_verified.text = "Verified"
-                tv_profile_verified.setTextColor(resources.getColor(R.color.colorAccent))
-            } else {
-                tv_profile_verified.text = "Not Verified"
-                tv_profile_verified.setTextColor(resources.getColor(R.color.colorPrimary))
-            }
         })
     }
 }
