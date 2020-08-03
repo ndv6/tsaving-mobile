@@ -1,39 +1,42 @@
 # tsaving-mobile
 
 ### **Joseph** : 
-    * Item 1
-    * Item 2
+   * Dashboard 
+   * Virtual Account List
+   * Retrofit
 
 ### **Vici** : 
-    * Item 1
-    * Item 2
+   * Transaction History
+   * Retrofit
 
 ### **Andreas** : 
-    * Item 1
-    * Item 2
+   * Edit Profile
+   * Profile
 
 ### **Azizah** : 
-    * Item 1
-    * Item 2
+   * Update Password
 
 ### **Jocelyn** : 
-    * Item 1
-    * Item 2
+   * Add Virtual Account
+   * UI
 
 ### **David** : 
-    * Item 1
-    * Item 2
+   * Login Logic
+   * Transfer To Main
+   * Transfer To Virtual Account
 
 ### **Yuly** : 
-    * Item 1
-    * Item 2
+   * OTP UI
+   * Virtual Account Details
+   * Delete Virtual Account
+   * Retrofit
 
 ### **Caesar** : 
-    * Item 1
-    * Item 2
+   * Login UI
+   * Register UI & Logic
+   * OTP Logic
 
 ### **Sekar** : 
-    * Drawer xml
-    * Edit VA
-    * Dialog handling function
-    * Styling
+   * Edit Virtual Account
+   * Drawer
+   * UI
