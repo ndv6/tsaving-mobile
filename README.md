@@ -33,5 +33,7 @@
     * Item 2
 
 ### **Sekar** : 
-    * Item 1
-    * Item 2
+    * Drawer xml
+    * Edit VA
+    * Dialog handling function
+    * Styling
