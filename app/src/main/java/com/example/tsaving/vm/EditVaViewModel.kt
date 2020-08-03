@@ -2,6 +2,7 @@ package com.example.tsaving.vm
 
 import android.util.Log
 import androidx.lifecycle.*
+import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.webservice.TsavingRepository
@@ -20,10 +21,19 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
     private var _statusPB = MutableLiveData<Boolean>()
     var statusPB : LiveData<Boolean> = _statusPB
 
-    private var _flagStatus = MutableLiveData<Boolean>()
-    var flagStatus : LiveData<Boolean> = _flagStatus
+    private var _flagStatus = MutableLiveData<ErrorName>()
+    var flagStatus : LiveData<ErrorName> = _flagStatus
 
-    fun validateEditVa(label: String) :Boolean = !label.isBlank()
+    fun validateEditVa(label: String, color: String){
+        when{
+            label.isBlank() -> {
+                _flagStatus.value = ErrorName.Null
+            }
+            label.length > 95 -> {
+                _flagStatus.value = ErrorName.NotValidLength
+            }else -> fetchVaEditData(label, color)
+        }
+    }
 
     fun fetchVaEditData(vaLabel:String, vaColor:String){
         _statusPB.value = true
@@ -34,7 +44,6 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
                 _statusPB.value = false
                 val result= withContext(Dispatchers.IO) {tsRepo.updateVa(vaNum, request)}
                 if (result.status == "SUCCESS"){
-                    _flagStatus.value = true
                     _data.value = result
                     Log.i("result", result.toString())
                 }
@@ -42,11 +51,11 @@ class EditVaViewModel (private val tsRepo: TsavingRepository, var vaNum : String
                 _statusPB.value = false
                 when (t) {
                     is IOException -> {
-                        _flagStatus.value = false
+                        _flagStatus.value = ErrorName.NetworkError
                         println(t.message)
                     }
                     is HttpException -> {
-                        _flagStatus.value = false
+                        _flagStatus.value = ErrorName.NetworkError
                         println(t.message)
                     }
                 }
