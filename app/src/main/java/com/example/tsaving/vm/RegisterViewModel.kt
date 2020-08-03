@@ -22,13 +22,17 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
 
     private val _flagStatus = MutableLiveData<ErrorName>()
     private val _dataRegister = MutableLiveData<GenericResponseModel<RegisterResponse>>()
+    private var _progresBar = MutableLiveData<Boolean>()
+
+    val progresBar: LiveData<Boolean> = _progresBar
 
     val flagStatus: LiveData<ErrorName> = _flagStatus
     val dataRegister: LiveData<GenericResponseModel<RegisterResponse>> = _dataRegister
 
-    fun onValidate(name: String,address: String,phone: String,email: String,password: String,channel: String){
+    fun onValidate(name: String,address: String,phone: String,email: String,password: String, confirmpassword: String,channel: String){
         var repo: TsavingRepository = TsavingRepository()
         job = Job()
+
 
         if (name.isBlank()){_flagStatus.value = ErrorName.NullName }
         if(address.isBlank()){_flagStatus.value = ErrorName.NullAddress}
@@ -41,16 +45,23 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
         if(password.isBlank()){ _flagStatus.value = ErrorName.NullPassword}
         else if (password.length < 6){ _flagStatus.value = ErrorName.NotValidLength}
 
-        if(!name.isBlank() && !address.isBlank() && !phone.isBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>6) {
+        if(confirmpassword.isBlank()){ _flagStatus.value = ErrorName.NullConfirmPassword}
+        else if (confirmpassword.length < 6){ _flagStatus.value = ErrorName.NotValidLengthConfirm}
+        else if (confirmpassword != password){ _flagStatus.value = ErrorName.InvalidConfirmPassword}
+
+        if(!name.isBlank() && !address.isBlank() && !phone.isBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>=6 && confirmpassword==password) {
             var request: RegisterRequestModel =
                 RegisterRequestModel(name, address, phone, email, password, channel)
 
             viewModelScope.launch {
+                _progresBar.value = true
                 try {
+                    _progresBar.value = false
                     val result = withContext(Dispatchers.IO) { repo.register(request) }
                     _flagStatus.value = ErrorName.Null
                     _dataRegister.value = result
                 } catch (t: Throwable) {
+                    _progresBar.value = false
                     when (t) {
                         is IOException -> {
                             _flagStatus.value  = ErrorName.ErrorNetwork

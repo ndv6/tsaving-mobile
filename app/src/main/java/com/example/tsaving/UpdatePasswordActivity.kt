@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.Observer
@@ -10,22 +11,35 @@ import kotlinx.android.synthetic.main.activity_update_password.*
 
 
 class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
-    private val updatePasswordViewModel : UpdatePasswordViewModel = UpdatePasswordViewModel()
+    private val updatePasswordViewModel: UpdatePasswordViewModel = UpdatePasswordViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_update_password)
 
-        btn_up_back.setOnClickListener{
+        btn_up_back.setOnClickListener {
+            finish()
+        }
+        btn_up_cancel.setOnClickListener {
             finish()
         }
 
-        updatePasswordViewModel.errorOldPassword.observe(this, Observer { newErrorName -> layout_oldpassword.setError(newErrorName)})
-        updatePasswordViewModel.errorNewPassword.observe(this, Observer { newErrorName -> layout_newpassword.setError(newErrorName)})
-        updatePasswordViewModel.errorConfirmPassword.observe(this, Observer { newErrorName -> layout_confirmpassword.setError(newErrorName)})
+        lifecycle.addObserver(updatePasswordViewModel)
+
+        updatePasswordViewModel.errorOldPassword.observe(
+            this,
+            Observer { newErrorName -> layout_oldpassword.setError(newErrorName) })
+
+        updatePasswordViewModel.errorNewPassword.observe(
+            this,
+            Observer { newErrorName -> layout_newpassword.setError(newErrorName) })
+
+        updatePasswordViewModel.errorConfirmPassword.observe(
+            this,
+            Observer { newErrorName -> layout_confirmpassword.setError(newErrorName) })
 
         updatePasswordViewModel.status.observe(this, Observer { it ->
-            if(it == true) {
+            if (it == true) {
                 AlertDialog.Builder(this)
                     .setTitle("Success")
                     .setMessage("Password Updated Successfully")
@@ -33,31 +47,42 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
                         "OK"
                     ) { dialog, which -> finish() }
                     .show()
-            } else {
-                ErrorDialogHandling(this@UpdatePasswordActivity,"Failed", "Unable to Update Password").errorResponseDialog()
+            } 
+        })
+
+        updatePasswordViewModel.errorstatus.observe(this, Observer {
+            if (it == ErrorName.NetworkError) {
+                Log.i("error", "Network Error")
+                DialogHandling({}).basicAlert(this, "Notification", "Network Error", "close")
+            } else if (it == ErrorName.UnableUpdatePassword) {
+                ErrorDialogHandling(
+                    this@UpdatePasswordActivity,
+                    "Failed",
+                    "Unable to Update Password"
+                ).errorResponseDialog()
             }
         })
 
-        et_up_oldpassword?.afterTextChanged{
-                if (et_up_oldpassword.text.toString().length < 6) {
-                    layout_oldpassword.setError("Minimum password length is 6")
-                }else {
-                    layout_oldpassword.setError(null)
-                }
+        et_up_oldpassword?.afterTextChanged {
+            if (et_up_oldpassword.text.toString().length < 6) {
+                layout_oldpassword.setError("Minimum password length is 6")
+            } else {
+                layout_oldpassword.setError(null)
+            }
         }
 
-        et_up_newpassword?.afterTextChanged{
+        et_up_newpassword?.afterTextChanged {
             if (et_up_newpassword.text.toString().length < 6) {
                 layout_newpassword.setError("Minimum password length is 6")
-            }else {
+            } else {
                 layout_newpassword.setError(null)
             }
         }
 
-        et_up_confirmpassword?.afterTextChanged{
+        et_up_confirmpassword?.afterTextChanged {
             if (et_up_confirmpassword.text.toString().length < 6) {
                 layout_confirmpassword.setError("Minimum password length is 6")
-            }else {
+            } else {
                 layout_confirmpassword.setError(null)
             }
         }
@@ -68,11 +93,10 @@ class UpdatePasswordActivity : AppCompatActivity(), LifecycleOwner {
             val newPassword = et_up_newpassword.text.toString()
             val confirmPassword = et_up_confirmpassword.text.toString()
 
-            val cek = updatePasswordViewModel.onValidate(oldPassword,newPassword,confirmPassword)
+            updatePasswordViewModel.onValidate(oldPassword, newPassword, confirmPassword)
 
         }
 
+
     }
-
-
 }

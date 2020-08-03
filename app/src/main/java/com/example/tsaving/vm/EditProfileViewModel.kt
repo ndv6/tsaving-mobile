@@ -1,6 +1,5 @@
 package com.example.tsaving.vm
 
-import android.util.Log
 import android.util.Patterns
 import androidx.lifecycle.*
 import com.example.tsaving.model.request.EditProfileRequestModel
@@ -33,8 +32,6 @@ enum class ErrorPhone(val message: String) {
 }
 
 enum class ErrorAddress(val message: String) {
-    NOTENOUGHLENGTH("Address must consists of minimum 10 characters"),
-    MAXLENGTHEXCEEDED("Email must consists of maximum 200 characters"),
     ISBLANK("Address cannot be blank")
 }
 
@@ -98,7 +95,6 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) { tsRepo.viewProfile() }
-                Log.i("EditProfileViewModel", result.toString())
                 if (result.status == "SUCCESS") {
                     _data.value = result
                 }
@@ -191,14 +187,6 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
                 _errorAddress.value = ErrorAddress.ISBLANK.message
                 isValid = false
             }
-            inputAddress.length < 10 -> {
-                _errorAddress.value = ErrorAddress.NOTENOUGHLENGTH.message
-                isValid = false
-            }
-            inputAddress.length > 200 -> {
-                _errorAddress.value = ErrorAddress.MAXLENGTHEXCEEDED.message
-                isValid = false
-            }
             else -> {
                 _errorAddress.value = null
             }
@@ -220,7 +208,6 @@ class EditProfileViewModel(private val tsRepo: TsavingRepository) : ViewModel(),
         viewModelScope.launch {
             try {
                 val result = withContext(Dispatchers.IO) { tsRepo.updateProfile(request) }
-                Log.i("EditProfileViewModel", result.status)
                 if (result.status == "SUCCESS") {
                     if (inputEmail != _data.value?.data?.cust_email) {
                         _updateStatus.value = UpdateStatus.EMAIL_CHANGED

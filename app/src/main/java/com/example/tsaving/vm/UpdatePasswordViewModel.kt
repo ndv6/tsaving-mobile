@@ -4,11 +4,13 @@ package com.example.tsaving.vm
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
+import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
 import retrofit2.HttpException
 import java.io.IOException
+import java.net.SocketException
 import kotlin.coroutines.CoroutineContext
 
 enum class ErrorPassword(val message:String) {
@@ -26,11 +28,14 @@ class UpdatePasswordViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
     private val _errorNewPassword = MutableLiveData<String>()
     private val _errorConfirmPassword = MutableLiveData<String>()
     private val _status = MutableLiveData<Boolean>()
+    private var _errorstatus = MutableLiveData<ErrorName>()
 
     val errorOldPassword: LiveData<String> = _errorOldPassword
     val errorNewPassword: LiveData<String> = _errorNewPassword
     val errorConfirmPassword: LiveData<String> = _errorConfirmPassword
     val status: LiveData<Boolean> = _status
+    val errorstatus: LiveData<ErrorName> = _errorstatus
+
 
     fun onValidate(oldPassword: String, newPassword: String, confirmPassword: String) {
         job = Job()
@@ -64,14 +69,19 @@ class UpdatePasswordViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
                     val result = withContext(Dispatchers.IO) {
                         repo.updatePassword(request)
                     }
-                    Log.i("response", result.toString())
-                    _status.setValue(true)
+                    if(result.status == "SUCCESS") {
+                        _status.value = true
+                    }
                 } catch (t: Throwable) {
                     when (t) {
-                        is IOException -> Log.i("Error", t.message.toString())
+                        is IOException -> {
+                            _status.value = false
+                            _errorstatus.value = ErrorName.NetworkError
+                        }
+
                         is HttpException -> {
-                            _status.setValue(false)
-                            Log.i("Error", t.message.toString())
+                            _status.value = false
+                            _errorstatus.value = ErrorName.UnableUpdatePassword
                         }
                     }
                 }

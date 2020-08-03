@@ -25,6 +25,7 @@ fun EditText.afterTextChanged(afterText: (String) -> Unit){
 
 sealed class ErrorName{
     object NotValidLength : ErrorName()
+    object NotValidLengthConfirm : ErrorName()
     object NotAlphaNumeric : ErrorName()
     object NetworkError : ErrorName()
     object FailedToRecognizeOTP : ErrorName()
@@ -37,6 +38,7 @@ sealed class ErrorName{
     object NullAddress : ErrorName()
     object NullEmail : ErrorName()
     object NullPassword : ErrorName()
+    object NullConfirmPassword : ErrorName()
     object InvalidEmail : ErrorName()
     object ErrorNetwork : ErrorName()
     object ErrorBadRequest : ErrorName()
@@ -45,7 +47,11 @@ sealed class ErrorName{
     object InvalidTransferToMain :ErrorName()
     object LoginUnAuthorized : ErrorName()
     object ErrorSendMail : ErrorName()
-    object  Null: ErrorName()
+    object UnableDeleteVA : ErrorName()
+    object UnableUpdatePassword : ErrorName()
+    object InvalidConfirmPassword : ErrorName()
+    object Null: ErrorName()
+    object LimitVALabel: ErrorName()
 }
 //Thousand separator func
 fun String.FormatDecimal() : String{

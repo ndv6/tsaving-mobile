@@ -2,6 +2,7 @@ package com.example.tsaving
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
@@ -56,6 +57,14 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
                     il_register_password.setError("Password Min 6 Character")
                 }
 
+                if (it == ErrorName.NullConfirmPassword) {
+                    il_register_password_confirm.setError("Please Input Confirm Password Field")
+                } else if (it == ErrorName.NotValidLengthConfirm) {
+                    il_register_password_confirm.setError("Confirm Password Min 6 Character")
+                } else if (it == ErrorName.InvalidConfirmPassword){
+                    il_register_password_confirm.setError("Your Confirm Password Not Match")
+                }
+
                 if (it == ErrorName.ErrorNetwork) {
                     DialogHandling({}).basicAlert(
                         this@RegisterActivity,
@@ -83,21 +92,34 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
                     finish()
                 }
             })
+
+            progresBar.observe(this@RegisterActivity, Observer {
+                if (it == true){
+                    pb_register.visibility = View.VISIBLE
+                }
+                else{
+                    Handler().postDelayed({
+                        pb_register.visibility = View.GONE
+                    }, 2000)
+                }
+            })
         }
 
-
-        et_register_name?.afterTextChanged { il_register_name.setError(null) }
-        et_register_address?.afterTextChanged { il_register_address.setError(null) }
-        et_register_phone?.afterTextChanged { il_register_phone.setError(null) }
-        et_register_email?.afterTextChanged { il_register_email.setError(null) }
-        et_register_password?.afterTextChanged { il_register_password.setError(null) }
+        et_register_name?.afterTextChanged { il_register_name.setError(null)}
+        et_register_address?.afterTextChanged { il_register_address.setError(null)}
+        et_register_phone?.afterTextChanged { il_register_phone.setError(null)}
+        et_register_email?.afterTextChanged { il_register_email.setError(null)}
+        et_register_password?.afterTextChanged { il_register_password.setError(null)}
+        et_register_password_confirm?.afterTextChanged { il_register_password_confirm.setError(null)}
 
         btn_register_signup.setOnClickListener {
+
             val registerName = et_register_name.text.toString()
             val registerAddress = et_register_address.text.toString()
             val registerPhone = et_register_phone.text.toString()
             val registerEmail = et_register_email.text.toString()
             val registerPassword = et_register_password.text.toString()
+            val registerConfirmPassword = et_register_password_confirm.text.toString()
             val registerChannel = "Mobile"
 
             val checkData = registerViewModel.onValidate(
@@ -106,9 +128,9 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
                 registerPhone,
                 registerEmail,
                 registerPassword,
+                registerConfirmPassword,
                 registerChannel
             )
-
         }
     }
 

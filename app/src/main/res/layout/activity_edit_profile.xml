@@ -163,17 +163,31 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
+                android:id="@+id/btn_edit_profile_cancel"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:text = "CANCEL"
+                style = "@style/ButtonCancel"
+                android:layout_marginLeft="@dimen/margin_xl"
+                android:layout_marginRight="@dimen/margin_medium"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_edit_profile_save"
+                app:layout_constraintStart_toStartOf="parent"
+                />
+
+
+            <Button
                 android:id="@+id/btn_edit_profile_save"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="@dimen/margin_medium"
                 android:layout_marginTop="32dp"
-                android:layout_marginEnd="24dp"
-                android:background="@drawable/button_rounded"
+                android:layout_marginEnd="@dimen/margin_xl"
+                style = "@style/ButtonPrimary"
                 android:text="Save"
                 android:textColor="@color/colorLight"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/btn_edit_profile_cancel"
                 app:layout_constraintTop_toBottomOf="@+id/pb_edit_profile_button" />
 
             <ProgressBar

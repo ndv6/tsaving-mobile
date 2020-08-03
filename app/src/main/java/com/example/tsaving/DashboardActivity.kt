@@ -37,9 +37,6 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
             startActivity(intent)
         }
 
-        civ_dashboard.setOnClickListener{
-            fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())?.commit()
-        }
         rv_dashboard_va_list.adapter = dashboardAdapter
         rv_dashboard_va_list.layoutManager = LinearLayoutManager(context)
 
@@ -63,7 +60,8 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
                 tv_dashboard_acc_num.text = it.data.accountNum
                 tv_dashboard_static_card_number.text = cardNum
                 tv_dashboard_static_card_exp.text = date
-                tv_dashboard_acc_balance.text = "Rp. ${it.data.accountBalance}"
+
+                tv_dashboard_acc_balance.text = "Rp. ${it.data.accountBalance.toString().FormatDecimal()}"
                 dashboardAdapter.vaList = it.data.virtualAccounts
                 dashboardAdapter.notifyDataSetChanged()
             })

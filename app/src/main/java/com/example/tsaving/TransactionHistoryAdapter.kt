@@ -1,11 +1,16 @@
 package com.example.tsaving
 
+import android.icu.text.SimpleDateFormat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.tsaving.helpers.TransactionHistoryHelper
 import com.example.tsaving.model.response.TransactionHistoryResponseData
+import java.time.format.DateTimeFormatter
+import java.util.*
 
 class TransactionHistoryAdapter :
     RecyclerView.Adapter<TransactionHistoryAdapter.TransactionHistoryViewHolder>() {
@@ -14,6 +19,8 @@ class TransactionHistoryAdapter :
 
     class TransactionHistoryViewHolder(val view: View) : RecyclerView.ViewHolder(view) {
         fun bindData(position: TransactionHistoryResponseData) {
+            val transactionHistoryIcon =
+                view.findViewById<ImageView>(R.id.img_transaction_history)
             val tranAmt =
                 view.findViewById<TextView>(R.id.tv_transaction_history_item_tran_amount)
             val destAccount =
@@ -30,12 +37,14 @@ class TransactionHistoryAdapter :
             val fromAccountPlaceholderString = "From : " + position.fromAccount
             val destAccountPlaceholderString = "To      : " + position.destinationAccount
 
+            TransactionHistoryHelper.setImgSrc(position.description, transactionHistoryIcon)
+            tranAmt.text = position.transferAmount.currencyFormatter("IDR")
+            TransactionHistoryHelper.formatTransactionAmount(position.description, tranAmt)
+            TransactionHistoryHelper.formatTransactionHistoryTitle(desc, position.description)
+
             destAccount.text = destAccountPlaceholderString
             fromAccount.text = fromAccountPlaceholderString
-            desc.text = position.description
-            tranAmt.text = position.transferAmount.currencyFormatter("IDR")
-            tranAmt.formatTransactionAmount(position.description)
-            createdAt.text = position.createdAt.toString()
+            createdAt.text = position.createdAt.toGMTString()
         }
     }
 
