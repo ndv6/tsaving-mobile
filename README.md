@@ -15,6 +15,7 @@
 
 ### **Azizah** : 
    * Update Password
+   * Fixing Delete VA
 
 ### **Jocelyn** : 
    * Add Virtual Account
