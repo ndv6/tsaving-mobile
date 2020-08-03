@@ -4,26 +4,18 @@ import android.content.Context
 import android.content.Intent
 import com.example.tsaving.BaseApplication
 import com.example.tsaving.LoginActivity
-import com.example.tsaving.model.DashboardResponseModel
+import com.example.tsaving.model.request.*
 import com.example.tsaving.model.request.AddVaRequestModel
 import com.example.tsaving.model.request.EditProfileRequestModel
 import com.example.tsaving.model.request.EditVaRequestModel
 import com.example.tsaving.model.request.LoginRequestModel
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
-import com.example.tsaving.model.response.UpdatePasswordResponseModel
-import com.example.tsaving.vm.UpdatePasswordViewModel
 import com.example.tsaving.model.request.TransferToVaRequestModel
 import com.example.tsaving.model.request.RegisterRequestModel
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
-import com.example.tsaving.model.request.VerifyRequestModel
-import com.example.tsaving.model.response.EditVaResponse
 import com.example.tsaving.model.response.*
-import com.example.tsaving.model.response.AddVaResponseModel
-import com.example.tsaving.model.response.*
-import com.example.tsaving.model.response.RegisterResponse
-import com.example.tsaving.model.response.EmailResponse
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.*
@@ -46,7 +38,7 @@ interface WebServices {
         const val DELETE_VA = "me/va/{va_num}"
         const val LIST_TRANSACTION_HISTORY = "me/transaction/{page}"
         const val SEND_EMAIL = "sendMail"
-
+        const val GET_TOKEN = "get-token"
     }
 
     @POST(REGISTER)
@@ -90,16 +82,23 @@ interface WebServices {
     ) : EditVaResponse
 
     @POST(TRANSFER_VA_TO_MAIN_ACCOOUNT)
-    suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String)
+    suspend fun transferVaToMainAccount(@Path("va_num") vaNum: String,@Body body:TransferToMainRequestModel, @Header("Authorization") token: String ) : GenericResponseModel<Any>
 
-    @POST(DELETE_VA)
-    suspend fun deleteVa(@Path("va_num") vaNum: String)
+    @DELETE(DELETE_VA)
+    suspend fun deleteVa(@Path("va_num") vaNum: String, @Header("Authorization") token: String ) : retrofit2.Response<Unit>
 
-    @DELETE(LIST_TRANSACTION_HISTORY)
-    suspend fun listTransactionHistory(@Path("page") page: Int)
+    @GET(LIST_TRANSACTION_HISTORY)
+    suspend fun listTransactionHistory(
+        @Header("Authorization") token: String,
+        @Path("page") page: Int
+    ): GenericResponseModel<List<TransactionHistoryResponseData>>
+
 
     @POST(SEND_EMAIL)
-    suspend fun sendEmail()
+    suspend fun sendEmail(@Body body: SendMailRequest) : GenericResponseModel<Any>
+
+    @POST(GET_TOKEN)
+    suspend fun getToken(@Body body: GetTokenRequest) : GenericResponseModel<GetTokenResponse>
 }
 
 class HeaderInterceptor: Interceptor {
@@ -128,7 +127,20 @@ class UnauthInterceptor (val ctx: Context) : Interceptor {
     }
 }
 
+class TnotifHeaderInterceptor: Interceptor {
+    override fun intercept(chain: Interceptor.Chain): Response {
+//        token parse from parameter
+        var req = chain.request()
+        req = req.newBuilder().header("Content-Type", "application/json")
+            .header("User-Agent", "tnotif")
+            .header("Accept", "application/json")
+            .build()
+        return chain.proceed(req)
+    }
+}
+
 val ohc = OkHttpClient.Builder().addInterceptor(HeaderInterceptor()).addInterceptor(UnauthInterceptor(BaseApplication.appContext)).build()
+val tnotif_ohc = OkHttpClient.Builder().addInterceptor(TnotifHeaderInterceptor()).build()
 
 //singleton
 val webServices: WebServices by lazy {
@@ -136,6 +148,15 @@ val webServices: WebServices by lazy {
         .baseUrl("http://10.0.2.2:8000/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(ohc)
+        .build()
+        .create(WebServices::class.java)
+}
+
+val tnotifServices: WebServices by lazy {
+    Retrofit.Builder()
+        .baseUrl("http://10.0.2.2:8082/")
+        .addConverterFactory(GsonConverterFactory.create())
+        .client(tnotif_ohc)
         .build()
         .create(WebServices::class.java)
 }

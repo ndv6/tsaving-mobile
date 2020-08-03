@@ -13,7 +13,6 @@ import androidx.lifecycle.Observer
 
 import com.example.tsaving.model.VirtualAccount
 import com.example.tsaving.vm.TransferViewModel
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -57,15 +56,28 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         }
 
         transferViewModel.apply {
-            statusTransfer.observe(this@TransferActivity, Observer {
-                if(statusTransfer.value == true){
-                    println("status changed")
+            dataTFVA.observe(this@TransferActivity, Observer {
+                if(it.status == "SUCCESS"){
                     val intent = Intent(this@TransferActivity, MainActivity::class.java)
-                    //add flag intent to clear all previous activity so when user press back its not return to this activity again
                     intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
                     startActivity(intent)
-                    Toast.makeText(this@TransferActivity,"Successfully Add Balance To Your Virtual Account", Toast.LENGTH_LONG).show()
+                }
+                else{
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
+                }
+            })
+            dataTFVAToMain.observe(this@TransferActivity, Observer {
+                if(it.status == "SUCCESS"){
+                    val intent = Intent(this@TransferActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    Toast.makeText(this@TransferActivity, it.message, Toast.LENGTH_LONG).show()
+                    startActivity(intent)
+                }
+                else{
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Transfer Failed", it.message, "close")
                 }
             })
             flagError.observe(this@TransferActivity, Observer {
@@ -76,6 +88,9 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
                     DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Network Error", "close")
                 }
                 else if(it == ErrorName.InvalidTransferToVA){
+                    DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer To Virtual Account Failed", "close")
+                }
+                else if(it == ErrorName.InvalidTransferToMain){
                     DialogHandling({}).basicAlert(this@TransferActivity, "Notification", "Transfer To Main Account Failed", "close")
                 }
             })
@@ -93,13 +108,11 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         btn_tf_transfer.setOnClickListener {
             val amount = et_tf_amount_input.text.toString().replace(",", "")
             if(tf_type.toString() == "main-to-va"){
-                transferViewModel.callTransferToMain(va.vaNum.toString() , amount)
+                transferViewModel.callTransferToVa(va.vaNum.toString() , amount)
             }
             else if(tf_type.toString() == "va-to-main"){
-                //semangat :) va to main logic will be written in another branch
+                transferViewModel.callTransferToMain(va.vaNum.toString(),amount)
             }
-
-
         }
         btn_tf_back.setOnClickListener {
             finish()
@@ -115,7 +128,7 @@ class TransferActivity: AppCompatActivity(), LifecycleOwner, CoroutineScope{
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             layout_tf_amout.setError(null)
             et_amount.removeTextChangedListener(this);
-            val stringAmount = s.toString()
+            val stringAmount = s.toString().trimStart('0')
             et_amount.setText(stringAmount.FormatDecimal())
             et_amount.addTextChangedListener(this)
             et_amount.setSelection(et_amount.getText().toString().length);

@@ -4,6 +4,7 @@ package com.example.tsaving.vm
 import android.util.Log
 import androidx.lifecycle.*
 import androidx.lifecycle.viewModelScope
+import com.example.tsaving.ErrorName
 import com.example.tsaving.model.request.UpdatePasswordRequestModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
@@ -65,7 +66,12 @@ class UpdatePasswordViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
                         repo.updatePassword(request)
                     }
                     Log.i("response", result.toString())
-                    _status.setValue(true)
+                    if(result.status == "SUCCESS") {
+                        _status.setValue(true)
+                    }
+                    else {
+                        _status.setValue(false)
+                    }
                 } catch (t: Throwable) {
                     when (t) {
                         is IOException -> Log.i("Error", t.message.toString())
