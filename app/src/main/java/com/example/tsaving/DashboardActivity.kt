@@ -46,7 +46,7 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
                 var cardNumber = it.data.cardNumber
                 val num1 = cardNumber.substring(0,4)
                 val num2 = cardNumber.substring(4,8)
-                val num3 = cardNumber.substring(8,13)
+                val num3 = cardNumber.substring(8,12)
                 val cardNum = "$num1 $num2 $num3"
 
                 val month = it.data.expired.substring(5,7)
