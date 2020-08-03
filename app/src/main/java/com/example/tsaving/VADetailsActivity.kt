@@ -22,7 +22,7 @@ class VADetailsActivity : AppCompatActivity() {
         val va = intent.getParcelableExtra<VirtualAccount>("va_detail") as? VirtualAccount ?: VirtualAccount(0, "", "", 0, "", "", Date(), Date())
         tv_vad_accnumber.text = va.vaNum
         tv_vad_label.text = va.vaLabel
-        tv_vad_vabalance.text = "Rp. ${va.vaBalance}"
+        tv_vad_vabalance.text = "Rp " + va.vaBalance.toString().FormatDecimal()
         layout_vad.setBackgroundColor(ContextCompat.getColor(this, colorStringToColor(va.vaColor)))
 
         btn_vad_edit.setOnClickListener {

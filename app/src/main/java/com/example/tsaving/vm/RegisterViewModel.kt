@@ -22,6 +22,9 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
 
     private val _flagStatus = MutableLiveData<ErrorName>()
     private val _dataRegister = MutableLiveData<GenericResponseModel<RegisterResponse>>()
+    private var _progresBar = MutableLiveData<Boolean>()
+
+    val progresBar: LiveData<Boolean> = _progresBar
 
     val flagStatus: LiveData<ErrorName> = _flagStatus
     val dataRegister: LiveData<GenericResponseModel<RegisterResponse>> = _dataRegister
@@ -42,6 +45,7 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
         else if (password.length < 6){ _flagStatus.value = ErrorName.NotValidLength}
 
         if(!name.isBlank() && !address.isBlank() && !phone.isBlank() && Patterns.EMAIL_ADDRESS.matcher(email).matches() && password.length>6) {
+            _progresBar.setValue(true)
             var request: RegisterRequestModel =
                 RegisterRequestModel(name, address, phone, email, password, channel)
 
@@ -61,6 +65,7 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
                     }
                 }
             }
+            _progresBar.setValue(false)
         }
     }
 }

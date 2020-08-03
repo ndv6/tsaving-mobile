@@ -4,8 +4,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.*
 import com.example.tsaving.DialogHandling
-import com.example.tsaving.model.DashboardResponseModel
-import com.example.tsaving.model.ResponseModel
+import com.example.tsaving.model.response.DashboardResponseModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.coroutines.*
 import retrofit2.HttpException
