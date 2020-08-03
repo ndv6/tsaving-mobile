@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
@@ -27,6 +28,13 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
 
         lifecycle.addObserver(otpViewModel)
         job = Job()
+        val cust_email = intent.getStringExtra("cust_email")?: ""
+        val cust_password = intent.getStringExtra("cust_password")?: ""
+
+        var page = intent.getStringExtra("page")
+        if (page == "login") {
+            tv_verify_login.visibility = View.VISIBLE
+        }
 
         otpViewModel.apply {
             _error.observe(this@OTPActivity, Observer {
@@ -36,13 +44,26 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                     DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Network Error", "close")
                 } else if (it == ErrorName.FailedToRecognizeOTP) {
                     DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Failed to recognize OTP", "close")
+                } else if (it == ErrorName.LoginUnAuthorized) {
+                    startActivity(Intent(this@OTPActivity, OTPActivity::class.java))
                 }
             })
 
             isValid.observe(this@OTPActivity, Observer {
-                if (isValid.value == true) {
-                    startActivity(Intent(this@OTPActivity, MainActivity::class.java))
-                    finish()
+                if (it == true) {
+                    login(cust_email, cust_password)
+                }
+            })
+
+            dataLogin.observe(this@OTPActivity, Observer {
+                if(it.status == "SUCCESS" && statusLogin.value == false){
+                    BaseApplication.token = it.data.token
+                    BaseApplication.custEmail = it.data.cust_email
+                    BaseApplication.custName = it.data.cust_name
+                    val intent = Intent(this@OTPActivity, MainActivity::class.java)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                    startActivity(intent)
                 }
             })
 
@@ -54,6 +75,12 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                     isLoadingLogin(false)
                 }
 
+            })
+
+            dataToken.observe(this@OTPActivity, Observer {
+                if (it.status == "SUCCESS") {
+                    resendOTP(cust_email, it.data.token)
+                }
             })
         }
 
@@ -73,8 +100,11 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
             }
         })
 
+        tv_otp_resendOTP.setOnClickListener {
+            otpViewModel.getOTP(cust_email)
+        }
+
         btn_otp_send.setOnClickListener {
-            val cust_email = intent.getStringExtra("cust_email").toString()
             otpViewModel.onValidate(et_otp_token.text.toString(), cust_email)
         }
     }
