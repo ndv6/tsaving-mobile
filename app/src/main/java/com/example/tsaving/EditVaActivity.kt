@@ -55,28 +55,21 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
 
         et_vae_label?.afterTextChanged { til_vae_label.setError(null) }
 
-        btn_vae_save.setOnClickListener {
-            val newVaLabel = et_vae_label.text.toString()
-            val newVaColor = sp_vae_color.selectedItem.toString()
-            val status = editVaViewModel.validateEditVa(newVaLabel)
-            if (!status) {
-                til_vae_label.setError("Please Input New Label")
-            } else {
-                editVaViewModel.fetchVaEditData(newVaLabel, newVaColor)
-            }
-        }
-
         editVaViewModel.apply {
             flagStatus.observe(this@EditVaActivity, androidx.lifecycle.Observer {
-                if(it == false){
+                if(flagStatus.value == ErrorName.Null){
+                    til_vae_label.setError("Please input new label")
+                }
+                if(flagStatus.value == ErrorName.NotValidLength){
+                    til_vae_label.setError("Invalid length")
+                }
+                if(flagStatus.value == ErrorName.NetworkError){
                     DialogHandling({}).basicAlert(this@EditVaActivity, "Notification", "Network Error", "close")
                 }
             })
             data.observe(this@EditVaActivity, androidx.lifecycle.Observer {
                 if (it.status == "SUCCESS"){
                     val intent = Intent(this@EditVaActivity, MainActivity::class.java)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
                     startActivity(intent)
                 }
             })
@@ -88,6 +81,12 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
                     isLoadingEditVa(false)
                 }
             })
+        }
+
+        btn_vae_save.setOnClickListener {
+            val newVaLabel = et_vae_label.text.toString()
+            val newVaColor = sp_vae_color.selectedItem.toString()
+            editVaViewModel.validateEditVa(newVaLabel, newVaColor)
         }
     }
 
