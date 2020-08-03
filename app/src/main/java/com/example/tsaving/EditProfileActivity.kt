@@ -65,6 +65,7 @@ class EditProfileFragment : Fragment(), LifecycleOwner {
             updateStatus.observe(viewLifecycleOwner, Observer { newUpdateStatus ->
                 if (newUpdateStatus == UpdateStatus.SUCCESS) {
                     activity?.let {
+                        BaseApplication.custName = et_edit_profile_name.text.toString()
                         DialogHandling {
                             fragmentManager?.beginTransaction()?.replace(R.id.flContent, ProfileFragment())
                                 ?.commit()
@@ -72,6 +73,8 @@ class EditProfileFragment : Fragment(), LifecycleOwner {
                     }
                 } else if (newUpdateStatus == UpdateStatus.EMAIL_CHANGED) {
                     activity?.let {
+                        BaseApplication.custName = et_edit_profile_name.text.toString()
+                        BaseApplication.custEmail = et_edit_profile_email.text.toString()
                         DialogHandling {
                             BaseApplication.token = ""
                             val intent = Intent(activity, LoginActivity::class.java)
