@@ -50,9 +50,9 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
                 val cardNum = "$num1 $num2 $num3"
 
                 val month = it.data.expired.substring(5,7)
-                val day = it.data.expired.substring(8,10)
+                val year = it.data.expired.substring(2,4)
 
-                val date = "$month/$day"
+                val date = "$month/$year"
 
                 BaseApplication.accNumber = it.data.accountNum
                 tv_dashboard_name.text = it.data.custName
