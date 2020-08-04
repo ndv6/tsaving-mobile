@@ -1,6 +1,7 @@
 package com.example.tsaving
 
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
@@ -96,10 +97,14 @@ class RegisterActivity: AppCompatActivity(), LifecycleOwner {
             progresBar.observe(this@RegisterActivity, Observer {
                 if (it == true){
                     pb_register.visibility = View.VISIBLE
+                    btn_register_signup.isEnabled = false
+                    btn_register_signup.setBackgroundResource(R.drawable.button_rounded_grey)
                 }
                 else{
                     Handler().postDelayed({
                         pb_register.visibility = View.GONE
+                        btn_register_signup.isEnabled = true
+                        btn_register_signup.setBackgroundResource(R.drawable.button_rounded)
                     }, 2000)
                 }
             })

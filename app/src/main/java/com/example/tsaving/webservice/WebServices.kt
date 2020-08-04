@@ -146,6 +146,7 @@ val tnotif_ohc = OkHttpClient.Builder().addInterceptor(TnotifHeaderInterceptor()
 val webServices: WebServices by lazy {
     Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8000/")
+//        .baseUrl("https://2fc3d0f82ee7.ap.ngrok.io/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(ohc)
         .build()
@@ -155,6 +156,7 @@ val webServices: WebServices by lazy {
 val tnotifServices: WebServices by lazy {
     Retrofit.Builder()
         .baseUrl("http://10.0.2.2:8082/")
+//        .baseUrl("https://f33db1f1ed12.ap.ngrok.io/")
         .addConverterFactory(GsonConverterFactory.create())
         .client(tnotif_ohc)
         .build()

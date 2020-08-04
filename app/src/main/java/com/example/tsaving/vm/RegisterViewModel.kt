@@ -56,12 +56,10 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
             viewModelScope.launch {
                 _progresBar.value = true
                 try {
-                    _progresBar.value = false
                     val result = withContext(Dispatchers.IO) { repo.register(request) }
                     _flagStatus.value = ErrorName.Null
                     _dataRegister.value = result
                 } catch (t: Throwable) {
-                    _progresBar.value = false
                     when (t) {
                         is IOException -> {
                             _flagStatus.value  = ErrorName.ErrorNetwork
@@ -71,6 +69,7 @@ class RegisterViewModel : ViewModel(), CoroutineScope, LifecycleObserver {
                         }
                     }
                 }
+                _progresBar.value = false
             }
         }
     }
