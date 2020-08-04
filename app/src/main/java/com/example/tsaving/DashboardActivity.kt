@@ -11,6 +11,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.tsaving.vm.DashboardViewModel
 import com.example.tsaving.webservice.TsavingRepository
 import kotlinx.android.synthetic.main.activity_dashboard.*
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.util.Collections.replaceAll
 
 class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
     private var dashboardViewModel: DashboardViewModel = DashboardViewModel(TsavingRepository(), ::isLoading)
@@ -39,10 +43,24 @@ class DashboardFragment() : androidx.fragment.app.Fragment(), LifecycleOwner {
 //        api listener
         dashboardViewModel.apply {
             data.observe(this@DashboardFragment, androidx.lifecycle.Observer {
+                var cardNumber = it.data.cardNumber
+                val num1 = cardNumber.substring(0,4)
+                val num2 = cardNumber.substring(4,8)
+                val num3 = cardNumber.substring(8,12)
+                val cardNum = "$num1 $num2 $num3"
+
+                val month = it.data.expired.substring(5,7)
+                val year = it.data.expired.substring(2,4)
+
+                val date = "$month/$year"
+
                 BaseApplication.accNumber = it.data.accountNum
                 tv_dashboard_name.text = it.data.custName
                 tv_dashboard_email.text = it.data.custEmail
                 tv_dashboard_acc_num.text = it.data.accountNum
+                tv_dashboard_static_card_number.text = cardNum
+                tv_dashboard_static_card_exp.text = date
+
                 tv_dashboard_acc_balance.text = "Rp. ${it.data.accountBalance.toString().FormatDecimal()}"
                 dashboardAdapter.vaList = it.data.virtualAccounts
                 dashboardAdapter.notifyDataSetChanged()
