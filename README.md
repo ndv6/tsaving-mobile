@@ -21,7 +21,7 @@
 ### **Jocelyn** : 
    * Add Virtual Account
    * UI
-   * Adding card number and expiry date from API
+   * Insert card number and expiry date from API
 
 ### **David** : 
    * Extensions class
