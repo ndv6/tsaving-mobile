@@ -20,7 +20,7 @@
 
 ### **Jocelyn** : 
    * Add Virtual Account
-   * UI
+   * UI (VA Details, VA List Color Label (Dashboard), Register, Edit Profile, Update Password, Transaction History) 
    * Insert card number and expiry date from API
 
 ### **David** : 
@@ -45,4 +45,4 @@
 ### **Sekar** : 
    * Edit Virtual Account
    * Drawer
-   * UI
+   * UI (Drawer, OTP, Login, Profile, Transfer, Transaction History)
