@@ -7,8 +7,9 @@
    * Navigation drawer implementation and fragment linking
 
 ### **Vici** : 
-   * Transaction History
-   * Retrofit
+   * Transaction History UI
+   * Retrofit Implementation
+   * Transaction history-related API fixes (VA number not logged when delete VA, Transaction history API not returning `from_account` field, etc)
 
 ### **Andreas** : 
    * Edit Profile
