@@ -2,7 +2,7 @@
 
 ### **Joseph** : 
    * Dashboard UI and implementation
-   * Recycler View Virtual Account List
+   * Card Expiration middleware (back-end)
    * Retrofit
    * Navigation drawer implementation and fragment linking
 
