@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.LifecycleOwner
 import com.example.tsaving.model.VirtualAccount
@@ -69,6 +70,7 @@ class EditVaActivity: AppCompatActivity(), CoroutineScope, LifecycleOwner {
             })
             data.observe(this@EditVaActivity, androidx.lifecycle.Observer {
                 if (it.status == "SUCCESS"){
+                    Toast.makeText(this@EditVaActivity, it.message, Toast.LENGTH_LONG).show()
                     val intent = Intent(this@EditVaActivity, MainActivity::class.java)
                     startActivity(intent)
                 }
