@@ -47,7 +47,10 @@ class OTPActivity : AppCompatActivity(), LifecycleOwner, CoroutineScope {
                     DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Failed to recognize OTP", "close")
                 } else if (it == ErrorName.LoginUnAuthorized) {
                     startActivity(Intent(this@OTPActivity, OTPActivity::class.java))
+                } else if (it == ErrorName.ErrorSendMail) {
+                    DialogHandling({}).basicAlert(this@OTPActivity, "Notification", "Failed To Send Email", "close")
                 }
+
             })
 
             isValid.observe(this@OTPActivity, Observer {
