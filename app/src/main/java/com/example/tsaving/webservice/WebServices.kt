@@ -16,6 +16,7 @@ import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Response
 import com.example.tsaving.model.response.*
+import com.example.tsaving.webservice.WebServices.Companion.tnotif_url
 import com.example.tsaving.webservice.WebServices.Companion.tsaving_url
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -41,7 +42,7 @@ interface WebServices {
         const val SEND_EMAIL = "sendMail"
         const val GET_TOKEN = "get-token"
         const val tsaving_url = "http://20.44.219.72:8000/"
-        const val tnotif = "http://20.44.219.72:8082/"
+        const val tnotif_url = "http://52.139.252.182:8082/"
     }
 
     @POST(REGISTER)
@@ -157,7 +158,7 @@ val webServices: WebServices by lazy {
 
 val tnotifServices: WebServices by lazy {
     Retrofit.Builder()
-        .baseUrl("http://10.0.2.2:8082/")
+        .baseUrl(tnotif_url)
         .addConverterFactory(GsonConverterFactory.create())
         .client(tnotif_ohc)
         .build()
