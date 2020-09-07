@@ -131,7 +131,6 @@ class OTPViewModel : ViewModel(),
                 val result = withContext(Dispatchers.IO) {
                     repo.sendEmail(request)
                 }
-                isValid.setValue(true)
                 isResend.setValue(true)
             } catch (t: Throwable) {
                 statusPB.value = false
