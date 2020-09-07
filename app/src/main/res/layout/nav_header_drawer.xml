@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/colorPrimary"
+    android:gravity="bottom"
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/margin_large"
+    android:paddingTop="@dimen/margin_large"
+    android:paddingRight="@dimen/margin_large"
+    android:paddingBottom="@dimen/margin_large">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/civ_drawer_photo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/profile_placehodler"
+        tools:src="@drawable/profile_placehodler" />
+
+    <TextView
+        android:id="@+id/tv_drawer_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Customer Name"
+        android:textColor="@color/colorLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/civ_drawer_photo"/>
+
+    <TextView
+        android:id="@+id/tv_drawer_email"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="customer@mail.com"
+        android:textColor="@color/colorLight"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_drawer_name"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,10 +1,41 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name = "ButtonPrimary" parent = "@style/Widget.AppCompat.Button">
+        <item name = "android:background">@drawable/button_oval</item>
+        <item name = "android:textSize">@dimen/text_small</item>
+        <item name = "android:textColor">@color/colorWhite</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
+    <style name ="EditTextPrimary">
+        <item name = "android:background">@drawable/edittext_rounded</item>
+        <item name = "android:textSize">@dimen/text_small</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
+    <style name = "ButtonCancel">
+        <item name = "android:background">@drawable/button_oval_cancel</item>
+        <item name = "android:textSize">@dimen/text_small</item>
+        <item name = "android:textColor">@color/colorPrimary</item>
+        <item name = "android:height">@dimen/height</item>
+    </style>
+
+    <style name="dashboard_tv_primary">
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:layout_marginStart">20sp</item>
+        <item name= "android:textColor">@color/colorWhite</item>
+    </style>
+
+    <style name = "card_with_shadow">
+        <item name = "android:background">@drawable/section_rounded</item>
     </style>
 
 </resources>

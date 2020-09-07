@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/cl_vae"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:visibility="visible">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/tb_vad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="?attr/colorPrimary"
+            android:minHeight="?attr/actionBarSize"
+            android:theme="?attr/actionBarTheme"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <ImageButton
+                android:id="@+id/btn_vae_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="left"
+                android:src="@drawable/ic_baseline_arrow_back_ios_24"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:layout_margin="@dimen/margin_large"
+                app:layout_constraintTop_toTopOf="@+id/tb_vad"
+                app:layout_constraintStart_toStartOf="@+id/tb_vad"
+                app:layout_constraintBottom_toBottomOf="@+id/tb_vad" />
+
+            <TextView
+                android:id = "@+id/tv_daily"
+                android:layout_width = "wrap_content"
+                android:layout_height = "wrap_content"
+                android:layout_gravity = "center"
+                android:text = "Edit Virtual Account"
+                android:textSize="@dimen/text_large"
+                android:textAllCaps = "true"
+                android:textStyle = "bold"
+                android:textColor = "@color/colorWhite"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/tb_vad"
+                app:layout_constraintEnd_toEndOf="@+id/tb_vad"
+                app:layout_constraintBottom_toBottomOf="@+id/tb_vad" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id = "@+id/tv_vae_va"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_xl"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:text="Virtual Account"
+            android:textSize="@dimen/text_medium"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tb_vad" />
+
+        <TextView
+            android:id = "@+id/tv_vae_num"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_medium"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:text="1234567890"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_large"
+            android:textColor="@color/colorGreyDark"
+            android:elegantTextHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tv_vae_va" />
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id = "@+id/til_vae_label"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_large"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_xl"
+            app:errorEnabled="true"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_vae_num">
+
+            <EditText
+                android:id="@+id/et_vae_label"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height"
+                android:hint="New Label"
+                android:textSize="@dimen/text_medium"/>
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id = "@+id/tv_vae_color"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft = "@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:layout_marginTop="@dimen/margin_large"
+            android:text="Color"
+            android:textSize="@dimen/text_medium"
+            android:elegantTextHeight="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/til_vae_label" />
+
+        <Spinner
+            android:id="@+id/sp_vae_color"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/height"
+            app:layout_constraintTop_toBottomOf="@+id/tv_vae_color"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginLeft = "@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:entries="@array/color_va"
+            android:background="@color/colorGreyBG" />
+
+        <Button
+            style="@style/ButtonCancel"
+            android:id="@+id/btn_vae_cancel"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_xl"
+            android:layout_marginRight="@dimen/margin_large"
+            android:layout_marginBottom="@dimen/margin_xl"
+            android:text = "CANCEL"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_vae_save"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+        <Button
+            style="@style/ButtonPrimary"
+            android:id="@+id/btn_vae_save"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/margin_large"
+            android:layout_marginRight="@dimen/margin_xl"
+            android:layout_marginBottom="@dimen/margin_xl"
+            android:text = "SAVE"
+            app:layout_constraintStart_toEndOf="@id/btn_vae_cancel"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <ProgressBar
+        android:id="@+id/pb_vae"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
